@@ -1,0 +1,139 @@
+## The income statement
+CashFlowStatement is a Report.
+CashFlowStatement has a list of Payment called expenses.
+CashFlowStatement has a list of Payment called revenues.
+CashFlowStatement has a list of MoneyAmount called revenueTotal.
+CashFlowStatement has a list of MoneyAmount called expenseTotal.
+
+## The balance sheet
+BalanceSheet is a Report.
+BalanceSheet has a list of Event called liabilities.
+BalanceSheet has a list of Event called assets.
+BalanceSheet has a list of Event called equity.
+BalanceSheet has a Double called liabilitiesTotal.
+BalanceSheet has a Double called assetsTotal.
+BalanceSheet has a Double called equityTotal.
+
+## The list of active contracts
+ActiveContracts is a Report.
+ActiveContracts has a list of PutContract called contracts.
+
+## A contract summary
+ContractSummary is a Report.
+ContractSummary has a list of PutContract called contracts.
+
+## Previous transactions registered for contract
+ContractHistory is a Report.
+ContractHistory has a list of TransactionEvent called transactions.
+
+## The state of a contract
+ContractState is a Report.
+ContractState has an Int called state.
+
+## The list of active contracts
+AllContracts is a Report.
+AllContracts has a list of PutContract called contracts.
+
+AllCustomers is a Report.
+AllCustomers has a list of Customer entities called customers.
+
+ContractsByCustomer is a Report.
+ContractsByCustomer has a list of PutContract called contracts.
+
+PendingPayment is a Report.
+PendingPayment has a list of PutContract called pendingPayment.
+
+GetReportNames is a Report.
+GetReportNames has a list of String called names.
+
+FilterReportNames is a Report.
+FilterReportNames has a list of String called names.
+
+GetReportTags is a Report.
+GetReportTags has a list of String called tags.
+
+GetContractTemplates is a Report.
+GetContractTemplates has a list of PutContractDef called contractTemplates.
+
+GetEntity is a Report.
+GetEntity has a Data called ent.
+
+AllResourceTypes is a Report.
+AllResourceTypes has a list of ResourceType entities called resources.
+
+##########################
+# Configuration Data
+##########################
+GetConfig is a Report.
+GetConfig has a list of Configuration called configuration.
+
+
+
+## * Reports
+OutstandingQuotes is a Report.
+OutstandingQuotes has comment "Provides a list of quotes not accepted by the customer".
+OutstandingQuotes has a list of PutContract called contracts.
+
+DJStatistics is a Report.
+DJStatistics has comment "Displays current usage of all employed DJs".
+DJStatistics has a String called dj.
+DJStatistics has a list of Event called events.
+
+AllDjs is a Report.
+AllDjs has a list of DJ entities called djs.
+
+#AllEventTypes is a Report.
+#AllEventTypes has a list of EventType called eventTypes.
+
+GetCompany is a Report.
+GetCompany has a list of Company entities called company.
+
+DJHistories is a Report.
+DJHistories has a list of DJHistory called histories.
+
+DJHistory has a DJ called dj.
+DJHistory has a list of PutContract called history.
+DJHistory has a Double called totalSalary.
+
+# Invoices
+Invoices is a Report.
+Invoices has a list of Invoice called invoices.
+
+Invoice has an Int called contractId.
+Invoice has a DateTime called timeStamp.
+Invoice has an Agent entity called sender.
+Invoice has an Agent entity called receiver.
+Invoice has a Double called amount.
+Invoice has a Currency.
+Invoice has a Double called includedVAT.
+Invoice has an Int called number.
+
+
+
+# Invoices
+PaidInvoices is a Report.
+PaidInvoices has a list of PaidInvoice called invoices.
+
+PaidInvoice has an Invoice.
+PaidInvoice has a Payment.
+
+JobsWithoutDJ is a Report.
+JobsWithoutDJ has a list of PutContract called missingDJs.
+
+#JobsWithoutDJData is a Report.
+#JobsWithoutDJData has an Int called contractId.
+#JobsWithoutDJData has a DJContract called contract.
+
+JobsPrWeek is a Report.
+JobsPrWeek has a list of JobsPrWeekData called jobs.
+
+JobsPrWeekData is a Report.
+JobsPrWeekData has a Int called amount.
+JobsPrWeekData has a DateTime called fromDate.
+JobsPrWeekData has a DateTime called toDate.
+
+#GetAvailableGear is a Report.
+#GetAvailableGear has a list of GearEntity called gear.
+
+#GearEntity has an Int called id.
+#GearEntity has a GearPackage called gear.

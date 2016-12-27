@@ -1,0 +1,551 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+Adult	src/dk/diku/poets/android/tablet/EDSL.java	/^	void Adult(PoetsValue pv) {$/;"	m	class:EDSL
+AdultRef	src/dk/diku/poets/android/tablet/EDSL.java	/^	void AdultRef(PoetsValue pv) {$/;"	m	class:EDSL
+AdultViewSpec	src/dk/diku/poets/android/tablet/ViewSpecData.java	/^	public static RecViewSpec AdultViewSpec =$/;"	f	class:ViewSpecData
+ArgSpec	src/dk/diku/poets/android/tablet/QuerySpec.java	/^	public interface ArgSpec {$/;"	i	class:QuerySpec
+ArrangementFields	src/dk/diku/poets/android/tablet/ViewSpecData.java	/^	private static List<String[]> ArrangementFields =$/;"	f	class:ViewSpecData	file:
+ArrangementListViewSpec	src/dk/diku/poets/android/tablet/ViewSpecLargeData.java	/^	public static ListViewSpec ArrangementListViewSpec = $/;"	f	class:ViewSpecLargeData
+ArrangementView	src/dk/diku/poets/android/tablet/ViewSpecData.java	/^	public static RecViewSpec ArrangementView =$/;"	f	class:ViewSpecData
+ArrangementViewSpec	src/dk/diku/poets/android/tablet/ViewSpecData.java	/^		public ArrangementViewSpec(String[] types, List<String[]> reqFs) {$/;"	m	class:ViewSpecData.ArrangementViewSpec
+ArrangementViewSpec	src/dk/diku/poets/android/tablet/ViewSpecData.java	/^	public static class ArrangementViewSpec extends RecViewSpec.DeclarativeRecViewSpec {$/;"	c	class:ViewSpecData
+AtomicViewSpec	src/dk/diku/poets/android/tablet/AtomicViewSpec.java	/^public class AtomicViewSpec extends ViewSpec {$/;"	c
+Bold	src/dk/diku/poets/android/tablet/DSL.java	/^	protected void Bold(PoetsValue txt) {$/;"	m	class:DSL
+Bold	src/dk/diku/poets/android/tablet/DSL.java	/^	protected void Bold(String txt) {$/;"	m	class:DSL
+Builder	src/dk/diku/poets/android/tablet/InputSpec.java	/^		public Builder(Context c) {$/;"	m	class:InputSpec.Builder
+Builder	src/dk/diku/poets/android/tablet/InputSpec.java	/^	public static class Builder {$/;"	c	class:InputSpec
+CAMEL_CASE_PATTERN	src/dk/diku/poets/android/tablet/HumaniseCamelCase.java	/^    private static final String CAMEL_CASE_PATTERN = "([A-Z]|[a-z])[a-z]*";$/;"	f	class:HumaniseCamelCase	file:
+ChildViewSpec	src/dk/diku/poets/android/tablet/ViewSpecData.java	/^	public static RecViewSpec ChildViewSpec =$/;"	f	class:ViewSpecData
+ConTile	src/dk/diku/poets/android/tablet/ConTile.java	/^	public ConTile(Context c, RecV putC, List<TransactionPattern> currentTPs) {$/;"	m	class:ConTile
+ConTile	src/dk/diku/poets/android/tablet/ConTile.java	/^public class ConTile extends RelativeLayout {$/;"	c
+ConstantArgSpec	src/dk/diku/poets/android/tablet/ConstantArgSpec.java	/^	public ConstantArgSpec(PoetsType pT) {$/;"	m	class:ConstantArgSpec
+ConstantArgSpec	src/dk/diku/poets/android/tablet/ConstantArgSpec.java	/^public class ConstantArgSpec $/;"	c
+Cont	src/dk/diku/poets/android/tablet/DSL.java	/^	protected interface Cont {$/;"	i	class:DSL
+ContainerType	src/dk/diku/poets/android/tablet/DSL.java	/^	public enum ContainerType { OnTop, NextTo, Table, Row };$/;"	g	class:DSL
+Continuum	src/dk/diku/poets/android/tablet/Continuum.java	/^public class Continuum extends Activity$/;"	c
+ContractView	src/dk/diku/poets/android/tablet/ContractView.java	/^	public ContractView(Context c, Integer cid, RecV put) {$/;"	m	class:ContractView
+ContractView	src/dk/diku/poets/android/tablet/ContractView.java	/^public class ContractView extends LinearLayout {$/;"	c
+ContractsFragment	src/dk/diku/poets/android/tablet/ContractsFragment.java	/^public class ContractsFragment extends Fragment implements Continuum.Refresh {$/;"	c
+DSL	src/dk/diku/poets/android/tablet/DSL.java	/^	public DSL() {$/;"	m	class:DSL
+DSL	src/dk/diku/poets/android/tablet/DSL.java	/^	public DSL(PoetsValue val) {$/;"	m	class:DSL
+DSL	src/dk/diku/poets/android/tablet/DSL.java	/^public class DSL {$/;"	c
+DSLElement	src/dk/diku/poets/android/tablet/DSLElement.java	/^public interface DSLElement {$/;"	i
+DSLHTMLConverter	src/dk/diku/poets/android/tablet/DSLHTMLConverter.java	/^	public DSLHTMLConverter() {$/;"	m	class:DSLHTMLConverter
+DSLHTMLConverter	src/dk/diku/poets/android/tablet/DSLHTMLConverter.java	/^public class DSLHTMLConverter implements DSLVisitor {$/;"	c
+DSLViewConverter	src/dk/diku/poets/android/tablet/DSLViewConverter.java	/^	public DSLViewConverter(Context ctx) {$/;"	m	class:DSLViewConverter
+DSLViewConverter	src/dk/diku/poets/android/tablet/DSLViewConverter.java	/^public class DSLViewConverter implements DSLVisitor {$/;"	c
+DSLVisitor	src/dk/diku/poets/android/tablet/DSLVisitor.java	/^public interface DSLVisitor {$/;"	i
+DateTimeInput	src/dk/diku/poets/android/tablet/DateTimeInput.java	/^		public DateTimeInput(Entry<String, Type> e) {$/;"	m	class:DateTimeInput
+DateTimeInput	src/dk/diku/poets/android/tablet/DateTimeInput.java	/^public class DateTimeInput extends InputWidget implements $/;"	c
+DeclarativeRecViewSpec	src/dk/diku/poets/android/tablet/RecViewSpec.java	/^		public DeclarativeRecViewSpec(String[] types, List<String[]> reqFs) {$/;"	m	class:RecViewSpec.DeclarativeRecViewSpec
+DeclarativeRecViewSpec	src/dk/diku/poets/android/tablet/RecViewSpec.java	/^	public static class DeclarativeRecViewSpec extends FieldIndexed {$/;"	c	class:RecViewSpec
+Defer	src/dk/diku/poets/android/tablet/Defer.java	/^public interface Defer <T> {$/;"	i
+DoubleInput	src/dk/diku/poets/android/tablet/DoubleInput.java	/^	public DoubleInput(Entry<String, Type> ent) {$/;"	m	class:DoubleInput
+DoubleInput	src/dk/diku/poets/android/tablet/DoubleInput.java	/^public class DoubleInput extends InputWidget {$/;"	c
+EDSL	src/dk/diku/poets/android/tablet/EDSL.java	/^	public EDSL() {$/;"	m	class:EDSL
+EDSL	src/dk/diku/poets/android/tablet/EDSL.java	/^	public EDSL(PoetsValue pv) {$/;"	m	class:EDSL
+EDSL	src/dk/diku/poets/android/tablet/EDSL.java	/^public class EDSL extends DSL {$/;"	c
+EmbedAs	src/dk/diku/poets/android/tablet/ViewSpec.java	/^	public enum EmbedAs {$/;"	g	class:ViewSpec
+End	src/dk/diku/poets/android/tablet/DSL.java	/^	protected void End() {$/;"	m	class:DSL
+Ext	src/dk/diku/poets/android/tablet/DSL.java	/^	protected void Ext(Cont cont, PoetsValue pv) {$/;"	m	class:DSL
+FULL	src/dk/diku/poets/android/tablet/ViewSpec.java	/^		FULL, TILE$/;"	e	enum:ViewSpec.EmbedAs	file:
+FieldIndexed	src/dk/diku/poets/android/tablet/RecViewSpec.java	/^		public FieldIndexed(String type, List<String[]> reqFs) {$/;"	m	class:RecViewSpec.FieldIndexed
+FieldIndexed	src/dk/diku/poets/android/tablet/RecViewSpec.java	/^		public FieldIndexed(String type, String[] reqFs) {$/;"	m	class:RecViewSpec.FieldIndexed
+FieldIndexed	src/dk/diku/poets/android/tablet/RecViewSpec.java	/^		public FieldIndexed(String[] types, List<String[]> reqFs) {$/;"	m	class:RecViewSpec.FieldIndexed
+FieldIndexed	src/dk/diku/poets/android/tablet/RecViewSpec.java	/^		public FieldIndexed(String[] types, String[] reqFs) {$/;"	m	class:RecViewSpec.FieldIndexed
+FieldIndexed	src/dk/diku/poets/android/tablet/RecViewSpec.java	/^	public static abstract class FieldIndexed extends TypeIndexed {$/;"	c	class:RecViewSpec
+FieldPair	src/dk/diku/poets/android/tablet/RecViewSpec.java	/^			public FieldPair(String[] path, PoetsValue pVal) {$/;"	m	class:RecViewSpec.FieldIndexed.FieldPair
+FieldPair	src/dk/diku/poets/android/tablet/RecViewSpec.java	/^		public static class FieldPair {$/;"	c	class:RecViewSpec.FieldIndexed
+Food	src/dk/diku/poets/android/tablet/EDSL.java	/^	void Food(PoetsValue pv) {$/;"	m	class:EDSL
+GenericAtomicViewSpec	src/dk/diku/poets/android/tablet/ViewSpecData.java	/^	public static AtomicViewSpec GenericAtomicViewSpec = new AtomicViewSpec();$/;"	f	class:ViewSpecData
+GenericListViewSpec	src/dk/diku/poets/android/tablet/ViewSpecData.java	/^	public static ListViewSpec GenericListViewSpec = new ListViewSpec();$/;"	f	class:ViewSpecData
+GenericRefViewSpec	src/dk/diku/poets/android/tablet/ViewSpecData.java	/^	public static RefViewSpec  GenericRefViewSpec  = new RefViewSpec();$/;"	f	class:ViewSpecData
+GenericReportViewSpec	src/dk/diku/poets/android/tablet/ReportViewSpecs.java	/^	public static RecViewSpec GenericReportViewSpec = $/;"	f	class:ReportViewSpecs
+Header	src/dk/diku/poets/android/tablet/EDSL.java	/^	void Header(String t) {$/;"	m	class:EDSL
+HtmlRecView	src/dk/diku/poets/android/tablet/RecViewSpec.java	/^		public HtmlRecView(String templateString, String[] types, List<String[]> reqFs) {$/;"	m	class:RecViewSpec.HtmlRecView
+HtmlRecView	src/dk/diku/poets/android/tablet/RecViewSpec.java	/^	public static class HtmlRecView extends FieldIndexed {$/;"	c	class:RecViewSpec
+HumaniseCamelCase	src/dk/diku/poets/android/tablet/HumaniseCamelCase.java	/^public class HumaniseCamelCase {$/;"	c
+Info	src/dk/diku/poets/android/tablet/EDSL.java	/^	void Info(PoetsValue pv) {$/;"	m	class:EDSL
+Input	src/dk/diku/poets/android/tablet/Input.java	/^public interface Input {$/;"	i
+InputSpec	src/dk/diku/poets/android/tablet/InputSpec.java	/^	private InputSpec(Context context) {$/;"	m	class:InputSpec	file:
+InputSpec	src/dk/diku/poets/android/tablet/InputSpec.java	/^public class InputSpec extends RelativeLayout implements Input {$/;"	c
+InputWidget	src/dk/diku/poets/android/tablet/InputWidget.java	/^public abstract class InputWidget implements Input {$/;"	c
+IntInput	src/dk/diku/poets/android/tablet/IntInput.java	/^	public IntInput(Entry<String, Type> ent) {$/;"	m	class:IntInput
+IntInput	src/dk/diku/poets/android/tablet/IntInput.java	/^public class IntInput extends InputWidget {$/;"	c
+LIST	src/dk/diku/poets/android/tablet/InputSpec.java	/^		NORMAL, LIST$/;"	e	enum:InputSpec.WidgetContext	file:
+ListEntryView	src/dk/diku/poets/android/tablet/ListInput.java	/^		public ListEntryView(final Context c, PoetsValue pv) {$/;"	m	class:ListInput.ListEntryView
+ListEntryView	src/dk/diku/poets/android/tablet/ListInput.java	/^	private static class ListEntryView extends Button implements View.OnClickListener {$/;"	c	class:ListInput
+ListInput	src/dk/diku/poets/android/tablet/ListInput.java	/^	public ListInput(Entry<String, Type> e) {$/;"	m	class:ListInput
+ListInput	src/dk/diku/poets/android/tablet/ListInput.java	/^public class ListInput extends InputWidget {$/;"	c
+ListViewSpec	src/dk/diku/poets/android/tablet/ListViewSpec.java	/^public class ListViewSpec extends ViewSpec {$/;"	c
+Location	src/dk/diku/poets/android/tablet/EDSL.java	/^	void Location(PoetsValue pv) {$/;"	m	class:EDSL
+MeRec	src/dk/diku/poets/android/tablet/ViewSpecData.java	/^	public static RecViewSpec MeRec =$/;"	f	class:ViewSpecData
+MkView	src/dk/diku/poets/android/tablet/Section.java	/^	public static interface MkView <T> {$/;"	i	class:Section
+MonthlyOverviewSpec	src/dk/diku/poets/android/tablet/ReportViewSpecs.java	/^	public static RecViewSpec MonthlyOverviewSpec =$/;"	f	class:ReportViewSpecs
+NORMAL	src/dk/diku/poets/android/tablet/InputSpec.java	/^		NORMAL, LIST$/;"	e	enum:InputSpec.WidgetContext	file:
+NOVIEW	src/dk/diku/poets/android/tablet/Utils.java	/^	public static final int NOVIEW = -42;$/;"	f	class:Utils
+NextTo	src/dk/diku/poets/android/tablet/DSL.java	/^	protected void NextTo() {$/;"	m	class:DSL
+NextTo	src/dk/diku/poets/android/tablet/DSL.java	/^	public enum ContainerType { OnTop, NextTo, Table, Row };$/;"	e	enum:DSL.ContainerType	file:
+NoViewSpec	src/dk/diku/poets/android/tablet/NoViewSpec.java	/^public class NoViewSpec extends ViewSpec {$/;"	c
+OnTop	src/dk/diku/poets/android/tablet/DSL.java	/^	protected void OnTop() {$/;"	m	class:DSL
+OnTop	src/dk/diku/poets/android/tablet/DSL.java	/^	public enum ContainerType { OnTop, NextTo, Table, Row };$/;"	e	enum:DSL.ContainerType	file:
+PContainer	src/dk/diku/poets/android/tablet/DSL.java	/^		public PContainer() {$/;"	m	class:DSL.PContainer
+PContainer	src/dk/diku/poets/android/tablet/DSL.java	/^	public static class PContainer extends PView {$/;"	c	class:DSL
+PExt	src/dk/diku/poets/android/tablet/DSL.java	/^	public static class PExt extends PView {$/;"	c	class:DSL
+PQuery	src/dk/diku/poets/android/tablet/DSL.java	/^	public static class PQuery extends PView {$/;"	c	class:DSL
+PText	src/dk/diku/poets/android/tablet/DSL.java	/^	public static class PText extends PView {$/;"	c	class:DSL
+PView	src/dk/diku/poets/android/tablet/DSL.java	/^	public static abstract class PView implements DSLElement {$/;"	c	class:DSL
+Participants	src/dk/diku/poets/android/tablet/EDSL.java	/^	void Participants(PoetsValue pv) {$/;"	m	class:EDSL
+PreCond	src/dk/diku/poets/android/tablet/PreCond.java	/^public abstract class PreCond {$/;"	c
+PutContractBirthdayViewSpec	src/dk/diku/poets/android/tablet/ViewSpecData.java	/^	public static RecViewSpec PutContractBirthdayViewSpec =$/;"	f	class:ViewSpecData
+PutContractGenericViewSpec	src/dk/diku/poets/android/tablet/ViewSpecData.java	/^	public static RecViewSpec PutContractGenericViewSpec =$/;"	f	class:ViewSpecData
+PutContractType	src/dk/diku/poets/android/tablet/ViewSpecData.java	/^	private static String[] PutContractType =$/;"	f	class:ViewSpecData	file:
+Query	src/dk/diku/poets/android/tablet/DSL.java	/^	protected void Query(String report, List<PoetsValue> args, Cont cont) {$/;"	m	class:DSL
+QuerySpec	src/dk/diku/poets/android/tablet/QuerySpec.java	/^	public QuerySpec(Report rp) {$/;"	m	class:QuerySpec
+QuerySpec	src/dk/diku/poets/android/tablet/QuerySpec.java	/^public class QuerySpec {$/;"	c
+RecViewSpec	src/dk/diku/poets/android/tablet/RecViewSpec.java	/^public abstract class RecViewSpec extends ViewSpec {$/;"	c
+RecordInput	src/dk/diku/poets/android/tablet/RecordInput.java	/^	public RecordInput(Entry<String, Type> e) {$/;"	m	class:RecordInput
+RecordInput	src/dk/diku/poets/android/tablet/RecordInput.java	/^	public RecordInput(String recordName) {$/;"	m	class:RecordInput
+RecordInput	src/dk/diku/poets/android/tablet/RecordInput.java	/^public class RecordInput extends InputWidget {$/;"	c
+Ref	src/dk/diku/poets/android/tablet/DSL.java	/^	protected void Ref(final PoetsValue ref, Cont cont) {$/;"	m	class:DSL
+RefInput	src/dk/diku/poets/android/tablet/RefInput.java	/^	public RefInput(Entry<String, Type> e) {$/;"	m	class:RefInput
+RefInput	src/dk/diku/poets/android/tablet/RefInput.java	/^public class RefInput extends InputWidget {$/;"	c
+RefViewSpec	src/dk/diku/poets/android/tablet/RefViewSpec.java	/^public class RefViewSpec extends ViewSpec {$/;"	c
+Refresh	src/dk/diku/poets/android/tablet/Continuum.java	/^	public interface Refresh {$/;"	i	class:Continuum
+ReportResultFragment	src/dk/diku/poets/android/tablet/ReportResultFragment.java	/^public class ReportResultFragment extends Fragment$/;"	c
+ReportViewSpecs	src/dk/diku/poets/android/tablet/ReportViewSpecs.java	/^public class ReportViewSpecs {$/;"	c
+ReportsFragment	src/dk/diku/poets/android/tablet/ReportsFragment.java	/^public class ReportsFragment extends Fragment implements Continuum.Refresh {$/;"	c
+Row	src/dk/diku/poets/android/tablet/DSL.java	/^	public enum ContainerType { OnTop, NextTo, Table, Row };$/;"	e	enum:DSL.ContainerType	file:
+RunWithArg	src/dk/diku/poets/android/tablet/Utils.java	/^	public interface RunWithArg <T> {$/;"	i	class:Utils
+ScheduleViewSpec	src/dk/diku/poets/android/tablet/ReportViewSpecs.java	/^	public static RecViewSpec ScheduleViewSpec =$/;"	f	class:ReportViewSpecs
+Section	src/dk/diku/poets/android/tablet/Section.java	/^	public Section(Context c, View h) {$/;"	m	class:Section
+Section	src/dk/diku/poets/android/tablet/Section.java	/^public class Section <T> extends FrameLayout {$/;"	c
+SelectBox	src/dk/diku/poets/android/tablet/SelectBox.java	/^	public SelectBox(Context ctx, View v) {$/;"	m	class:SelectBox
+SelectBox	src/dk/diku/poets/android/tablet/SelectBox.java	/^public class SelectBox extends LinearLayout {$/;"	c
+StartContractActivity	src/dk/diku/poets/android/tablet/StartContractActivity.java	/^public class StartContractActivity extends Activity {$/;"	c
+StringContainer	src/dk/diku/poets/android/tablet/DSLHTMLConverter.java	/^	private interface StringContainer {$/;"	i	class:DSLHTMLConverter
+StringInput	src/dk/diku/poets/android/tablet/StringInput.java	/^	public StringInput(Entry<String, Type> e) {$/;"	m	class:StringInput
+StringInput	src/dk/diku/poets/android/tablet/StringInput.java	/^public class StringInput extends InputWidget {$/;"	c
+TILE	src/dk/diku/poets/android/tablet/ViewSpec.java	/^		FULL, TILE$/;"	e	enum:ViewSpec.EmbedAs	file:
+TListener	src/dk/diku/poets/android/tablet/Continuum.java	/^		public TListener(Fragment tcf, String t) {$/;"	m	class:Continuum.TListener
+TListener	src/dk/diku/poets/android/tablet/Continuum.java	/^	public static class TListener implements TabListener {$/;"	c	class:Continuum
+Table	src/dk/diku/poets/android/tablet/DSL.java	/^	protected void Table() {$/;"	m	class:DSL
+Table	src/dk/diku/poets/android/tablet/DSL.java	/^	public enum ContainerType { OnTop, NextTo, Table, Row };$/;"	e	enum:DSL.ContainerType	file:
+TableRow	src/dk/diku/poets/android/tablet/DSL.java	/^	protected void TableRow() {$/;"	m	class:DSL
+Text	src/dk/diku/poets/android/tablet/DSL.java	/^	protected void Text(PoetsValue txt) {$/;"	m	class:DSL
+Text	src/dk/diku/poets/android/tablet/DSL.java	/^	protected void Text(String t) {$/;"	m	class:DSL
+Text	src/dk/diku/poets/android/tablet/DSL.java	/^	protected void Text(String t, int size, Typeface tf) {$/;"	m	class:DSL
+TypeIndexed	src/dk/diku/poets/android/tablet/ListViewSpec.java	/^		public TypeIndexed(String oneType) {$/;"	m	class:ListViewSpec.TypeIndexed
+TypeIndexed	src/dk/diku/poets/android/tablet/ListViewSpec.java	/^		public TypeIndexed(String... supportedTypes) {$/;"	m	class:ListViewSpec.TypeIndexed
+TypeIndexed	src/dk/diku/poets/android/tablet/ListViewSpec.java	/^	static public class TypeIndexed extends ListViewSpec {$/;"	c	class:ListViewSpec
+TypeIndexed	src/dk/diku/poets/android/tablet/RecViewSpec.java	/^		public TypeIndexed(String oneType) {$/;"	m	class:RecViewSpec.TypeIndexed
+TypeIndexed	src/dk/diku/poets/android/tablet/RecViewSpec.java	/^		public TypeIndexed(String... supportedTypes) {$/;"	m	class:RecViewSpec.TypeIndexed
+TypeIndexed	src/dk/diku/poets/android/tablet/RecViewSpec.java	/^	public static abstract class TypeIndexed extends RecViewSpec {$/;"	c	class:RecViewSpec
+Utils	src/dk/diku/poets/android/tablet/Utils.java	/^public class Utils {$/;"	c
+ViewSpec	src/dk/diku/poets/android/tablet/ViewSpec.java	/^public abstract class ViewSpec {$/;"	c
+ViewSpecData	src/dk/diku/poets/android/tablet/ViewSpecData.java	/^public class ViewSpecData {$/;"	c
+ViewSpecGetter	src/dk/diku/poets/android/tablet/ViewSpecGetter.java	/^public class ViewSpecGetter {$/;"	c
+ViewSpecLargeData	src/dk/diku/poets/android/tablet/ViewSpecLargeData.java	/^public class ViewSpecLargeData {$/;"	c
+WidgetContext	src/dk/diku/poets/android/tablet/InputSpec.java	/^	public enum WidgetContext {$/;"	g	class:InputSpec
+accept	src/dk/diku/poets/android/tablet/DSL.java	/^		public void accept(DSLVisitor visitor) {$/;"	m	class:DSL.PContainer
+accept	src/dk/diku/poets/android/tablet/DSL.java	/^		public void accept(DSLVisitor visitor) {$/;"	m	class:DSL.PExt
+accept	src/dk/diku/poets/android/tablet/DSL.java	/^		public void accept(DSLVisitor visitor) {$/;"	m	class:DSL.PQuery
+accept	src/dk/diku/poets/android/tablet/DSL.java	/^		public void accept(DSLVisitor visitor) {$/;"	m	class:DSL.PText
+accept	src/dk/diku/poets/android/tablet/DSLElement.java	/^	void accept(DSLVisitor visitor);$/;"	m	interface:DSLElement
+acronym	src/dk/diku/poets/android/tablet/HumaniseCamelCase.java	/^    private String acronym;$/;"	f	class:HumaniseCamelCase	file:
+actionListener	src/dk/diku/poets/android/tablet/RefInput.java	/^	View.OnClickListener actionListener = new View.OnClickListener() {$/;"	f	class:RefInput
+actionSection	src/dk/diku/poets/android/tablet/RefInput.java	/^	Section<Boolean> actionSection; $/;"	f	class:RefInput
+actions	src/dk/diku/poets/android/tablet/ListInput.java	/^		private String[] actions = new String[2];$/;"	f	class:ListInput.ListEntryView	file:
+activeContractViews	src/dk/diku/poets/android/tablet/ContractsFragment.java	/^	private LinearLayout ll, activeContractViews, todayList, soonList, laterList;$/;"	f	class:ContractsFragment	file:
+activeContracts	src/dk/diku/poets/android/tablet/ContractsFragment.java	/^	private List<PoetsValue> activeContracts;$/;"	f	class:ContractsFragment	file:
+ad	src/dk/diku/poets/android/tablet/ListInput.java	/^		private AlertDialog ad;$/;"	f	class:ListInput.ListEntryView	file:
+ad	src/dk/diku/poets/android/tablet/ListInput.java	/^	private AlertDialog ad;$/;"	f	class:ListInput	file:
+addActiveContractView	src/dk/diku/poets/android/tablet/ContractsFragment.java	/^	private void addActiveContractView(Integer cid, RecV putC) {$/;"	m	class:ContractsFragment	file:
+addArgument	src/dk/diku/poets/android/tablet/QuerySpec.java	/^	public QuerySpec addArgument(ArgSpec argS) {$/;"	m	class:QuerySpec
+addConTile	src/dk/diku/poets/android/tablet/ContractsFragment.java	/^	private void addConTile(RecV putC) {$/;"	m	class:ContractsFragment	file:
+addContracts	src/dk/diku/poets/android/tablet/ContractsFragment.java	/^	private void addContracts() {$/;"	m	class:ContractsFragment	file:
+addId	src/dk/diku/poets/android/tablet/ReportsFragment.java	/^	private static final int addId = 1;$/;"	f	class:ReportsFragment	file:
+addInputWidget	src/dk/diku/poets/android/tablet/InputSpec.java	/^	private void addInputWidget(InputWidget iw) {$/;"	m	class:InputSpec	file:
+addListener	src/dk/diku/poets/android/tablet/ReportsFragment.java	/^	DialogInterface.OnClickListener addListener =$/;"	f	class:ReportsFragment
+addRuler	src/dk/diku/poets/android/tablet/Section.java	/^	public static void addRuler(Context mContext, LinearLayout ll) {$/;"	m	class:Section
+addToAcronym	src/dk/diku/poets/android/tablet/HumaniseCamelCase.java	/^    private void addToAcronym(String word) {$/;"	m	class:HumaniseCamelCase	file:
+addV	src/dk/diku/poets/android/tablet/DSL.java	/^	private void addV(PView v) {$/;"	m	class:DSL	file:
+addVG	src/dk/diku/poets/android/tablet/DSL.java	/^	private void addVG(PContainer vg) {$/;"	m	class:DSL	file:
+appendAcronymIfThereIsOne	src/dk/diku/poets/android/tablet/HumaniseCamelCase.java	/^    private void appendAcronymIfThereIsOne() {$/;"	m	class:HumaniseCamelCase	file:
+appendWord	src/dk/diku/poets/android/tablet/HumaniseCamelCase.java	/^    private void appendWord(String word) {$/;"	m	class:HumaniseCamelCase	file:
+argSpecs	src/dk/diku/poets/android/tablet/QuerySpec.java	/^	private List<ArgSpec> argSpecs;$/;"	f	class:QuerySpec	file:
+args	src/dk/diku/poets/android/tablet/DSL.java	/^		public List<PoetsValue> args;$/;"	f	class:DSL.PQuery
+before	src/dk/diku/poets/android/tablet/Utils.java	/^	static public boolean before(Calendar c1, Calendar c2) {$/;"	m	class:Utils
+buildTPForm	src/dk/diku/poets/android/tablet/ContractView.java	/^	private View buildTPForm(final TransactionPattern tp) {$/;"	m	class:ContractView	file:
+cal	src/dk/diku/poets/android/tablet/DateTimeInput.java	/^		Calendar cal;	$/;"	f	class:DateTimeInput
+camelCaseWordMatcher	src/dk/diku/poets/android/tablet/HumaniseCamelCase.java	/^    private Matcher camelCaseWordMatcher(String camelCaseString) {$/;"	m	class:HumaniseCamelCase	file:
+capitaliseFirstLetter	src/dk/diku/poets/android/tablet/HumaniseCamelCase.java	/^    private String capitaliseFirstLetter(String str) {$/;"	m	class:HumaniseCamelCase	file:
+check	src/dk/diku/poets/android/tablet/PreCond.java	/^	public abstract boolean check(PoetsValue pv);$/;"	m	class:PreCond
+checkPre	src/dk/diku/poets/android/tablet/ViewSpec.java	/^	public boolean checkPre(PoetsValue pv) {$/;"	m	class:ViewSpec
+cid	src/dk/diku/poets/android/tablet/ConTile.java	/^	private int cid;$/;"	f	class:ConTile	file:
+conList	src/dk/diku/poets/android/tablet/ContractsFragment.java	/^	private LinearLayout conList;$/;"	f	class:ContractsFragment	file:
+consFragment	src/dk/diku/poets/android/tablet/Continuum.java	/^	private Fragment consFragment;$/;"	f	class:Continuum	file:
+cont	src/dk/diku/poets/android/tablet/DSL.java	/^		public Cont cont;$/;"	f	class:DSL.PExt
+cont	src/dk/diku/poets/android/tablet/DSL.java	/^		public Cont cont;$/;"	f	class:DSL.PQuery
+container	src/dk/diku/poets/android/tablet/DSLHTMLConverter.java	/^	private List<StringContainer> container;$/;"	f	class:DSLHTMLConverter	file:
+containsSoon	src/dk/diku/poets/android/tablet/ContractsFragment.java	/^	private boolean containsSoon(List<TransactionPattern> tps) {$/;"	m	class:ContractsFragment	file:
+containsToday	src/dk/diku/poets/android/tablet/ContractsFragment.java	/^	private boolean containsToday(List<TransactionPattern> tps) {$/;"	m	class:ContractsFragment	file:
+contractId	src/dk/diku/poets/android/tablet/ContractView.java	/^	private Integer contractId;$/;"	f	class:ContractView	file:
+contractRecView	src/dk/diku/poets/android/tablet/StartContractActivity.java	/^	private InputSpec contractRecView;$/;"	f	class:StartContractActivity	file:
+convertPoetsType	src/dk/diku/poets/android/tablet/InputSpec.java	/^		private Type convertPoetsType(PoetsType pt) {$/;"	m	class:InputSpec.Builder	file:
+create	src/dk/diku/poets/android/tablet/InputSpec.java	/^		public View create() {$/;"	m	class:InputSpec.Builder
+ctx	src/dk/diku/poets/android/tablet/DSLViewConverter.java	/^	Context ctx;$/;"	f	class:DSLViewConverter
+curView	src/dk/diku/poets/android/tablet/DSL.java	/^	private PView curView;$/;"	f	class:DSL	file:
+dataEnable	src/dk/diku/poets/android/tablet/RecordInput.java	/^	Section.MkView<RecordDefinition> dataEnable =$/;"	f	class:RecordInput
+dataMK	src/dk/diku/poets/android/tablet/StartContractActivity.java	/^	private Section.MkView<RecV> dataMK = new Section.MkView<RecV>() {$/;"	f	class:StartContractActivity	file:
+dataSection	src/dk/diku/poets/android/tablet/RecordInput.java	/^	Section<RecordDefinition> dataSection;$/;"	f	class:RecordInput
+dataSection	src/dk/diku/poets/android/tablet/StartContractActivity.java	/^	private Section<RecV> dataSection;$/;"	f	class:StartContractActivity	file:
+dateb	src/dk/diku/poets/android/tablet/DateTimeInput.java	/^		Button timeb, dateb;$/;"	f	class:DateTimeInput
+diaListen	src/dk/diku/poets/android/tablet/ListInput.java	/^	DialogInterface.OnClickListener diaListen =$/;"	f	class:ListInput
+disable	src/dk/diku/poets/android/tablet/Section.java	/^	public void disable() {$/;"	m	class:Section
+dk.diku.poets.android.tablet	src/dk/diku/poets/android/tablet/AtomicViewSpec.java	/^package dk.diku.poets.android.tablet;$/;"	p
+dk.diku.poets.android.tablet	src/dk/diku/poets/android/tablet/ConTile.java	/^package dk.diku.poets.android.tablet;$/;"	p
+dk.diku.poets.android.tablet	src/dk/diku/poets/android/tablet/ConstantArgSpec.java	/^package dk.diku.poets.android.tablet;$/;"	p
+dk.diku.poets.android.tablet	src/dk/diku/poets/android/tablet/Continuum.java	/^package dk.diku.poets.android.tablet;$/;"	p
+dk.diku.poets.android.tablet	src/dk/diku/poets/android/tablet/ContractView.java	/^package dk.diku.poets.android.tablet;$/;"	p
+dk.diku.poets.android.tablet	src/dk/diku/poets/android/tablet/ContractsFragment.java	/^package dk.diku.poets.android.tablet;$/;"	p
+dk.diku.poets.android.tablet	src/dk/diku/poets/android/tablet/DSL.java	/^package dk.diku.poets.android.tablet;$/;"	p
+dk.diku.poets.android.tablet	src/dk/diku/poets/android/tablet/DSLElement.java	/^package dk.diku.poets.android.tablet;$/;"	p
+dk.diku.poets.android.tablet	src/dk/diku/poets/android/tablet/DSLHTMLConverter.java	/^package dk.diku.poets.android.tablet;$/;"	p
+dk.diku.poets.android.tablet	src/dk/diku/poets/android/tablet/DSLViewConverter.java	/^package dk.diku.poets.android.tablet;$/;"	p
+dk.diku.poets.android.tablet	src/dk/diku/poets/android/tablet/DSLVisitor.java	/^package dk.diku.poets.android.tablet;$/;"	p
+dk.diku.poets.android.tablet	src/dk/diku/poets/android/tablet/DateTimeInput.java	/^package dk.diku.poets.android.tablet;$/;"	p
+dk.diku.poets.android.tablet	src/dk/diku/poets/android/tablet/Defer.java	/^package dk.diku.poets.android.tablet;$/;"	p
+dk.diku.poets.android.tablet	src/dk/diku/poets/android/tablet/DoubleInput.java	/^package dk.diku.poets.android.tablet;$/;"	p
+dk.diku.poets.android.tablet	src/dk/diku/poets/android/tablet/EDSL.java	/^package dk.diku.poets.android.tablet;$/;"	p
+dk.diku.poets.android.tablet	src/dk/diku/poets/android/tablet/HumaniseCamelCase.java	/^package dk.diku.poets.android.tablet;$/;"	p
+dk.diku.poets.android.tablet	src/dk/diku/poets/android/tablet/Input.java	/^package dk.diku.poets.android.tablet;$/;"	p
+dk.diku.poets.android.tablet	src/dk/diku/poets/android/tablet/InputSpec.java	/^package dk.diku.poets.android.tablet;$/;"	p
+dk.diku.poets.android.tablet	src/dk/diku/poets/android/tablet/InputWidget.java	/^package dk.diku.poets.android.tablet;$/;"	p
+dk.diku.poets.android.tablet	src/dk/diku/poets/android/tablet/IntInput.java	/^package dk.diku.poets.android.tablet;$/;"	p
+dk.diku.poets.android.tablet	src/dk/diku/poets/android/tablet/ListInput.java	/^package dk.diku.poets.android.tablet;$/;"	p
+dk.diku.poets.android.tablet	src/dk/diku/poets/android/tablet/ListViewSpec.java	/^package dk.diku.poets.android.tablet;$/;"	p
+dk.diku.poets.android.tablet	src/dk/diku/poets/android/tablet/NoViewSpec.java	/^package dk.diku.poets.android.tablet;$/;"	p
+dk.diku.poets.android.tablet	src/dk/diku/poets/android/tablet/PreCond.java	/^package dk.diku.poets.android.tablet;$/;"	p
+dk.diku.poets.android.tablet	src/dk/diku/poets/android/tablet/QuerySpec.java	/^package dk.diku.poets.android.tablet;$/;"	p
+dk.diku.poets.android.tablet	src/dk/diku/poets/android/tablet/RecViewSpec.java	/^package dk.diku.poets.android.tablet;$/;"	p
+dk.diku.poets.android.tablet	src/dk/diku/poets/android/tablet/RecordInput.java	/^package dk.diku.poets.android.tablet;$/;"	p
+dk.diku.poets.android.tablet	src/dk/diku/poets/android/tablet/RefInput.java	/^package dk.diku.poets.android.tablet;$/;"	p
+dk.diku.poets.android.tablet	src/dk/diku/poets/android/tablet/RefViewSpec.java	/^package dk.diku.poets.android.tablet;$/;"	p
+dk.diku.poets.android.tablet	src/dk/diku/poets/android/tablet/ReportResultFragment.java	/^package dk.diku.poets.android.tablet;$/;"	p
+dk.diku.poets.android.tablet	src/dk/diku/poets/android/tablet/ReportViewSpecs.java	/^package dk.diku.poets.android.tablet;$/;"	p
+dk.diku.poets.android.tablet	src/dk/diku/poets/android/tablet/ReportsFragment.java	/^package dk.diku.poets.android.tablet;$/;"	p
+dk.diku.poets.android.tablet	src/dk/diku/poets/android/tablet/Section.java	/^package dk.diku.poets.android.tablet;$/;"	p
+dk.diku.poets.android.tablet	src/dk/diku/poets/android/tablet/SelectBox.java	/^package dk.diku.poets.android.tablet;$/;"	p
+dk.diku.poets.android.tablet	src/dk/diku/poets/android/tablet/StartContractActivity.java	/^package dk.diku.poets.android.tablet;$/;"	p
+dk.diku.poets.android.tablet	src/dk/diku/poets/android/tablet/StringInput.java	/^package dk.diku.poets.android.tablet;$/;"	p
+dk.diku.poets.android.tablet	src/dk/diku/poets/android/tablet/Utils.java	/^package dk.diku.poets.android.tablet;$/;"	p
+dk.diku.poets.android.tablet	src/dk/diku/poets/android/tablet/ViewSpec.java	/^package dk.diku.poets.android.tablet;$/;"	p
+dk.diku.poets.android.tablet	src/dk/diku/poets/android/tablet/ViewSpecData.java	/^package dk.diku.poets.android.tablet;$/;"	p
+dk.diku.poets.android.tablet	src/dk/diku/poets/android/tablet/ViewSpecGetter.java	/^package dk.diku.poets.android.tablet;$/;"	p
+dk.diku.poets.android.tablet	src/dk/diku/poets/android/tablet/ViewSpecLargeData.java	/^package dk.diku.poets.android.tablet;$/;"	p
+doAdd	src/dk/diku/poets/android/tablet/ReportsFragment.java	/^	private void doAdd() {$/;"	m	class:ReportsFragment	file:
+doRefresh	src/dk/diku/poets/android/tablet/ReportsFragment.java	/^	private void doRefresh( ) {$/;"	m	class:ReportsFragment	file:
+dpd	src/dk/diku/poets/android/tablet/DateTimeInput.java	/^		DatePickerDialog dpd;$/;"	f	class:DateTimeInput
+ed	src/dk/diku/poets/android/tablet/StringInput.java	/^	private EditText ed;$/;"	f	class:StringInput	file:
+edIdx	src/dk/diku/poets/android/tablet/ListInput.java	/^		private final int edIdx = 1;$/;"	f	class:ListInput.ListEntryView	file:
+elementType	src/dk/diku/poets/android/tablet/ListInput.java	/^	private PoetsType elementType;$/;"	f	class:ListInput	file:
+elements	src/dk/diku/poets/android/tablet/DSL.java	/^		public List<PView> elements;$/;"	f	class:DSL.PContainer
+enable	src/dk/diku/poets/android/tablet/Section.java	/^	public void enable(T data) {$/;"	m	class:Section
+enableAllBut	src/dk/diku/poets/android/tablet/RecordInput.java	/^		private void enableAllBut(Button b, LinearLayout locll) {$/;"	m	class:RecordInput	file:
+enabled	src/dk/diku/poets/android/tablet/SelectBox.java	/^	private boolean enabled;$/;"	f	class:SelectBox	file:
+entry	src/dk/diku/poets/android/tablet/DoubleInput.java	/^	private Entry<String, Type> entry;$/;"	f	class:DoubleInput	file:
+entry	src/dk/diku/poets/android/tablet/InputSpec.java	/^		private Entry<String, Type> entry;$/;"	f	class:InputSpec.Builder	file:
+entry	src/dk/diku/poets/android/tablet/IntInput.java	/^	private Entry<String, Type> entry;$/;"	f	class:IntInput	file:
+entry	src/dk/diku/poets/android/tablet/ListInput.java	/^	private Entry<String, Type> entry;$/;"	f	class:ListInput	file:
+entry	src/dk/diku/poets/android/tablet/RecordInput.java	/^	Entry<String, Type> entry;$/;"	f	class:RecordInput
+entry	src/dk/diku/poets/android/tablet/RefInput.java	/^	Entry<String, Type> entry;$/;"	f	class:RefInput
+entry	src/dk/diku/poets/android/tablet/StringInput.java	/^	private Entry<String, Type> entry;$/;"	f	class:StringInput	file:
+entrySection	src/dk/diku/poets/android/tablet/RefInput.java	/^	Section<Boolean> entrySection;$/;"	f	class:RefInput
+eval	src/dk/diku/poets/android/tablet/ConstantArgSpec.java	/^	public PoetsValue eval() {$/;"	m	class:ConstantArgSpec
+eval	src/dk/diku/poets/android/tablet/QuerySpec.java	/^		public PoetsValue eval();$/;"	m	interface:QuerySpec.ArgSpec
+evalArgs	src/dk/diku/poets/android/tablet/QuerySpec.java	/^	private List<PoetsValue> evalArgs() {$/;"	m	class:QuerySpec	file:
+expectedTransactions	src/dk/diku/poets/android/tablet/ContractsFragment.java	/^	private Map<Integer, List<TransactionPattern>> expectedTransactions;$/;"	f	class:ContractsFragment	file:
+externalReports	src/dk/diku/poets/android/tablet/ReportsFragment.java	/^	private List<Report> externalReports;$/;"	f	class:ReportsFragment	file:
+f	src/dk/diku/poets/android/tablet/DSL.java	/^	protected PoetsValue f(String field) {$/;"	m	class:DSL
+fetchActiveContracts	src/dk/diku/poets/android/tablet/ContractsFragment.java	/^	private void fetchActiveContracts() {$/;"	m	class:ContractsFragment	file:
+fetchHistory	src/dk/diku/poets/android/tablet/ContractView.java	/^	private void fetchHistory(final ProgressBar pb, final LinearLayout localll) {$/;"	m	class:ContractView	file:
+fetchMeta	src/dk/diku/poets/android/tablet/ContractView.java	/^	private void fetchMeta(final ProgressBar pb, final LinearLayout localll) {$/;"	m	class:ContractView	file:
+fetchTPs	src/dk/diku/poets/android/tablet/ContractView.java	/^	private void fetchTPs(final ProgressBar pb, final LinearLayout localll) {$/;"	m	class:ContractView	file:
+fieldInputs	src/dk/diku/poets/android/tablet/RecordInput.java	/^	Map<String, Input> fieldInputs;$/;"	f	class:RecordInput
+fill	src/dk/diku/poets/android/tablet/ConstantArgSpec.java	/^	public void fill(PoetsValue pv) {$/;"	m	class:ConstantArgSpec
+fill	src/dk/diku/poets/android/tablet/DateTimeInput.java	/^		public void fill(PoetsValue pv) {$/;"	m	class:DateTimeInput
+fill	src/dk/diku/poets/android/tablet/DoubleInput.java	/^	public void fill(PoetsValue pv) {$/;"	m	class:DoubleInput
+fill	src/dk/diku/poets/android/tablet/Input.java	/^	public void fill(PoetsValue pv);$/;"	m	interface:Input
+fill	src/dk/diku/poets/android/tablet/InputSpec.java	/^	public void fill(final PoetsValue pv) {$/;"	m	class:InputSpec
+fill	src/dk/diku/poets/android/tablet/IntInput.java	/^	public void fill(PoetsValue pv) {$/;"	m	class:IntInput
+fill	src/dk/diku/poets/android/tablet/ListInput.java	/^	public void fill(PoetsValue pv) {$/;"	m	class:ListInput
+fill	src/dk/diku/poets/android/tablet/RecordInput.java	/^		public void fill(PoetsValue pv) {$/;"	m	class:RecordInput
+fill	src/dk/diku/poets/android/tablet/RefInput.java	/^	public void fill(PoetsValue pv) {$/;"	m	class:RefInput
+fill	src/dk/diku/poets/android/tablet/StringInput.java	/^	public void fill(PoetsValue pv) {$/;"	m	class:StringInput
+fillField	src/dk/diku/poets/android/tablet/InputSpec.java	/^	public void fillField(final String fieldName, final PoetsValue pv) {$/;"	m	class:InputSpec
+fillField	src/dk/diku/poets/android/tablet/RecordInput.java	/^		public void fillField(String fieldName, PoetsValue pv) {$/;"	m	class:RecordInput
+get	src/dk/diku/poets/android/tablet/DSL.java	/^		public DSL get(PoetsValue pv);$/;"	m	interface:DSL.Cont
+get	src/dk/diku/poets/android/tablet/Defer.java	/^	public abstract T get();$/;"	m	interface:Defer
+get	src/dk/diku/poets/android/tablet/Utils.java	/^	public static RecV get(RecV rec) {$/;"	m	class:Utils
+getAtomicFields	src/dk/diku/poets/android/tablet/Utils.java	/^	static public Map<String, PoetsValue> getAtomicFields(RecV recV) {$/;"	m	class:Utils
+getChildIndex	src/dk/diku/poets/android/tablet/Utils.java	/^	static public int getChildIndex(ViewGroup vg, View v) {$/;"	m	class:Utils
+getEntities	src/dk/diku/poets/android/tablet/Utils.java	/^	static void getEntities(final String startType, final RunWithArg<Set<PoetsValue>> rwa) {$/;"	m	class:Utils
+getFieldValues	src/dk/diku/poets/android/tablet/RecViewSpec.java	/^		public List<FieldPair> getFieldValues() {$/;"	m	class:RecViewSpec.FieldIndexed
+getHtml	src/dk/diku/poets/android/tablet/DSL.java	/^	public String getHtml() {$/;"	m	class:DSL
+getHtml	src/dk/diku/poets/android/tablet/DSLHTMLConverter.java	/^	public String getHtml() {$/;"	m	class:DSLHTMLConverter
+getListElementView	src/dk/diku/poets/android/tablet/ListInput.java	/^	private View getListElementView(AsyncTask<Void,Void,PoetsValue> at, Context c) {$/;"	m	class:ListInput	file:
+getPView	src/dk/diku/poets/android/tablet/DSL.java	/^	private PView getPView() {$/;"	m	class:DSL	file:
+getPre	src/dk/diku/poets/android/tablet/AtomicViewSpec.java	/^	protected List<PreCond> getPre() {$/;"	m	class:AtomicViewSpec
+getPre	src/dk/diku/poets/android/tablet/ListViewSpec.java	/^		protected List<PreCond> getPre() {$/;"	m	class:ListViewSpec.TypeIndexed
+getPre	src/dk/diku/poets/android/tablet/ListViewSpec.java	/^	protected List<PreCond> getPre() {$/;"	m	class:ListViewSpec
+getPre	src/dk/diku/poets/android/tablet/NoViewSpec.java	/^	protected List<PreCond> getPre() {$/;"	m	class:NoViewSpec
+getPre	src/dk/diku/poets/android/tablet/RecViewSpec.java	/^		protected List<PreCond> getPre() {$/;"	m	class:RecViewSpec.FieldIndexed
+getPre	src/dk/diku/poets/android/tablet/RecViewSpec.java	/^		protected List<PreCond> getPre() {$/;"	m	class:RecViewSpec.TypeIndexed
+getPre	src/dk/diku/poets/android/tablet/RecViewSpec.java	/^	protected List<PreCond> getPre() {$/;"	m	class:RecViewSpec
+getPre	src/dk/diku/poets/android/tablet/RefViewSpec.java	/^	protected List<PreCond> getPre() {$/;"	m	class:RefViewSpec
+getPre	src/dk/diku/poets/android/tablet/ViewSpec.java	/^	protected abstract List<PreCond> getPre();$/;"	m	class:ViewSpec
+getReplacement	src/dk/diku/poets/android/tablet/RecViewSpec.java	/^		private String getReplacement(PoetsValue pValue) {$/;"	m	class:RecViewSpec.HtmlRecView	file:
+getString	src/dk/diku/poets/android/tablet/DSLHTMLConverter.java	/^		public String getString();$/;"	m	interface:DSLHTMLConverter.StringContainer
+getTarget	src/dk/diku/poets/android/tablet/RecViewSpec.java	/^		private String getTarget(String[] path) {$/;"	m	class:RecViewSpec.HtmlRecView	file:
+getValue	src/dk/diku/poets/android/tablet/ConstantArgSpec.java	/^	public AsyncTask<Void, Void, PoetsValue> getValue() {$/;"	m	class:ConstantArgSpec
+getValue	src/dk/diku/poets/android/tablet/DateTimeInput.java	/^			public AsyncTask<Void,Void,PoetsValue> getValue() {$/;"	m	class:DateTimeInput
+getValue	src/dk/diku/poets/android/tablet/DoubleInput.java	/^	public AsyncTask<Void, Void, PoetsValue> getValue() {$/;"	m	class:DoubleInput
+getValue	src/dk/diku/poets/android/tablet/Input.java	/^	public AsyncTask<Void, Void, PoetsValue> getValue();$/;"	m	interface:Input
+getValue	src/dk/diku/poets/android/tablet/InputSpec.java	/^	public AsyncTask<Void,Void,PoetsValue> getValue() {$/;"	m	class:InputSpec
+getValue	src/dk/diku/poets/android/tablet/IntInput.java	/^	public AsyncTask<Void, Void, PoetsValue> getValue() {$/;"	m	class:IntInput
+getValue	src/dk/diku/poets/android/tablet/ListInput.java	/^		public PoetsValue getValue() {$/;"	m	class:ListInput.ListEntryView
+getValue	src/dk/diku/poets/android/tablet/ListInput.java	/^	public AsyncTask<Void, Void, PoetsValue> getValue() {$/;"	m	class:ListInput
+getValue	src/dk/diku/poets/android/tablet/RecordInput.java	/^		public AsyncTask<Void,Void,PoetsValue> getValue() {$/;"	m	class:RecordInput
+getValue	src/dk/diku/poets/android/tablet/RefInput.java	/^		public AsyncTask<Void,Void,PoetsValue> getValue() {$/;"	m	class:RefInput
+getValue	src/dk/diku/poets/android/tablet/StringInput.java	/^		public AsyncTask<Void, Void, PoetsValue> getValue() {$/;"	m	class:StringInput
+getValueFromPath	src/dk/diku/poets/android/tablet/Utils.java	/^	static public PoetsValue getValueFromPath(RecV root, String... path) {$/;"	m	class:Utils
+getView	src/dk/diku/poets/android/tablet/AtomicViewSpec.java	/^	public View getView(Context mContext, EmbedAs embedding) {$/;"	m	class:AtomicViewSpec
+getView	src/dk/diku/poets/android/tablet/ConstantArgSpec.java	/^	public View getView(Context mContext) {$/;"	m	class:ConstantArgSpec
+getView	src/dk/diku/poets/android/tablet/DSL.java	/^	public View getView(Context ctx) {$/;"	m	class:DSL
+getView	src/dk/diku/poets/android/tablet/DSLViewConverter.java	/^	public View getView() {$/;"	m	class:DSLViewConverter
+getView	src/dk/diku/poets/android/tablet/DateTimeInput.java	/^			protected View getView(Context c) {$/;"	m	class:DateTimeInput
+getView	src/dk/diku/poets/android/tablet/DoubleInput.java	/^	protected View getView(Context c) {$/;"	m	class:DoubleInput
+getView	src/dk/diku/poets/android/tablet/EDSL.java	/^	public View getView(final Context mContext) {$/;"	m	class:EDSL
+getView	src/dk/diku/poets/android/tablet/InputWidget.java	/^	protected abstract View getView(Context c);$/;"	m	class:InputWidget
+getView	src/dk/diku/poets/android/tablet/IntInput.java	/^	protected View getView(Context c) {$/;"	m	class:IntInput
+getView	src/dk/diku/poets/android/tablet/ListInput.java	/^	protected View getView(final Context c) {$/;"	m	class:ListInput
+getView	src/dk/diku/poets/android/tablet/ListViewSpec.java	/^	public View getView(Context mContext, EmbedAs embedding) {$/;"	m	class:ListViewSpec
+getView	src/dk/diku/poets/android/tablet/NoViewSpec.java	/^	public View getView(Context mContext, EmbedAs embedding) {$/;"	m	class:NoViewSpec
+getView	src/dk/diku/poets/android/tablet/RecViewSpec.java	/^		public View getView(Context mContext, EmbedAs embedding) {$/;"	m	class:RecViewSpec.DeclarativeRecViewSpec
+getView	src/dk/diku/poets/android/tablet/RecViewSpec.java	/^		public View getView(Context mContext, EmbedAs embedding) {$/;"	m	class:RecViewSpec.HtmlRecView
+getView	src/dk/diku/poets/android/tablet/RecordInput.java	/^		protected View getView(final Context c) {$/;"	m	class:RecordInput
+getView	src/dk/diku/poets/android/tablet/RefInput.java	/^		protected View getView(final Context c) {$/;"	m	class:RefInput
+getView	src/dk/diku/poets/android/tablet/RefViewSpec.java	/^	public View getView(final Context mContext, EmbedAs embedding) {$/;"	m	class:RefViewSpec
+getView	src/dk/diku/poets/android/tablet/StringInput.java	/^		protected View getView(Context c) {$/;"	m	class:StringInput
+getView	src/dk/diku/poets/android/tablet/ViewSpec.java	/^	public abstract View getView(Context mContext, EmbedAs embedding);$/;"	m	class:ViewSpec
+getView	src/dk/diku/poets/android/tablet/ViewSpecData.java	/^		public View getView(Context mContext, EmbedAs emb) {$/;"	m	class:ViewSpecData.ArrangementViewSpec
+getViewSpec	src/dk/diku/poets/android/tablet/ViewSpecGetter.java	/^	public static ViewSpec getViewSpec(PoetsValue pv) {$/;"	m	class:ViewSpecGetter
+hcc	src/dk/diku/poets/android/tablet/DoubleInput.java	/^	private HumaniseCamelCase hcc = new HumaniseCamelCase();$/;"	f	class:DoubleInput	file:
+hcc	src/dk/diku/poets/android/tablet/IntInput.java	/^	private HumaniseCamelCase hcc = new HumaniseCamelCase();$/;"	f	class:IntInput	file:
+hcc	src/dk/diku/poets/android/tablet/RecViewSpec.java	/^		private HumaniseCamelCase hcc;$/;"	f	class:RecViewSpec.DeclarativeRecViewSpec	file:
+hcc	src/dk/diku/poets/android/tablet/RecordInput.java	/^	HumaniseCamelCase hcc = new HumaniseCamelCase();$/;"	f	class:RecordInput
+hcc	src/dk/diku/poets/android/tablet/StringInput.java	/^	private HumaniseCamelCase hcc = new HumaniseCamelCase();$/;"	f	class:StringInput	file:
+header	src/dk/diku/poets/android/tablet/Section.java	/^	private View header;$/;"	f	class:Section	file:
+humanise	src/dk/diku/poets/android/tablet/HumaniseCamelCase.java	/^    public String humanise(String camelCaseString) {$/;"	m	class:HumaniseCamelCase
+humanisedString	src/dk/diku/poets/android/tablet/HumaniseCamelCase.java	/^    private String humanisedString;$/;"	f	class:HumaniseCamelCase	file:
+iWidget	src/dk/diku/poets/android/tablet/InputSpec.java	/^	private InputWidget iWidget;$/;"	f	class:InputSpec	file:
+in	src/dk/diku/poets/android/tablet/ContractView.java	/^	private InputSpec in;$/;"	f	class:ContractView	file:
+includeTP	src/dk/diku/poets/android/tablet/ContractView.java	/^	private boolean includeTP(TransactionPattern tp) {$/;"	m	class:ContractView	file:
+input	src/dk/diku/poets/android/tablet/ConstantArgSpec.java	/^	private Input input;$/;"	f	class:ConstantArgSpec	file:
+isA	src/dk/diku/poets/android/tablet/DSL.java	/^	protected boolean isA(PoetsValue pVal, String s) {$/;"	m	class:DSL
+isA	src/dk/diku/poets/android/tablet/DSL.java	/^	protected boolean isA(String s) {$/;"	m	class:DSL
+isAtomic	src/dk/diku/poets/android/tablet/Utils.java	/^	static public boolean isAtomic(PoetsValue pVal) {$/;"	m	class:Utils
+isEnumType	src/dk/diku/poets/android/tablet/RecordInput.java	/^	Boolean isEnumType = true;$/;"	f	class:RecordInput
+iwv	src/dk/diku/poets/android/tablet/ListInput.java	/^	private View iwv;$/;"	f	class:ListInput	file:
+l	src/dk/diku/poets/android/tablet/DSL.java	/^	protected List<PoetsValue> l(RecV rec, String field) {$/;"	m	class:DSL
+l	src/dk/diku/poets/android/tablet/DSL.java	/^	protected List<PoetsValue> l(String field) {$/;"	m	class:DSL
+laterList	src/dk/diku/poets/android/tablet/ContractsFragment.java	/^	private LinearLayout ll, activeContractViews, todayList, soonList, laterList;$/;"	f	class:ContractsFragment	file:
+ll	src/dk/diku/poets/android/tablet/ContractsFragment.java	/^	private LinearLayout ll, activeContractViews, todayList, soonList, laterList;$/;"	f	class:ContractsFragment	file:
+ll	src/dk/diku/poets/android/tablet/DateTimeInput.java	/^		LinearLayout ll;$/;"	f	class:DateTimeInput
+ll	src/dk/diku/poets/android/tablet/ListInput.java	/^	private LinearLayout ll;$/;"	f	class:ListInput	file:
+ll	src/dk/diku/poets/android/tablet/RecordInput.java	/^	LinearLayout ll, typeSelect;$/;"	f	class:RecordInput
+ll	src/dk/diku/poets/android/tablet/RefInput.java	/^	LinearLayout ll;$/;"	f	class:RefInput
+ll	src/dk/diku/poets/android/tablet/ReportResultFragment.java	/^	private LinearLayout ll;$/;"	f	class:ReportResultFragment	file:
+ll	src/dk/diku/poets/android/tablet/Section.java	/^	private LinearLayout ll;$/;"	f	class:Section	file:
+llid	src/dk/diku/poets/android/tablet/ListInput.java	/^	int llid = 42;$/;"	f	class:ListInput
+mContext	src/dk/diku/poets/android/tablet/ConTile.java	/^	private Context mContext;$/;"	f	class:ConTile	file:
+mContext	src/dk/diku/poets/android/tablet/Continuum.java	/^	Context mContext;$/;"	f	class:Continuum
+mContext	src/dk/diku/poets/android/tablet/ContractView.java	/^	private Context mContext;$/;"	f	class:ContractView	file:
+mContext	src/dk/diku/poets/android/tablet/ContractsFragment.java	/^	private Context mContext;$/;"	f	class:ContractsFragment	file:
+mContext	src/dk/diku/poets/android/tablet/InputSpec.java	/^		private Context mContext;$/;"	f	class:InputSpec.Builder	file:
+mContext	src/dk/diku/poets/android/tablet/InputSpec.java	/^	private Context mContext;$/;"	f	class:InputSpec	file:
+mContext	src/dk/diku/poets/android/tablet/ListInput.java	/^	private Context mContext;$/;"	f	class:ListInput	file:
+mContext	src/dk/diku/poets/android/tablet/RecordInput.java	/^	Context mContext;$/;"	f	class:RecordInput
+mContext	src/dk/diku/poets/android/tablet/ReportResultFragment.java	/^	private Context mContext;$/;"	f	class:ReportResultFragment	file:
+mContext	src/dk/diku/poets/android/tablet/ReportsFragment.java	/^	private Context mContext;$/;"	f	class:ReportsFragment	file:
+mContext	src/dk/diku/poets/android/tablet/Section.java	/^	protected Context mContext;$/;"	f	class:Section
+mContext	src/dk/diku/poets/android/tablet/SelectBox.java	/^	private Context mContext;$/;"	f	class:SelectBox	file:
+mContext	src/dk/diku/poets/android/tablet/StartContractActivity.java	/^	private Context mContext;$/;"	f	class:StartContractActivity	file:
+mFragment	src/dk/diku/poets/android/tablet/Continuum.java	/^		private Fragment mFragment;$/;"	f	class:Continuum.TListener	file:
+makeConTile	src/dk/diku/poets/android/tablet/ContractsFragment.java	/^	private View makeConTile(final RecV putC) {$/;"	m	class:ContractsFragment	file:
+makeConcludeButton	src/dk/diku/poets/android/tablet/ContractView.java	/^	private View makeConcludeButton() {$/;"	m	class:ContractView	file:
+makeEditButton	src/dk/diku/poets/android/tablet/ContractView.java	/^	private View makeEditButton() {$/;"	m	class:ContractView	file:
+makeFieldsView	src/dk/diku/poets/android/tablet/RecordInput.java	/^	private View makeFieldsView(Context c, RecordDefinition rdef) {$/;"	m	class:RecordInput	file:
+makeHTML	src/dk/diku/poets/android/tablet/RecViewSpec.java	/^		private String makeHTML() {$/;"	m	class:RecViewSpec.HtmlRecView	file:
+makeHistory	src/dk/diku/poets/android/tablet/ContractView.java	/^	private void makeHistory() {$/;"	m	class:ContractView	file:
+makeIW	src/dk/diku/poets/android/tablet/InputSpec.java	/^		private void makeIW(final InputSpec is) {$/;"	m	class:InputSpec.Builder	file:
+makeIWTyped	src/dk/diku/poets/android/tablet/InputSpec.java	/^		private InputWidget makeIWTyped(InputSpec is) {$/;"	m	class:InputSpec.Builder	file:
+makeInit	src/dk/diku/poets/android/tablet/ContractView.java	/^	private void makeInit() {$/;"	m	class:ContractView	file:
+makeMeta	src/dk/diku/poets/android/tablet/ContractView.java	/^	private void makeMeta() {$/;"	m	class:ContractView	file:
+makeNext	src/dk/diku/poets/android/tablet/ContractView.java	/^	private void makeNext() {$/;"	m	class:ContractView	file:
+makeRefPicker	src/dk/diku/poets/android/tablet/RefInput.java	/^	public View makeRefPicker(final Context c) {$/;"	m	class:RefInput
+makeSectionHeader	src/dk/diku/poets/android/tablet/Section.java	/^	public static View makeSectionHeader(Context mContext, String itemNum, String itemText) {$/;"	m	class:Section
+makeTPTile	src/dk/diku/poets/android/tablet/ContractView.java	/^	private View makeTPTile(final TransactionPattern tp) {$/;"	m	class:ContractView	file:
+mk	src/dk/diku/poets/android/tablet/DSLHTMLConverter.java	/^	private void mk(final String s) {$/;"	m	class:DSLHTMLConverter	file:
+mk	src/dk/diku/poets/android/tablet/EDSL.java	/^	public static EDSL mk(PoetsValue pv) {$/;"	m	class:EDSL
+mk	src/dk/diku/poets/android/tablet/Section.java	/^		public abstract View mk(T data);$/;"	m	interface:Section.MkView
+mk	src/dk/diku/poets/android/tablet/Section.java	/^	private MkView<T> mk;$/;"	f	class:Section	file:
+mkHeader	src/dk/diku/poets/android/tablet/ContractsFragment.java	/^	private TextView mkHeader(String text) {$/;"	m	class:ContractsFragment	file:
+mkLLRule	src/dk/diku/poets/android/tablet/ContractsFragment.java	/^	private View mkLLRule(int height) {$/;"	m	class:ContractsFragment	file:
+newB	src/dk/diku/poets/android/tablet/RefInput.java	/^	Button newB;$/;"	f	class:RefInput
+on	src/dk/diku/poets/android/tablet/DSL.java	/^	protected PoetsValue on(PoetsValue pv, String field) {$/;"	m	class:DSL
+onClick	src/dk/diku/poets/android/tablet/DateTimeInput.java	/^			public void onClick(View v) {$/;"	m	class:DateTimeInput
+onClick	src/dk/diku/poets/android/tablet/ListInput.java	/^		public void onClick(View arg0) {$/;"	m	class:ListInput.ListEntryView
+onCreate	src/dk/diku/poets/android/tablet/Continuum.java	/^	public void onCreate(Bundle savedInstanceState)$/;"	m	class:Continuum
+onCreate	src/dk/diku/poets/android/tablet/StartContractActivity.java	/^	public void onCreate(Bundle state) {$/;"	m	class:StartContractActivity
+onCreateOptionsMenu	src/dk/diku/poets/android/tablet/ContractsFragment.java	/^	public void onCreateOptionsMenu(Menu menu, MenuInflater infl) {$/;"	m	class:ContractsFragment
+onCreateOptionsMenu	src/dk/diku/poets/android/tablet/ReportsFragment.java	/^	public void onCreateOptionsMenu(Menu menu, MenuInflater infl) {$/;"	m	class:ReportsFragment
+onCreateView	src/dk/diku/poets/android/tablet/ContractsFragment.java	/^	public View onCreateView(LayoutInflater infl, ViewGroup container, Bundle state) {$/;"	m	class:ContractsFragment
+onCreateView	src/dk/diku/poets/android/tablet/ReportResultFragment.java	/^	public View onCreateView(LayoutInflater infl, ViewGroup container, Bundle state) {$/;"	m	class:ReportResultFragment
+onCreateView	src/dk/diku/poets/android/tablet/ReportsFragment.java	/^	public View onCreateView(LayoutInflater infl, ViewGroup container, Bundle state) {$/;"	m	class:ReportsFragment
+onDateSet	src/dk/diku/poets/android/tablet/DateTimeInput.java	/^			public void onDateSet(DatePicker arg0, int year, int month, int day) {$/;"	m	class:DateTimeInput
+onInterceptTouchEvent	src/dk/diku/poets/android/tablet/Section.java	/^	public boolean onInterceptTouchEvent(MotionEvent e) {$/;"	m	class:Section
+onOptionsItemSelected	src/dk/diku/poets/android/tablet/ContractsFragment.java	/^	public boolean onOptionsItemSelected(MenuItem item) {$/;"	m	class:ContractsFragment
+onOptionsItemSelected	src/dk/diku/poets/android/tablet/ReportsFragment.java	/^	public boolean onOptionsItemSelected(MenuItem item) {$/;"	m	class:ReportsFragment
+onSaveInstanceState	src/dk/diku/poets/android/tablet/Continuum.java	/^	public void onSaveInstanceState(Bundle outState) {$/;"	m	class:Continuum
+onTabReselected	src/dk/diku/poets/android/tablet/Continuum.java	/^		public void onTabReselected(Tab arg0, FragmentTransaction arg1) {$/;"	m	class:Continuum.TListener
+onTabSelected	src/dk/diku/poets/android/tablet/Continuum.java	/^		public void onTabSelected(Tab arg0, FragmentTransaction ft) {$/;"	m	class:Continuum.TListener
+onTabUnselected	src/dk/diku/poets/android/tablet/Continuum.java	/^		public void onTabUnselected(Tab arg0, FragmentTransaction ft) {$/;"	m	class:Continuum.TListener
+onTimeSet	src/dk/diku/poets/android/tablet/DateTimeInput.java	/^			public void onTimeSet(TimePicker arg0, int hSet, int mSet) {$/;"	m	class:DateTimeInput
+overlay	src/dk/diku/poets/android/tablet/Section.java	/^	private View overlay;$/;"	f	class:Section	file:
+pServer	src/dk/diku/poets/android/tablet/ContractView.java	/^	private PoetsServer.Iface pServer;$/;"	f	class:ContractView	file:
+pType	src/dk/diku/poets/android/tablet/ConstantArgSpec.java	/^	private PoetsType pType;$/;"	f	class:ConstantArgSpec	file:
+pVal	src/dk/diku/poets/android/tablet/DSL.java	/^		public PoetsValue pVal;$/;"	f	class:DSL.PExt
+pVal	src/dk/diku/poets/android/tablet/DSL.java	/^	protected PoetsValue pVal;$/;"	f	class:DSL
+pVal	src/dk/diku/poets/android/tablet/ListInput.java	/^		private PoetsValue pVal;$/;"	f	class:ListInput.ListEntryView	file:
+pVal	src/dk/diku/poets/android/tablet/ViewSpec.java	/^	protected PoetsValue pVal;$/;"	f	class:ViewSpec
+pad	src/dk/diku/poets/android/tablet/DateTimeInput.java	/^		private String pad(int c) {$/;"	m	class:DateTimeInput	file:
+path	src/dk/diku/poets/android/tablet/RecViewSpec.java	/^			public String[] path;$/;"	f	class:RecViewSpec.FieldIndexed.FieldPair
+pathVal	src/dk/diku/poets/android/tablet/RecViewSpec.java	/^			public PoetsValue pathVal;$/;"	f	class:RecViewSpec.FieldIndexed.FieldPair
+pb	src/dk/diku/poets/android/tablet/ContractsFragment.java	/^	private ProgressBar pb;$/;"	f	class:ContractsFragment	file:
+pb	src/dk/diku/poets/android/tablet/InputSpec.java	/^	private ProgressBar pb;$/;"	f	class:InputSpec	file:
+pendingQuery	src/dk/diku/poets/android/tablet/ReportsFragment.java	/^	private QuerySpec pendingQuery;$/;"	f	class:ReportsFragment	file:
+prefill	src/dk/diku/poets/android/tablet/RecordInput.java	/^	RecV prefill = null;$/;"	f	class:RecordInput
+prefill	src/dk/diku/poets/android/tablet/RefInput.java	/^	RefV refV, prefill;$/;"	f	class:RefInput
+prefill	src/dk/diku/poets/android/tablet/StringInput.java	/^	private StringV prefill;$/;"	f	class:StringInput	file:
+prefillFields	src/dk/diku/poets/android/tablet/RecordInput.java	/^	Map<String, PoetsValue> prefillFields;$/;"	f	class:RecordInput
+prevView	src/dk/diku/poets/android/tablet/RefInput.java	/^	SelectBox prevView;$/;"	f	class:RefInput
+ptype	src/dk/diku/poets/android/tablet/InputSpec.java	/^		private PoetsType ptype;$/;"	f	class:InputSpec.Builder	file:
+putC	src/dk/diku/poets/android/tablet/ConTile.java	/^	private RecV putC;$/;"	f	class:ConTile	file:
+putC	src/dk/diku/poets/android/tablet/ContractView.java	/^	private RecV putC;$/;"	f	class:ContractView	file:
+queryReport	src/dk/diku/poets/android/tablet/ReportResultFragment.java	/^	public void queryReport() {$/;"	m	class:ReportResultFragment
+rDef	src/dk/diku/poets/android/tablet/RecordInput.java	/^	RecordDefinition rDef;$/;"	f	class:RecordInput
+recEdit	src/dk/diku/poets/android/tablet/RefInput.java	/^	View recEdit;$/;"	f	class:RefInput
+recordName	src/dk/diku/poets/android/tablet/InputSpec.java	/^		private String recordName;$/;"	f	class:InputSpec.Builder	file:
+refTypeName	src/dk/diku/poets/android/tablet/RefInput.java	/^	String refTypeName;$/;"	f	class:RefInput
+refV	src/dk/diku/poets/android/tablet/RefInput.java	/^	RefV refV, prefill;$/;"	f	class:RefInput
+refresh	src/dk/diku/poets/android/tablet/Continuum.java	/^		public void refresh();$/;"	m	interface:Continuum.Refresh
+refresh	src/dk/diku/poets/android/tablet/ContractView.java	/^	public void refresh() {$/;"	m	class:ContractView
+refresh	src/dk/diku/poets/android/tablet/ContractsFragment.java	/^	public void refresh() {$/;"	m	class:ContractsFragment
+refresh	src/dk/diku/poets/android/tablet/ReportResultFragment.java	/^	public void refresh() {$/;"	m	class:ReportResultFragment
+refresh	src/dk/diku/poets/android/tablet/ReportsFragment.java	/^	public void refresh() {$/;"	m	class:ReportsFragment
+refreshActiveContracts	src/dk/diku/poets/android/tablet/ContractsFragment.java	/^	private void refreshActiveContracts(PoetsServer.Iface pServer) $/;"	m	class:ContractsFragment	file:
+refreshId	src/dk/diku/poets/android/tablet/ContractsFragment.java	/^	private static final int refreshId = 2;$/;"	f	class:ContractsFragment	file:
+refreshId	src/dk/diku/poets/android/tablet/ReportsFragment.java	/^	private static final int refreshId = 2;$/;"	f	class:ReportsFragment	file:
+refreshText	src/dk/diku/poets/android/tablet/ReportResultFragment.java	/^	private void refreshText() {$/;"	m	class:ReportResultFragment	file:
+refreshTransactionPatterns	src/dk/diku/poets/android/tablet/ContractsFragment.java	/^	private void refreshTransactionPatterns(PoetsServer.Iface pServer) {$/;"	m	class:ContractsFragment	file:
+refreshValue	src/dk/diku/poets/android/tablet/ReportResultFragment.java	/^	public void refreshValue(PoetsValue pv) {$/;"	m	class:ReportResultFragment
+refreshWithState	src/dk/diku/poets/android/tablet/ReportsFragment.java	/^	private void refreshWithState(Bundle state) {$/;"	m	class:ReportsFragment	file:
+removeConView	src/dk/diku/poets/android/tablet/ContractView.java	/^	private void removeConView() {$/;"	m	class:ContractView	file:
+report	src/dk/diku/poets/android/tablet/DSL.java	/^		public String report;$/;"	f	class:DSL.PQuery
+report	src/dk/diku/poets/android/tablet/QuerySpec.java	/^	private Report report;$/;"	f	class:QuerySpec	file:
+reportItemsListener	src/dk/diku/poets/android/tablet/ReportsFragment.java	/^	private DialogInterface.OnClickListener reportItemsListener =$/;"	f	class:ReportsFragment	file:
+repsFragment	src/dk/diku/poets/android/tablet/Continuum.java	/^	private Fragment repsFragment;$/;"	f	class:Continuum	file:
+requiredFields	src/dk/diku/poets/android/tablet/RecViewSpec.java	/^		private List<String[]> requiredFields;$/;"	f	class:RecViewSpec.FieldIndexed	file:
+reset	src/dk/diku/poets/android/tablet/HumaniseCamelCase.java	/^    private void reset() {$/;"	m	class:HumaniseCamelCase	file:
+rl	src/dk/diku/poets/android/tablet/ListInput.java	/^	private RelativeLayout rl;$/;"	f	class:ListInput	file:
+rmIdx	src/dk/diku/poets/android/tablet/ListInput.java	/^		private final int rmIdx = 0;$/;"	f	class:ListInput.ListEntryView	file:
+rootid	src/dk/diku/poets/android/tablet/Continuum.java	/^	private static final int rootid = 42;$/;"	f	class:Continuum	file:
+rootid	src/dk/diku/poets/android/tablet/ReportsFragment.java	/^	private static final int rootid = 117;$/;"	f	class:ReportsFragment	file:
+rootll	src/dk/diku/poets/android/tablet/Continuum.java	/^	LinearLayout rootll;$/;"	f	class:Continuum
+rootll	src/dk/diku/poets/android/tablet/ReportsFragment.java	/^	private LinearLayout rootll;$/;"	f	class:ReportsFragment	file:
+roots	src/dk/diku/poets/android/tablet/DSL.java	/^	private List<PView> roots;$/;"	f	class:DSL	file:
+rrFragment	src/dk/diku/poets/android/tablet/ReportsFragment.java	/^	private Fragment rrFragment;$/;"	f	class:ReportsFragment	file:
+rrTag	src/dk/diku/poets/android/tablet/ReportsFragment.java	/^	private static final String rrTag = "ReportResultFragTag";$/;"	f	class:ReportsFragment	file:
+run	src/dk/diku/poets/android/tablet/Utils.java	/^		public void run(T t);$/;"	m	interface:Utils.RunWithArg
+runQuery	src/dk/diku/poets/android/tablet/QuerySpec.java	/^	public void runQuery(Utils.RunWithArg<PoetsValue> rwa) {$/;"	m	class:QuerySpec
+selectView	src/dk/diku/poets/android/tablet/SelectBox.java	/^	private View selectView;$/;"	f	class:SelectBox	file:
+selectedSubType	src/dk/diku/poets/android/tablet/RecordInput.java	/^	RecordDefinition selectedSubType;$/;"	f	class:RecordInput
+sem	src/dk/diku/poets/android/tablet/InputSpec.java	/^	private Semaphore sem;$/;"	f	class:InputSpec	file:
+sendTo	src/dk/diku/poets/android/tablet/EDSL.java	/^	private String sendTo = null;$/;"	f	class:EDSL	file:
+setConTileDetails	src/dk/diku/poets/android/tablet/ConTile.java	/^	private void setConTileDetails() {$/;"	m	class:ConTile	file:
+setEnabled	src/dk/diku/poets/android/tablet/SelectBox.java	/^	public void setEnabled(boolean enable) {$/;"	m	class:SelectBox
+setEntry	src/dk/diku/poets/android/tablet/InputSpec.java	/^		public Builder setEntry(Entry<String, Type> e) {$/;"	m	class:InputSpec.Builder
+setMK	src/dk/diku/poets/android/tablet/Section.java	/^	public void setMK(MkView<T> mker) {$/;"	m	class:Section
+setRecordName	src/dk/diku/poets/android/tablet/InputSpec.java	/^		public Builder setRecordName(String rName) {$/;"	m	class:InputSpec.Builder
+setSendTo	src/dk/diku/poets/android/tablet/EDSL.java	/^	public EDSL setSendTo(String s) {$/;"	m	class:EDSL
+setType	src/dk/diku/poets/android/tablet/InputSpec.java	/^		public Builder setType(PoetsType t) {$/;"	m	class:InputSpec.Builder
+setValue	src/dk/diku/poets/android/tablet/ViewSpec.java	/^	protected ViewSpec setValue(PoetsValue pv) {$/;"	m	class:ViewSpec
+setWidgetContext	src/dk/diku/poets/android/tablet/InputSpec.java	/^		public Builder setWidgetContext(WidgetContext wc) {$/;"	m	class:InputSpec.Builder
+setup	src/dk/diku/poets/android/tablet/RecordInput.java	/^	private void setup(String recordName) {$/;"	m	class:RecordInput	file:
+setupConLists	src/dk/diku/poets/android/tablet/ContractsFragment.java	/^	private void setupConLists() {$/;"	m	class:ContractsFragment	file:
+setupLoader	src/dk/diku/poets/android/tablet/StartContractActivity.java	/^	private void setupLoader() {$/;"	m	class:StartContractActivity	file:
+size	src/dk/diku/poets/android/tablet/DSL.java	/^		public Integer size;$/;"	f	class:DSL.PText
+soonList	src/dk/diku/poets/android/tablet/ContractsFragment.java	/^	private LinearLayout ll, activeContractViews, todayList, soonList, laterList;$/;"	f	class:ContractsFragment	file:
+startConMenuItemId	src/dk/diku/poets/android/tablet/ContractsFragment.java	/^	private static final int startConMenuItemId = 1;$/;"	f	class:ContractsFragment	file:
+startContractUI	src/dk/diku/poets/android/tablet/StartContractActivity.java	/^	private void startContractUI(ListV templList) {$/;"	m	class:StartContractActivity	file:
+statusText	src/dk/diku/poets/android/tablet/SelectBox.java	/^	private TextView statusText;$/;"	f	class:SelectBox	file:
+submitMK	src/dk/diku/poets/android/tablet/StartContractActivity.java	/^	private Section.MkView<RecordDefinition> submitMK = new Section.MkView<RecordDefinition>() {$/;"	f	class:StartContractActivity	file:
+submitSection	src/dk/diku/poets/android/tablet/StartContractActivity.java	/^	private Section<RecordDefinition> submitSection;$/;"	f	class:StartContractActivity	file:
+subtypes	src/dk/diku/poets/android/tablet/RecordInput.java	/^	Set<RecordDefinition> subtypes;$/;"	f	class:RecordInput
+supportedTypes	src/dk/diku/poets/android/tablet/ListViewSpec.java	/^		private String[] supportedTypes;$/;"	f	class:ListViewSpec.TypeIndexed	file:
+supportedTypes	src/dk/diku/poets/android/tablet/RecViewSpec.java	/^		private String[] supportedTypes;$/;"	f	class:RecViewSpec.TypeIndexed	file:
+t	src/dk/diku/poets/android/tablet/DSL.java	/^	protected DateTimeV t(String field) {$/;"	m	class:DSL
+tag	src/dk/diku/poets/android/tablet/Continuum.java	/^		private String tag;$/;"	f	class:Continuum.TListener	file:
+templMK	src/dk/diku/poets/android/tablet/StartContractActivity.java	/^	private Section.MkView<ListV> templMK =$/;"	f	class:StartContractActivity	file:
+templateSection	src/dk/diku/poets/android/tablet/StartContractActivity.java	/^	private Section<ListV> templateSection;$/;"	f	class:StartContractActivity	file:
+templateString	src/dk/diku/poets/android/tablet/RecViewSpec.java	/^		protected String templateString;$/;"	f	class:RecViewSpec.HtmlRecView
+text	src/dk/diku/poets/android/tablet/DSL.java	/^		public String text;$/;"	f	class:DSL.PText
+time	src/dk/diku/poets/android/tablet/EDSL.java	/^	String time(PoetsValue pv) {$/;"	m	class:EDSL
+timeb	src/dk/diku/poets/android/tablet/DateTimeInput.java	/^		Button timeb, dateb;$/;"	f	class:DateTimeInput
+tmpView	src/dk/diku/poets/android/tablet/ReportResultFragment.java	/^	private TextView tmpView;$/;"	f	class:ReportResultFragment	file:
+todayList	src/dk/diku/poets/android/tablet/ContractsFragment.java	/^	private LinearLayout ll, activeContractViews, todayList, soonList, laterList;$/;"	f	class:ContractsFragment	file:
+tpd	src/dk/diku/poets/android/tablet/DateTimeInput.java	/^		TimePickerDialog tpd;$/;"	f	class:DateTimeInput
+tps	src/dk/diku/poets/android/tablet/ConTile.java	/^	private List<TransactionPattern> tps;$/;"	f	class:ConTile	file:
+tv	src/dk/diku/poets/android/tablet/DoubleInput.java	/^	private EditText tv;$/;"	f	class:DoubleInput	file:
+tv	src/dk/diku/poets/android/tablet/IntInput.java	/^	private EditText tv;$/;"	f	class:IntInput	file:
+tv	src/dk/diku/poets/android/tablet/StartContractActivity.java	/^	private TextView tv;$/;"	f	class:StartContractActivity	file:
+type	src/dk/diku/poets/android/tablet/DSL.java	/^		public ContainerType type;$/;"	f	class:DSL.PContainer
+typeSection	src/dk/diku/poets/android/tablet/RecordInput.java	/^	Section<Set<RecordDefinition>> typeSection;$/;"	f	class:RecordInput
+typeSelect	src/dk/diku/poets/android/tablet/RecordInput.java	/^	LinearLayout ll, typeSelect;$/;"	f	class:RecordInput
+typeface	src/dk/diku/poets/android/tablet/DSL.java	/^		public Typeface typeface;$/;"	f	class:DSL.PText
+updateContractsUI	src/dk/diku/poets/android/tablet/ContractsFragment.java	/^	private void updateContractsUI() {$/;"	m	class:ContractsFragment	file:
+useB	src/dk/diku/poets/android/tablet/RefInput.java	/^	Button useB;$/;"	f	class:RefInput
+view	src/dk/diku/poets/android/tablet/DSLViewConverter.java	/^	View view;$/;"	f	class:DSLViewConverter
+viewSpecs	src/dk/diku/poets/android/tablet/ViewSpecGetter.java	/^	private static List<ViewSpec> viewSpecs =$/;"	f	class:ViewSpecGetter	file:
+visit	src/dk/diku/poets/android/tablet/DSLHTMLConverter.java	/^	public void visit(DSL.PContainer pc) {$/;"	m	class:DSLHTMLConverter
+visit	src/dk/diku/poets/android/tablet/DSLHTMLConverter.java	/^	public void visit(DSL.PText pt) {$/;"	m	class:DSLHTMLConverter
+visit	src/dk/diku/poets/android/tablet/DSLHTMLConverter.java	/^	public void visit(final DSL.PExt pe){$/;"	m	class:DSLHTMLConverter
+visit	src/dk/diku/poets/android/tablet/DSLHTMLConverter.java	/^	public void visit(final DSL.PQuery pq) {$/;"	m	class:DSLHTMLConverter
+visit	src/dk/diku/poets/android/tablet/DSLViewConverter.java	/^	public void visit(DSL.PContainer pc) {$/;"	m	class:DSLViewConverter
+visit	src/dk/diku/poets/android/tablet/DSLViewConverter.java	/^	public void visit(DSL.PExt pe){$/;"	m	class:DSLViewConverter
+visit	src/dk/diku/poets/android/tablet/DSLViewConverter.java	/^	public void visit(DSL.PQuery pq) {$/;"	m	class:DSLViewConverter
+visit	src/dk/diku/poets/android/tablet/DSLViewConverter.java	/^	public void visit(DSL.PText pt) {$/;"	m	class:DSLViewConverter
+visit	src/dk/diku/poets/android/tablet/DSLVisitor.java	/^	public void visit(DSL.PContainer pc);$/;"	m	interface:DSLVisitor
+visit	src/dk/diku/poets/android/tablet/DSLVisitor.java	/^	public void visit(DSL.PExt pe);$/;"	m	interface:DSLVisitor
+visit	src/dk/diku/poets/android/tablet/DSLVisitor.java	/^	public void visit(DSL.PQuery pq);$/;"	m	interface:DSLVisitor
+visit	src/dk/diku/poets/android/tablet/DSLVisitor.java	/^	public void visit(DSL.PText pt);$/;"	m	interface:DSLVisitor
+widgetContext	src/dk/diku/poets/android/tablet/InputSpec.java	/^		private WidgetContext widgetContext;$/;"	f	class:InputSpec.Builder	file:
+with	src/dk/diku/poets/android/tablet/DSL.java	/^	protected void with(PoetsValue rec) {$/;"	m	class:DSL
+withQuery	src/dk/diku/poets/android/tablet/Utils.java	/^	public static PoetsValue withQuery(String reportName, List<PoetsValue> args) {$/;"	m	class:Utils
+withQuery	src/dk/diku/poets/android/tablet/Utils.java	/^	public static void withQuery(final String report, final List<PoetsValue> args,$/;"	m	class:Utils

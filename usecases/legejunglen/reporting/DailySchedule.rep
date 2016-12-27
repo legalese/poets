@@ -1,0 +1,14 @@
+name: DailySchedule
+description:
+	Returns a list of arrangements for which the expected arrival is the same as the given date.
+tags: legejunglen
+
+report : Date -> Schedule
+report expectedArrival = 
+	Schedule {
+		arrangements = [arra |
+			putC <- contracts,
+			arra  : Arrangement = putC.contract,
+			expectedArrival == arra.arrivalDate.date 
+		]
+	}

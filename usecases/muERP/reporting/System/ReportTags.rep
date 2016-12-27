@@ -1,0 +1,7 @@
+name: ReportTags
+description:
+  A list of tags that are used in registered reports.
+tags: internal, report
+
+report : [String]
+report = nup (concatMap (\x -> x.tags) reports)

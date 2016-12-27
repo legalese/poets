@@ -1,0 +1,16 @@
+name: PendingPayment
+description:
+	provides a list of contracts for which the customer has not yet payed.
+
+report : PendingPayment
+report = PendingPayment { 
+  pendingPayment = [ djCon |
+		     -- find all entered DJContracts
+		     djCon : PutContract <- contracts,
+		     djCon.contract :? DJContract,
+		     -- filter to only return the ones that have no payment from a customer
+                     null [ payment |
+                            paymentEvent : TransactionEvent <- events, 
+			    payment : Payment = paymentEvent.transaction,
+			    paymentEvent.contractId == djCon.contractId,
+			    payment.sender :? Customer] ]}

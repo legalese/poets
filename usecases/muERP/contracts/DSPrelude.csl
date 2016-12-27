@@ -1,0 +1,21 @@
+// Check if 'lines' are in stock by invoking the 'Inventory' report
+fun inStock lines =
+  let inv = (reports.inventory ()).availableItems
+  in
+  all (\l -> any (\i -> (l.item).itemType == i.itemType && (l.item).quantity <= i.quantity) inv) lines
+
+// Check that amount 'm' equals the total amount in m's currency of a list of sales lines
+fun checkAmount m orderLines =
+  let a = foldr (\x acc ->
+            if (x.unitPrice).currency == m.currency then
+              (x.item).quantity * (100 + x.vatPercentage) * (x.unitPrice).amount + acc
+            else
+              acc) 0 orderLines
+  in
+  m.amount * 100 == a
+
+// Remove sales lines that have the currency of 'm'
+fun remainingOrderLines m = filter (\x -> (x.unitPrice).currency /= m.currency)
+
+// A reference to the designated entity that represents the company
+val me = reports.me ()

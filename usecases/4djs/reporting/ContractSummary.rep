@@ -1,0 +1,10 @@
+name: ContractSummary
+description:
+    provides a contract-record given a contract id
+tags: internal
+
+report : Int -> ContractSummary
+report cid = ContractSummary {
+    contracts = [ createCon |
+                  createCon : PutContract <- contracts,
+                  createCon.contractId == cid ] }

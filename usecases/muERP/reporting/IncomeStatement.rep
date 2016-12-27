@@ -1,0 +1,25 @@
+name: IncomeStatement
+description:
+  The Income Statement.
+tags: external, financial
+
+-- Revenue
+revenue = normaliseMoney [line.unitPrice{amount = amount} |
+ inv <- invoicesSent,
+ line <- inv.2.orderLines,
+ amount = line.unitPrice.amount * line.item.quantity]
+
+costOfGoodsSold = fifoCost
+contribMargin = subtractMoney revenue fifoCost
+fixedCosts = [] -- For simplicity
+depreciation = [] -- For simplicity
+netOpIncome = subtractMoney (subtractMoney contribMargin fixedCosts) depreciation
+
+report : IncomeStatement
+report = IncomeStatement{
+  revenue = revenue,
+  costOfGoodsSold = costOfGoodsSold,
+  contribMargin = contribMargin,
+  fixedCosts = fixedCosts,
+  depreciation = depreciation,
+  netOpIncome = netOpIncome}

@@ -1,0 +1,45 @@
+Arrangement is a Contract.
+Arrangement is abstract.
+Arrangement has a DateTime called arrivalDate.
+Arrangement has Food.
+Arrangement has a Location called placement.
+Arrangement has a Participants.
+Arrangement has an Int called numberOfTableSettings.
+Arrangement has a String called comments.
+Arrangement has an Adult entity called contactPerson.
+
+Participants is a Data.
+Participants has an Int called numberOfChildren.
+Participants has an Int called numberOfGrandparents.
+Participants has an Int called numberOfAdults.
+Participants has an Int called numberOfBabies.
+
+Birthday is an Arrangement.
+Birthday has a list of Child called birthdayChildren.
+
+Occasion is an Arrangement.
+Occasion has a String called occasionInfo.
+
+
+Food is a Data.
+Food is abstract.
+
+WithoutFood is a Food.
+
+FoodIncluded is a Food.
+FoodIncluded has a Time called eatingTime.
+FoodIncluded has a String called suggestion.
+FoodIncluded field suggestion is restricted by report SuggestionList.
+FoodIncluded has a String called extraInfo.
+
+Location is a Data.
+Location is abstract.
+
+Savannerum is a Location.
+Junglerum is a Location.
+Pyramiderum is a Location.
+Prinsesserum is a Location.
+Festrum is a Location.
+
+Salen is a Location.
+Salen has a list of Int called tableNumbers.

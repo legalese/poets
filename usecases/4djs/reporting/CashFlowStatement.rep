@@ -1,0 +1,50 @@
+name: CashFlowStatement
+description:
+  provides an account of money spent and earned.
+tags: external, financial
+
+filterPaymentAmounts : [AtomicResource] -> [MoneyAmount]
+filterPaymentAmounts res = [ MoneyAmount{currency = r.resourceType,
+                                         amount = r.qty} |
+                             r <- res,
+                             r.resourceType :? Currency ]
+
+-- Get all transfer transactions which are transfer of money.
+getPaymentTransactions : [Payment]
+getPaymentTransactions = [ Payment{contractId = transaction.contractId,
+                                   sender = transfer.sender,
+                                   receiver = transfer.receiver,
+                                   moneyAmount = amount} |
+                           transaction : TransactionEvent  <- events,
+                           transfer : Transfer = transaction.transaction,
+                           amount <- filterPaymentAmounts transfer.resource.resources]
+
+sumPaymentAmmounts : [Payment] -> Double
+sumPaymentAmmounts ps = sum [p.moneyAmount.amount | p <- ps]
+
+sumPayments : [Payment] -> [MoneyAmount]
+sumPayments ps = [MoneyAmount {currency = g.1, amount = sumPaymentAmmounts g.2} |
+                  g <- groupProj (\p -> p.moneyAmount.currency) ps]
+
+
+latestConfig : [Configuration]
+latestConfig = headList [ co |
+                          md : CreateEntity <- events,
+                          co : Configuration = md.data]
+
+-- getCompany : [<Company>]
+getCompany = [ config.company | config <- latestConfig]
+              
+
+report : CashFlowStatement
+report = let mRevenues = [payment | 
+                          payment <- getPaymentTransactions,
+                          elem (payment.receiver) getCompany]
+             mExpenses = [payment | 
+                          payment <- getPaymentTransactions,
+                          elem (payment.sender) getCompany]
+         in CashFlowStatement {
+                  revenues = mRevenues,
+                  expenses = mExpenses,
+                  revenueTotal = sumPayments mRevenues,
+                  expenseTotal = sumPayments mExpenses }

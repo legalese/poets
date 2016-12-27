@@ -1,0 +1,24 @@
+name: DJHistories
+description: 
+        Provides a list of all DJs along with the events each of them played (or are due to play at).
+tags: external
+
+
+djs : [DJ]
+djs = nup [ dj |
+						cu : <Data> <- entities,
+            dj : DJ = (cu !)]
+
+djHistory : DJ -> DJHistory
+djHistory dj =
+    let history = [up |
+	           up : PutContract <- contracts,
+                   pr : DJContract = up.contract,
+                   def : DefinedDJ = pr.dj,
+                   (def.dj !) == dj ]
+    in DJHistory { dj = dj,
+                   history = history,
+                   totalSalary = sum [ djpr.djSalary.amount | up <- history, djpr : DJContract = up.contract] }
+
+report : DJHistories
+report = DJHistories { histories = [ djHistory dj | dj <- djs ] }

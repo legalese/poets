@@ -1,0 +1,7 @@
+name: GetEntity
+description:
+  Dereference an entity to get the latest version.
+tags: internal, entity
+
+report : <Data> -> Data
+report ref = ref !

@@ -1,0 +1,104 @@
+\subsection{Ontology}
+\label{app:muerp-ontology}
+
+\subsubsection{Data}
+\label{app:muerp-ontology-data}
+\lstinputlisting[language=ontology,xleftmargin=0pt]{muERP/ontologies/Data.pce}
+
+\subsubsection{Transaction}
+\label{app:muerp-ontology-transaction}
+\lstinputlisting[language=ontology,xleftmargin=0pt]{muERP/ontologies/Transaction.pce}
+
+\subsubsection{Report}
+\label{app:muerp-ontology-report}
+\lstinputlisting[language=ontology,xleftmargin=0pt]{muERP/ontologies/Report.pce}
+
+\subsubsection{Contract}
+\label{app:muerp-ontology-contract}
+\lstinputlisting[language=ontology,xleftmargin=0pt]{muERP/ontologies/Contract.pce}
+
+\subsection{Reports}
+\label{app:muerp-reports}
+
+
+
+\subsubsection{Prelude Functions}
+\label{app:muerp-reports-prelude}
+\lstinputlisting[language=parrot,xleftmargin=0pt]{muERP/reporting/Prelude.rep}
+
+\subsubsection{Domain-Specific Prelude Functions}
+\label{app:muerp-reports-dsprelude}
+\lstinputlisting[language=parrot,xleftmargin=0pt]{muERP/reporting/DSPrelude.rep}
+
+\subsubsection{Internal Reports}
+\label{app:muerp-reports-internal}
+
+\lstinputintreport{5}{Me}
+
+\lstinputintreport{5}{Entities}
+
+\lstinputintreport{5}{EntitiesByType}
+
+\lstinputintreport{5}{ReportNames}
+
+\lstinputintreport{6}{ReportNamesByTags}
+
+\lstinputintreport{5}{ReportTags}
+
+\lstinputintreport{5}{ContractTemplates}
+
+\lstinputintreport{6}{ContractTemplatesByType}
+
+\lstinputintreport{5}{Contracts}
+
+\lstinputintreport{5}{ContractHistory}
+
+\lstinputintreport{5}{ContractSummary}
+
+\subsubsection{External Reports}
+\label{app:muerp-reports-external}
+
+\lstinputextreport{5}{IncomeStatement}
+
+\lstinputextreport{5}{BalanceSheet}
+
+\lstinputextreport{5}{CashFlowStatement}
+
+\lstinputextreport{5}{UnpaidInvoices}
+
+\lstinputextreport{5}{VATReport}
+
+\lstinputextreport{6}{Inventory}
+
+\lstinputextreport{5}{TopNCustomers}
+
+\subsection{Contracts}
+\label{app:muerp-contracts}
+
+\subsubsection{Prelude}
+\label{app:muerp-contracts-prelude}
+\lstinputlisting[language=pcsl,xleftmargin=0pt]{muERP/contracts/Prelude.csl}
+
+\subsubsection{Domain-Specific Prelude}
+\label{app:muerp-contracts-dsprelude}
+\lstinputlisting[language=pcsl,xleftmargin=0pt]{muERP/contracts/DSPrelude.csl}
+
+\subsubsection{Contract Templates}
+\label{app:muerp-contracts-templates}
+
+\paragraph{Purchase}
+
+~
+
+\lstinputlisting[language=pcsl,xleftmargin=0pt]{muERP/contracts/Purchase.csl}
+
+\paragraph{Sale}
+
+~
+
+\lstinputlisting[language=pcsl,xleftmargin=0pt]{muERP/contracts/Sale.csl}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "tr"
+%%% End: 

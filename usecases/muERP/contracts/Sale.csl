@@ -1,0 +1,42 @@
+name: sale
+type: Sale
+description: "Set up a sale"
+
+clause sale(lines : [OrderLine])<me : <Me>, customer : <Customer>> =
+ <me> IssueInvoice(sender s, receiver r, orderLines sl)
+   where s == me && r == customer && sl == lines && inStock lines
+   due within 1H
+ then
+ payment(lines, me, 10m)<customer>
+ and
+ <me> Delivery(sender s, receiver r, items i)
+   where s == me && r == customer && i == map (\x -> x.item) lines
+   due within 1W
+ then
+ repair(map (\x -> x.item) lines, customer, 3M)<me>
+
+clause payment(lines : [OrderLine], me : <Me>, deadline : Duration)<customer : <Customer>> =
+ if null lines then
+   fulfilment
+ else
+   <customer> Payment(sender s, receiver r, money m)
+     where s == customer && r == me && checkAmount m lines
+     due within deadline
+     remaining newDeadline
+   then
+   payment(remainingOrderLines m lines, me, newDeadline)<customer>
+
+clause repair(items : [Item], customer : <Customer>, deadline : Duration)<me : <Me>> =
+ when RequestRepair(sender s, receiver r, items i)
+   where s == customer && r == me && subset i items
+   due within deadline
+   remaining newDeadline
+ then
+ <me> Repair(sender s, receiver r, items i')
+   where s == me && r == customer && i == i'
+   due within 5D
+   remaining newDeadline'
+ then
+ repair(items, customer, newDeadline <-> 5D <+> newDeadline')<me>
+
+contract = sale(orderLines)<me, customer>

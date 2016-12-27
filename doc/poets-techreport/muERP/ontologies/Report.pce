@@ -1,0 +1,35 @@
+IncomeStatement is a Report.
+IncomeStatement has a list of Money called revenue.
+IncomeStatement has a list of Money called costOfGoodsSold.
+IncomeStatement has a list of Money called contribMargin.
+IncomeStatement has a list of Money called fixedCosts.
+IncomeStatement has a list of Money called depreciation.
+IncomeStatement has a list of Money called netOpIncome.
+
+BalanceSheet is a Report.
+BalanceSheet has a list of Money called fixedAssets.
+BalanceSheet has CurrentAssets.
+BalanceSheet has a list of Money called totalAssets.
+BalanceSheet has Liabilities.
+BalanceSheet has a list of Money called ownersEquity.
+BalanceSheet has a list of Money called totalLiabilitiesPlusEquity.
+
+CashFlowStatement is a Report.
+CashFlowStatement has a list of Payment called expenses.
+CashFlowStatement has a list of Payment called revenues.
+CashFlowStatement has a list of Money called revenueTotal.
+CashFlowStatement has a list of Money called expenseTotal.
+
+UnpaidInvoices is a Report.
+UnpaidInvoices has a list of UnpaidInvoice called invoices.
+
+VATReport is a Report.
+VATReport has a list of Money called outgoingVAT.
+VATReport has a list of Money called incomingVAT.
+VATReport has a list of Money called vatDue.
+
+Inventory is a Report.
+Inventory has a list of Item called availableItems.
+
+TopNCustomers is a Report.
+TopNCustomers has a list of CustomerStatistics.

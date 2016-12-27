@@ -1,0 +1,7 @@
+name: GetReportTags
+description: This function provides the set of all tags that are mentioned with the registered reports.
+tags: Internal
+
+report : GetReportTags
+report = 
+  GetReportTags{tags = concatMap (\x -> x.tags) reports}

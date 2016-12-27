@@ -1,0 +1,7 @@
+name: GetEntity
+description: Returns a list of size 1 containing the newest version of the entity 
+             identified by the paramenter or the empty list otherwise
+tags: Internal
+
+report : <Data> -> GetEntity
+report ref = GetEntity{ent = ref !}

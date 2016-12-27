@@ -1,0 +1,39 @@
+ResourceType is Data.
+ResourceType is abstract.
+
+Currency is a ResourceType.
+Currency is abstract.
+
+DKK is a Currency.
+
+ItemType is a ResourceType.
+ItemType is abstract.
+
+
+Resource is Data.
+Resource is abstract.
+
+Money is a Resource.
+Money has a Currency.
+Money has a Real called amount.
+
+Item is a Resource.
+Item has an ItemType.
+Item has a Real called quantity.
+
+Agent is a Data.
+Agent is abstract.
+
+Me is an Agent.
+
+Person is an Agent.
+Person is abstract.
+Person has a String called name.
+
+Child is a Person.
+Child has an Int called age.
+
+Adult is a Person.
+Adult has a String called eMail.
+Adult has an Int called phoneNumber.
+

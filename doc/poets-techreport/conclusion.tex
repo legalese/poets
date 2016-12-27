@@ -1,0 +1,124 @@
+We have presented an extended and generalised version of the POETS
+architecture~\cite{henglein09jlap}, which we have fully
+implemented. We have presented domain-specific languages for
+specifying the data model, reports, and contracts of a POETS instance,
+and we have demonstrated an application of POETS in a small use
+case. The use case demonstrates the conciseness of our
+approach---Appendix~\ref{app:muerp} contains the complete source
+needed for a running system---as well as the domain-orientation
+of our specification languages. We believe that non-programmers should
+be able to read and understand the data model of
+Appendix~\ref{app:muerp-ontology}, to some extent the contract
+specifications of Appendix~\ref{app:muerp-contracts-templates}, and to
+a lesser extent the reports of Appendix~\ref{app:muerp-reports} (after all,
+reports describe computations).
+
+\subsection{Future Work}
+\label{sec:future-work}
+
+With our implementation and revision of POETS we have only taken the
+first steps towards a software system that can be used in practice. In
+order to properly verify our hypothesis that POETS is practically
+feasible, we want to conduct a larger use case in a live, industrial
+setting. Such use case will both serve as a means of testing the
+technical possibilities of POETS, that is whether we can model and
+implement more complex scenarios, as well as a means of testing our
+hypothesis that the use of domain-specific languages shortens the gap
+between requirements and implementation.
+
+\paragraph{Expressivity}
+As mentioned above, a larger and more realistic use case is needed in
+order to fully evaluate POETS. In particular, we are interested in
+investigating whether the data model, the report language, and the
+contract language have sufficient expressivity. For instance, a
+possible extension of the data model is to introduce finite maps. Such
+extension will, for example, simplify the reports from our \muerp use
+case that deal with multiple currencies. Moreover, finite maps will
+enable a modelling of resources that is closer in structure to that
+of Henglein et al.~\cite{henglein09jlap}.
+
+Another possible extension is to allow types as values in the report
+language. For instance, the \emph{EntitiesByType} report in
+Appendix~\ref{app:muerp-reports-internal} takes a string
+representation of a record type, rather than the record type
+itself. Hence the function cannot take subtypes into account, that is
+if we query the report with input \recordname{A}, then we only get
+entities of declared type \recordname{A} and not entities of declared
+subtypes of \recordname{A}.
+
+\paragraph{Rules}
+A rule engine is a part of our extended architecture
+(Figure~\ref{fig:arch}), however it remains to be implemented. The
+purpose of the rule engine is to provide rules---written in a separate
+domain-specific language---that can constrain the values that are
+accepted by the system. For instance, a rule might specify that the
+\fieldname{items} list of a \recordname{Delivery} transaction always
+be non-empty.
+
+More interestingly, the rule engine will enable values
+to be \emph{inferred} from the rules in the engine. For instance, a
+set of rules for calculating VAT will enable the field
+\fieldname{vatPercentage} of an \recordname{OrderLine} to be inferred
+automatically in the context of a \recordname{Sale} record. That is,
+based on the information of a sale and the items that are being sold,
+the VAT percentage can be calculated automatically for each item
+type.
+
+The interface to the rule engine will be very simple: A record value,
+as defined in Section~\ref{sec:values}, with zero or more \emph{holes}
+is sent to the engine, and the engine will return either
+\begin{inparaenum}[(i)]
+\item an indication that the record cannot possibly fulfil the rules in the
+  engine, or
+\item a (partial) substitution that assigns inferred values to (some
+  of) the holes of the value as dictated by the rules.
+\end{inparaenum}
+Hence when we, for example, instantiate the sale of a bicycle in
+Section~\ref{sec:bootstrapping}, then we first let the rule engine
+infer the VAT percentage before passing the contract meta data to the
+contract engine.
+
+\paragraph{Forecasts}
+A feature of the contract engine, or more specifically of the reduction
+semantics of contract instances, is the possibility to retrieve the
+state of a running contract at any given point in time. The state is
+essentially the AST of a contract clause, and it describes what is
+currently expected in the contract, as well as what is expected in the
+future.
+
+Analysing the AST of a contract enables the possibility to do
+\emph{forecasts}, for instance to calculate the expected outcome of a
+contract or the items needed for delivery within the next
+week. Forecasts are, in some sense, dual to reports. Reports derive
+data from transactions, that is facts about what has previously
+happened. Forecasts, on the other hand, look into the future, in terms
+of calculations over running contracts. We have currently implemented
+a single forecast, namely a forecast that lists the set of
+immediately expected transactions for a given contract. A more
+ambitious approach is to devise (yet another) language for writing
+forecasts, that is functions that operate on contract ASTs.
+
+\paragraph{Practicality}
+In order to make POETS useful in practice, many features are still 
+missing. However, we see no inherent difficulties in adding them to
+POETS compared to traditional ERP architectures. To mention a few:
+\begin{inparaenum}[(i)]
+\item security, that is authorisation, users, roles, etc.;
+\item module systems for the report language and contract language,
+  that is better support for code reuse; and
+\item check-pointing of a running system, that is a dump of the memory
+  of a running system, so the event log does not have to be replayed
+  from scratch when the system is restarted.
+\end{inparaenum}
+
+\paragraph{Acknowledgements} We are grateful to Fritz Henglein for
+many fruitful discussions and for convincing us of the \emph{POETS
+  approach} in the first place. Morten Ib Nielsen and Mikkel
+J\o{}nsson Thomsen both contributed to our implementation and design
+of POETS, for which we are thankful. Lastly, we thank the participants
+of the DIKU course ``POETS Summer of Code'' for valuable input.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "tr"
+%%% End: 

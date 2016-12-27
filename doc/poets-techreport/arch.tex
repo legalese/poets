@@ -1,0 +1,55 @@
+\newcommand\comp[4][]{%
+    \node[box,#1] (#2) {#3\nodepart{two}#4};
+}%
+
+
+\begin{tikzpicture}
+  [box/.style={thick, shape=rectangle split, rectangle split parts=2,rounded
+    corners=3mm,minimum height=3cm, minimum
+    width=3cm,anchor=north,align=left,draw},%
+  db/.style={very thick,shape=cylinder, shape border
+    rotate=90,aspect=.25,draw,align=center},%
+  push/.style={->,draw,>=latex},%
+  pull/.style={->,draw,>=latex,dashed},%
+  node distance=4cm,on grid,bend angle=10]%
+  \comp{contracts}{Contract Engine}{- manage templates\\- manage
+    contracts\\- retrieve contracts\\- register transactions}%
+  \comp[right of=contracts]{reports}{Report Engine}{- manage
+    reports\\- query reports}%
+  \comp[right of=reports]{entities}{Entity Store}{- manage
+    entities}%
+  \comp[dotted,below of=contracts]{rules}{Rule Engine}{- manage
+    rules\\- apply rules}
+  \node[db,right of=rules] (log) {Event\\log};
+  \comp[right of=log]{data}{Data Model}{- manage data
+    definitions\\- retrieve data definitions}
+  \draw%
+  (contracts) edge[push] (log)%
+  (reports) %
+  edge[pull] (contracts)%
+  edge[push,bend left] (log)%
+  (entities)%
+  edge[push] (log)%
+%  edge[pull] (data)%
+  edge[pull] (reports)%
+  (rules)%
+  edge[push] (log)%
+  (log)%
+  edge[pull,bend left] (reports)
+  (data)%
+  edge[pull] (entities)%
+  edge[pull] (reports)%
+  edge[pull] (contracts)%
+  edge[pull,bend left] (log)%
+  edge[push, bend right] (log)%
+  ;%
+  \coordinate[node distance=2cm,below of=rules] (a);
+  \coordinate[right of=a] (b);
+  \coordinate[right of=b] (c);
+  \draw (a) edge[push] node[above,midway] {information pushed} ($(b)-(1,0)$);
+  \draw ($(b)+(1,0)$) edge[pull] node[above,midway] {information pulled} (c);
+\end{tikzpicture}
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "tr"
+%%% End: 

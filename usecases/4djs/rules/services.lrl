@@ -1,0 +1,354 @@
+document "moms_af_ydelser"
+  importance 3 //guide (Danish, vejledning)
+  enacted '2004-12-01'
+
+/* This rule set is intended for Danish companies who sell, buy or
+distribute services across the Danish border. The rules answer the
+following questions:
+  1. When to levy Danish VAT.
+  2. Whether buyer or seller should calculate VAT.
+
+The rules apply to all companies whether registered for VAT or not.
+*/
+
+//Preface - Default Rules
+s: Service
+
+p1: if s.placeOfDelivery is in Denmark and
+       s.levyVAT == true and
+       s.vatRate == 25
+    then s.vatCalculator := VCSome { agent = s.seller }
+
+p2: if s.placeOfDelivery is in Denmark and
+       s.levyVAT == true and
+       s.vatRate == 0
+    then s.vatCalculator := VCNone {}
+
+//Where is the place of delivery?
+s: Service
+pod1: if s.seller.establishedIn is in Denmark
+      then s.placeOfDelivery := Denmark
+      examples
+        s is in PersonalService
+        s is in CateringService
+        s is in AdministrativeService
+        s is in VehicleRentalInEUService
+        s is in VeterinarianService
+        s is in SafeDepositBoxService
+
+//Should VAT be levied on this service?
+s: Service
+lvat1: if s.placeOfDelivery is in Denmark
+       then s.levyVAT == true
+
+lvat2: if s.placeOfDelivery is in Denmark
+       then s.vatRate == 25
+
+lvat3: if s.placeOfDelivery is in Denmark and
+          s in HealthCare or
+          s in SocialWelfare or
+          s in Teaching or
+          s in Sports or
+          s in Culture or
+          s in Art or
+          s in RealProperty or
+          s in Insurance or
+          s in FinancialActivities or
+          s in Games or
+          s in TransportOfPassengers or
+          s in TravelAgency or
+          s in FuneralService or
+          s in Charity
+       then s.levyVAT := false
+
+lvat4: if s.levyVAT == false
+       then s.vatCalculator := VCNone {} and
+            s.deductInGoingVAT == false
+
+lvat5: if s.levyVAT == false
+       then s.vatCharger := VCNone {}
+
+lvat6: if s.levyVAT == true
+       then s.deductInGoingVAT == true
+
+lvat7: if s.levyVAT == true and
+          s.vatRate == 0
+       then s.vatCalculator := VCNone {} and
+            s.deductInGoingVAT == true
+
+//Extra rule, which doesn't exist in rule set.
+lvat7e1: if s.vatCalculator == VCNone {}
+         then s.vatCharger := VCNone {}
+
+lvat8: if s in V0_1 or
+          s in V0_2 or
+          s in V0_3 or
+          s in V0_4 or
+          s in V0_5 or
+          s in V0_6 or
+          s in V0_7 or
+          s in V0_8
+       then s.vatRate == 0
+
+//How to pay VAT
+htp1: if s.vatCharger == s.buyer and
+         s.vatCalculator == s.buyer and
+         s.buyer.establishedIn in Denmark
+      then s.vatRate = 25
+
+htp2: if s.vatCharger = s.seller and
+         s.vatCalculator == s.seller
+      then s.vatRate = 25
+
+htp2a: s.invoice.totalPrice == s.invoice.price + s.invoice.vat
+htp2b: s.invoice.vat == (s.vatRate * 0.01) * s.invoice.price
+
+//Default deduct.
+htp3: if s.levyVAT == true
+      then s.deductRate = 100
+
+htp4: if s.levyVAT == false
+      then s.deductRate = 0
+
+//Services that do not follow the main rule
+
+//Advising
+s: Service
+advis1a: if s.seller.establishedIn in Denmark and
+            s is AdvisingService and
+            s.buyer.establishedIn in Denmark and
+            s.buyer.liableForVAT == true and
+            s.placeOfActualUse is EU 
+        then
+            s.placeOfDelivery == Denmark and
+            s.vatCalculator == s.seller
+
+advis1b: if s.seller.establishedIn in Denmark and
+            s is AdvisingService and
+            s.buyer.establishedIn in Denmark and
+            s.buyer.liableForVAT == true and
+            not (s.placeOfActualUse is EU)
+        then
+            s.placeOfDelivery != Denmark
+            s.vatCalculator != s.seller
+
+advis2: if s.seller.establishedIn in Denmark and
+           s is AdvisingService and
+           not (s.buyer.establishedIn in Denmark) and
+           s.buyer.establishedIn in EU) and
+           s.buyer.liableForVAT == true and
+        then  
+           s.placeOfDelivery != Denmark and
+           s.invoice.reverseCharge == true and
+           s.invoice.registerVATNO == true
+
+advis3a: if s.seller.establishedIn in Denmark and
+            s is AdvisingService and
+            not (s.buyer.establishedIn in Denmark) and
+            s.buyer.establishedIn in EU) and
+            s.buyer.liableForVAT == false and
+            s.placeOfActualUse is EU
+        then
+           s.placeOfDelivery == Denmark and
+           s.vatCalculator == s.seller
+
+advis3b: if s.seller.establishedIn in Denmark and
+            s is AdvisingService and
+            not (s.buyer.establishedIn in Denmark) and
+            s.buyer.establishedIn in EU) and
+            s.buyer.liableForVAT == false and
+            not (s.placeOfActualUse is EU)
+        then
+           s.placeOfDelivery != Denmark and
+           s.vatCalculator != s.seller
+
+advis4a: if s.seller.establishedIn in Denmark and
+            s is AdvisingService and
+            not (s.buyer.establishedIn in EU) and
+            s.placeOfActualUse is Denmark
+         then
+            s.placeOfDelivery == s.seller and
+            s.vatCalculator == s.seller
+
+advis4b: if s.seller.establishedIn in Denmark and
+            s is AdvisingService and
+            not (s.buyer.establishedIn in EU) and
+            not (s.placeOfActualUse is Denmark)
+         then
+           s.placeOfDelivery != Denmark and
+           s.vatCalculator != s.seller
+
+advis5a: if not (s.seller.establishedIn Denmark) and
+            s is AdvisingService and
+            s.seller.establishedIn EU and
+            s.buyer.establishedIn Denmark and
+            s.buyer.liableForVat == true and
+            (s.placeOfActualUse is EU)
+         then
+           s.placeOfDeliery == Denmark and
+           s.vatCalculator == s.buyer and
+           s.vatRate = 25
+
+advis5b: if not (s.seller.establishedIn Denmark) and
+            s.seller.establishedIn EU and
+            s is AdvisingService and
+            s.buyer.establishedIn Denmark and
+            s.buyer.liableForVat == true and
+            not (s.placeOfActualUse is EU) and            
+         then
+            s.placeOfDelivery != Denmark and
+            s.vatCalculator == VCNone {}
+
+advis5c: if not (s.seller.establishedIn Denmark) and
+            s.seller.establishedIn EU and
+            s is AdvisingService and
+            s.buyer.establishedIn Denmark and
+            s.buyer.liableForVat == false
+         then
+            s.placeOfDelivery != Denmark and
+            s.vatCalculator == VCNone {}
+
+advis6a: if not (s.seller.establishedIn EU) and
+            s.buyer.establishedIn Denmark and
+            s is AdvisingService and
+            s.buyer.liableForVat == true and
+            s.placeOfActualUse is Denmark
+         then
+           s.placeOfDelivery == Denmark and
+           s.vatCalculator == s.buyer
+           s.vatRate == 25
+
+advis6b: if not (s.seller.establishedIn EU) and
+            s.buyer.establishedIn Denmark and
+            s is AdvisingService and
+            s.buyer.liableForVat == true and
+            not (s.placeOfActualUse is Denmark)
+         then
+           s.placeOfDelivery != Denmark
+           s.vatCalculator == VCNone {}
+           
+
+advis6c: if not (s.seller.establishedIn EU) and
+            s.buyer.establishedIn Denmark and
+            s is AdvisingService and
+            s.buyer.liableForVat == false and
+            s.placeOfActualUse is Denmark
+         then
+            s.placeOfDelivery is Denmark
+            s.vatCalculator == s.seller
+
+
+advis6d: if not (s.seller.establishedIn EU) and
+            s.buyer.establishedIn Denmark and
+            s is AdvisingService and
+            s.buyer.liableForVat == false and
+            not (s.placeOfActualUse is Denmark)
+         then
+            s.placeOfDelivery != Denmark
+            s.vatCalculator == VCNone {}
+
+//Electronic services
+ s: Service
+//Selling
+elecS1: if s is AdvisingService and
+           s.buyer.establishedIn in Denmark
+        then
+           s.placeOfDelivery == Denmark
+           s.vatCalculator = s.seller
+
+elecS2: if s is AdvisingService and
+           not (s.buyer.establishedIn in Denmark) and
+           s.buyer.establishedIn in EU and
+           s.buyer.liableForVAT
+        then
+           s.placeOfDelivery != Denmark
+           s.vatCalculator != s.seller
+           s.invoice.reverseCharge == true
+
+elecS3: if s is AdvisingService and
+           not (s.buyer.establishedIn in Denmark) and
+           s.buyer.establishedIn in EU and
+           not (s.buyer.liableForVAT)
+        then
+           s.placeOfDelivery == Denmark
+           s.vatCalculator == s.seller
+
+elecS4: if s is AdvisingService and
+           not (s.buyer.establishedIn in EU)
+        then
+           s.placeOfDelivery != Denmark
+           s.vatCalculator != s.seller
+
+//Buying
+elecB1: if s is AdvisingService and
+           s.seller.isBusiness and
+           s.seller.establishedIn in Denmark
+        then
+           s.placeOfDelivery == Denmark
+           s.vatCalculator == s.seller
+       
+elecB2a: if s is AdvisingService and
+            s.seller.isBusiness and
+            not (s.seller.establishedIn in Denmark) and
+            s.seller.establishedIn in EU and
+            s.buyer.liableForVAT
+          then
+            s.placeOfDelivery == Denmark
+            s.vatCalculator == s.seller
+            s.vatRate == 25
+
+elecB2b: if s is AdvisingService and
+            s.seller.isBusiness and
+            not (s.seller.establishedIn in Denmark) and
+            s.seller.establishedIn in EU and 
+            not (s.buyer.liableForVAT)
+          then
+            s.placeOfDelivery != Denmark
+            s.vatCalculator == VCNone {}
+
+elecB3a: if s is AdvisingService and
+            s.seller.isBusiness and
+            not (s.seller.establishedIn in EU) and
+            s.buyer.liableForVAT
+         then
+            s.placeOfDelivery == Denmark
+            s.vatCalculator = s.buyer
+            s.vatRate == 25
+
+elecB3b: if s is AdvisingService and
+            s.seller.isBusiness and
+            not (s.seller.establishedIn in EU) and
+            not (s.buyer.liableForVAT)
+         then
+            s.placeOfDelivery == Denmark
+            s.vatCalculator == s.seller
+
+
+/*
+To model:
+add pod dk to all
+
+*/
+
+/*
+
+Nice to haves:
+
+Userdefined predicates i.e.:
+s : Seller
+s.euNotDK := not (s.establishedIn in Denmark) and
+             s.established in EU
+
+
+
+make a set of conditions implicit on all / subset of ruless rules.
+IE ... -> ( ... -> ..., ... -> ...)
+
+Need to haves:
+* Nominals identifying enummerated instances of concepts - e.g., the agent NoOne.
+* Equality on non-primitive values (vatCalculator and seller).
+
+* Use == instead of :=
+
+
+*/

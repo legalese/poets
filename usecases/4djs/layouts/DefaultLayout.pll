@@ -1,0 +1,241 @@
+{
+    "ActiveContracts" : {
+	"title" : "Active contracts",
+	"header": [{"contracts" : ""}],
+	"body"  : [],
+	"footer": []
+    },
+    "CreateContract" : {
+	"title" : "",
+	"header": [{"contract":""}],
+	"body"  : [],
+	"footer": []
+    },
+    "UpdateContract" : {
+	"title" : "",
+	"header": [{"contract":""}],
+	"body"  : [],
+	"footer": []
+    },
+    "DJContract" : {
+	"title" : "DJ contract",
+	"header": [
+	    {"customer":"Customer"},
+	    {"eventAddress":"Address of event"},
+	    {"start"   :"Event date"},
+	    {"dj"      :"Assigned DJ"}
+	],
+	"body"  : [
+	    {"djSalary":"Salary for DJ"},
+	    {"eventType":"Event type"},
+	    {"size":"Expected no. guests"},
+	    {"comments":"Notes about event"}
+	],
+	"footer": [
+	    {"gear":"Included gear"},
+	    {"startDate":"Initiation date"},
+	    {"tentativeEnd":"Expected to end at"}
+	]
+    },
+    "DefinedDJ" : {
+	"title" : "",
+	"header": [{"dj" : ""}],
+	"body"  : [],
+	"footer": []
+    },
+    "UndefinedDJ" : {
+	"title" : "No DJ",
+	"header": [],
+	"body"  : [],
+	"footer": []
+    },
+    "DJ" : {
+	"title" : "",
+	"header": [{"name":"Name"}, {"emailAddress":"Email"}],
+	"body"  : [],
+	"footer": []
+    },
+    "LegalEntity" : {
+	"title" : "",
+	"header": [],
+	"body"  : [{"phoneNo":"Phone"}, {"billingAddress":"Billing address"}],
+	"footer": []
+    },
+    "Customer" : {
+	"title" : "Customer",
+	"header": [{"name":"Name"}, {"emailAddress":"Email"},
+		   {"phoneNo":"Phone no."}
+		  ],
+	"body"  : [],
+	"footer": []
+    },
+    "JobsWithoutDJ" : {
+	"title" : "Jobs with no DJ",
+	"header": [{"missingDJs":""}],
+	"body"  : [],
+	"footer": []
+    },
+    "TransactionEvent" : {
+	"title" : "",
+	"header": [{"transaction":""}],
+	"body"  : [],
+	"footer": []
+    },
+    "AcceptQuote" : {
+	"title" : "Accepted quote",
+	"header": [{"sender":"From"},{"receiver":"To"},{"paymentMethod":""}],
+	"body"  : [],
+	"footer": []
+    },
+    "FixedPrice" : {
+	"title" : "Fixed pricing",
+	"header": [{"moneyAmount":""}],
+	"body"  : [],
+	"footer": []
+    },
+    "VariablePrice" : {
+	"title" : "Variable pricing",
+	"header": [{"pricePrHour":"Price per hour"},
+		   {"startPrice" :"Start price"}
+		  ],
+	"body"  : [],
+	"footer": []    
+    },
+    "MoneyAmount" : {
+	"title" : "",
+	"header": [{"amount":"Amount"}, {"currency":""}],
+	"body"  : [],
+	"footer": []
+    },
+    "ContractHistory" : {
+	"title" : "Past events",
+	"header": [{"transactions":""}],
+	"body"  : [],
+	"footer": []
+    },
+    "Transfer" : {
+	"title" : "Transfer",
+	"header": [{"sender":"From"},{"receiver":"To"},
+		   {"resource":""}
+		  ],
+	"body"  : [],
+	"footer": []
+    },
+    "IssueInvoice" : {
+	"title" : "Invoice",
+	"header": [{"sender":"From"},{"receiver":"To"},
+		   {"moneyAmount":""}
+		  ],
+	"body"  : [],
+	"footer": []
+    },
+    "Resource" : {
+	"title" : "Resource",
+	"header": [{"resources":""}],
+	"body"  : [],
+	"footer": []
+    },
+    "AtomicResource" : {
+	"title" : "",
+	"header": [{"resourceType":"Type"},
+		   {"qty":"Qty"}
+		  ],
+	"body"  : [],
+	"footer": []
+    },
+    "Company" : {
+	"title" : "Company",
+	"header": [{"name":"Name"}, {"billingAddress":"Address"},
+		   {"emailAddress":"Email"}, {"phoneNo":"Phone"}],
+	"body"  : [],
+	"footer": []
+    },
+    "Address" : {
+	"title" : "",
+	"header": [{"address":"Street"}, {"zipCode":"ZIP"}],
+	"body"  : [],
+	"footer": []
+    },
+    "CashFlowStatement" : {
+	"title" : "Cash flow statement",
+	"header": [{"revenueTotal":"Revenue"}, {"expenseTotal":"Expenses"},
+		   {"revenues":"Revenue events"}, {"expenses":"Expense events"}
+		  ],
+	"body"  : [],
+	"footer": []
+    },
+    "Payment" : {
+	"title" : "Payment",
+	"header": [{"sender":"From"}, {"receiver":"To"},
+		   {"moneyAmount":""}
+		  ],
+	"body"  : [],
+	"footer": []
+    },
+    "PlayEvent" : {
+	"title" : "PlayEvent",
+	"header": [{"endTime":"Finished"}],
+	"body"  : [{"dj":""}],
+	"footer": []
+    },
+    "Invoices" : {
+	"title" : "All invoices",
+	"header": [{"invoices":""}],
+	"body"  : [],
+	"footer": []
+    },
+    "PaidInvoices" : {
+	"title" : "Paid invoices",
+	"header": [{"invoices":""}],
+	"body"  : [],
+	"footer": []
+    },
+    "PaidInvoice" : {
+	"title" : "Payment received",
+	"header": [{"payment":""},{"invoice":""}],
+	"body"  : [],
+	"footer": []
+    },
+    "Invoice" : {
+	"title" : "Invoice data",
+	"header": [{"receiver":"Sent to"},
+		   {"amount" : "Amount"}
+		  ],
+	"body"  : [{"timeStamp":"Issue date"}],
+	"footer": []
+    },
+    "EventType" : {
+	"title" : "Event type",
+	"header": [],
+	"body"  : [{"details":"Detail"}],
+	"footer": []
+    },
+    "DJHistories" : {
+	"title" : "Overview of all DJ activities",
+	"header": [{"histories":""}],
+	"body"  : [],
+	"footer": []
+    },
+    "DJHistory" : {
+	"title" : "DJ activities",
+	"header": [{"dj":""}, {"totalSalary":"Total salary"}],
+	"body"  : [{"history":"Related jobs"}],
+	"footer": []
+    },
+    "PrivateIndividual" : {
+	"title" : "Customer",
+	"header": [{"name":"Name"}, {"emailAddress":"Email"},
+		   {"phoneNo":"Phone no."}
+		  ],
+	"body"  : [],
+	"footer": []
+    },
+    "Entrepreneur" : {
+	"title" : "Customer",
+	"header": [{"companyName":"Firma"}, {"emailAddress":"Email"},
+		   {"phoneNo":"Phone no."}
+		  ],
+	"body"  : [],
+	"footer": []
+    }
+}

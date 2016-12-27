@@ -1,0 +1,4 @@
+Contract is abstract.
+Contract has a DateTime called contractStartDate.
+Contract has a String called templateName.
+Contract field templateName is restricted by report ContractTemplateNames.

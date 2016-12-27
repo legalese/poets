@@ -1,0 +1,12 @@
+name: FilterReportNames
+description: This function provides the names of all registered reports that have the all tags provided as first argument to this function and none of the tags provided as second argument.
+tags: Internal
+
+filt allOf noneOf rep = all (\x -> elem x rep.tags) allOf &&
+                        not (any (\x -> elem x rep.tags) noneOf)
+
+report : [String] -> [String] -> FilterReportNames
+report allOf noneOf = 
+  FilterReportNames{
+    names = map (\x -> x.name) (filter (filt allOf noneOf) reports)
+  }

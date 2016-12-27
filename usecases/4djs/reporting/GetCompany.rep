@@ -1,0 +1,17 @@
+name: GetCompany
+description:
+  Always returns the company information for the current Company
+tags: Internal
+
+
+
+report : GetCompany
+report = 
+  GetCompany { 
+    company = headList [co | ce : CreateEntity <- events,
+                             cx : PutEntity =
+                                 first ce [up | up : UpdateEntity <- events, 
+                                                up.ent == ce.ent],
+                             co : <Company> = cx.ent,
+                             not (isDeleted cx.ent)]
+  }

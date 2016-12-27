@@ -1,0 +1,172 @@
+Name:           poets
+Version:        0.1
+Synopsis:       The POETS project
+Description:    The POETS project
+Category:
+License:        AllRightsReserved
+License-file:   LICENSE
+License:        AllRightsReserved
+Author:         diku@3gerp.org
+Maintainer:     diku@3gerp.org
+Build-Type:     Simple
+Cabal-Version:  >=1.9.2
+
+flag poetsserver
+  description: Build poetsserver executable.
+  default:     True
+
+flag upload
+  description: Build contract definition uploader
+  default:     False
+
+flag dplparser
+  description: Build dplparser executable.
+  default:     False
+
+flag parrot
+  description: Build executable for debugging report modules.
+  default:     False
+
+flag query
+  description: Build executable for querying a report of a running POETS server.
+  default:     False
+
+flag lib
+  description: Build the POETS library.
+  default:     True
+
+flag all
+  description: Build all targets.
+  default:     False
+
+flag client
+  description: Builds a text based client for poets. Supports thrift interface
+  default:     False
+
+Executable poetsserver
+  Main-is:		PServer.hs
+  Other-Modules:	
+  Build-Depends:	thrift >= 1, base >= 4, directory, filepath, unix, containers, datetime >= 0.2, mtl, xml, poets, poets-thrift, compdata >= 0.6.1.2, compdata < 0.8, network, template-haskell, text, unordered-containers, vector, hashable
+  hs-source-dirs:	exe-src
+  ghc-options: -W
+  if !flag(poetsserver) && !flag(all)
+    buildable:     False
+
+Executable dplparser
+  Main-is:          DplParserTest.hs
+  Build-Depends:    base >= 4, parsec >= 3, haskeline, cmdargs, wl-pprint, mtl
+  hs-source-dirs:   test/rules, src
+  ghc-options:      -W
+  if !flag(dplparser)
+    buildable:      False
+
+Executable parrot
+  Main-is:          Parrot.hs
+  Build-Depends:    base >= 4, directory, filepath, poets
+  hs-source-dirs:   exe-src
+  ghc-options:      -W
+  if !flag(parrot) && !flag(all)
+    buildable:      False
+
+Executable poetsquery
+  Main-is:          PQuery.hs
+  Build-Depends:    base >= 4, poets, poets-thrift, thrift >= 1, network, containers, datetime
+  hs-source-dirs:   exe-src
+  ghc-options:      -W
+  if !flag(query) && !flag(all)
+    buildable:      False
+
+Executable upload
+  Main-is:          ContractUploader.hs
+  Build-Depends:    base >= 4, containers, mtl, datetime, network, thrift >= 1, poets, poets-thrift, compdata >= 0.6.1.2
+  hs-source-dirs:   exe-src
+  ghc-options:      -W
+  if !flag(upload) && !flag(all)
+    buildable:      False
+
+Test-Suite test
+  Type:             exitcode-stdio-1.0
+  Main-is:          Poets_Test.hs
+  Build-Depends:    base >= 4, containers, mtl, wl-pprint, directory, filepath, ghc >= 6.12, ghc-paths, STMonadTrans, equivalence, template-haskell, IndentParser, GraphSCC, datetime, xml, network, hslogger >= 1.1.0, ConfigFile, parsec >= 3, MissingH, time, array, compdata >= 0.6.1.2, thrift >= 1, test-framework, test-framework-hunit, HUnit, test-framework-quickcheck2, QuickCheck >= 2
+  hs-source-dirs:   src test/suites
+
+library
+  Exposed-Modules:
+      Poets.Reporting.Interface,
+      Poets.Reporting.Language.Parrot.Compiler.Interface,
+      Poets.Rules, 
+      Poets.Contracts, Poets.Logging,
+      Poets.Reporting, Poets.Data, Poets.EventLog,
+      Poets.EventLog.Names, Poets.Config,
+      Poets.EntityStore,
+      Poets.Reporting.Loader, Poets.Reporting.Report,
+      Poets.Reporting.ReportMonad, Poets.Conc,
+      Poets.Data.Serialize, Poets.Data.Value,
+      Poets.Data.Value.Duration, Poets.Data.Value.Utils,
+      Poets.Data.Render,
+      Poets.Data.Type, Poets.Data.Type.Utils,
+      Poets.Data.Type.Render,
+      Poets.Reporting.Language.Parrot.Syntax,
+      Poets.Data.Value.Render,
+      Poets.Data.Value.TypeChecker,
+      Poets.Data.Value.Serialize,
+      Poets.Reporting.ReportInitException,
+      Poets.Reporting.Language.Parrot.Compiler.Haskell,
+      Poets.Reporting.Language.Parrot,
+      Poets.Reporting.Language.Parrot.Compiler.MetaInterface,
+      Poets.Reporting.Language.Parrot.Compiler.BasicValue,
+      Poets.Reporting.Language.Parrot.Parser,
+      Poets.Reporting.Language.Parrot.Typing,
+      Poets.Reporting.Language.Parrot.Typing.BasicType,
+      Poets.Reporting.Language.Parrot.Typing.Decomp,
+      Poets.Reporting.Language.Parrot.Typing.ExtendedRecords,
+      Poets.Reporting.Language.Parrot.FreeVars,
+      Poets.Reporting.Language.Parrot.ReportLibrary,
+      Poets.Reporting.Language.Parrot.FreshVar,
+      Poets.Reporting.Language.Parrot.Desugar,
+      Poets.Reporting.Language.Parrot.Typing.PolyType,
+      Poets.Reporting.Language.Parrot.Typing.Inference,
+      Poets.Reporting.Language.Parrot.Typing.Instance,
+      Poets.Reporting.Language.Parrot.Typing.Rename,
+      Poets.Reporting.Language.Parrot.Typing.TypeAlias,
+      Poets.Reporting.Language.Parrot.Typing.Entailment,
+      Poets.Reporting.Language.Parrot.Typing.TypingMonad,
+      Poets.Reporting.Language.Parrot.Typing.Simplify.Simplify,
+      Poets.Reporting.Language.Parrot.Typing.Simplify.Match,
+      Poets.Reporting.Language.Parrot.Typing.Simplify.FuhMishra,
+      Poets.Reporting.Language.Parrot.Typing.Simplify.AtomicDecomp,
+      Poets.Reporting.Language.Parrot.Typing.Simplify.AtomicTypes,
+      Poets.Reporting.Language.Parrot.Typing.Simplify.FieldConstraints,
+      Poets.Reporting.Language.Parrot.Typing.Simplify.SubtypeConstraints,
+      Poets.Contracts.Base,
+      Poets.Contracts.Repository,
+      Poets.Contracts.Language.CSL,
+      Poets.Contracts.Language.CSL.Exceptions,
+      Poets.Contracts.Language.CSL.AST,
+      Poets.Contracts.Language.CSL.AST.Base,
+      Poets.Contracts.Language.CSL.AST.Clause,
+      Poets.Contracts.Language.CSL.AST.Exp,
+      Poets.Contracts.Language.CSL.AST.RecordFieldName,
+      Poets.Contracts.Language.CSL.AST.Type,
+      Poets.Contracts.Language.CSL.BuiltIn,
+      Poets.Contracts.Language.CSL.Desugar,
+      Poets.Contracts.Language.CSL.Parser,
+      Poets.Contracts.Language.CSL.Render,
+      Poets.Contracts.Language.CSL.Interpreter,
+      Poets.Contracts.Language.CSL.TypeChecker,
+      Poets.Contracts.Language.CSL.Typing.Inference,
+      Poets.Contracts.Language.CSL.Typing.TypeInferer,
+      Poets.Contracts.Language.CSL.Typing.Match,
+      Poets.Contracts.Language.CSL.Typing.Simplify,
+      Poets.Contracts.Language.CSL.Typing.Rename,
+      Poets.Contracts.Language.CSL.Evaluation.Substitute,
+      Poets.Contracts.Language.CSL.Evaluation.Evaluator,
+      Poets.Contracts.Language.CSL.Analysis.ExpectedTransactions,
+      Poets.Contracts.Language.CSL.Analysis.Guardedness,
+      Poets.Contracts.Language.CSL.Analysis.Concludable,
+      Poets.Data.Type.Parser
+  Build-Depends:    base >= 4, containers, mtl, wl-pprint, directory, filepath, ghc >= 6.12, ghc-paths, STMonadTrans, equivalence, template-haskell, IndentParser, GraphSCC, datetime, xml, network, hslogger >= 1.1.0, ConfigFile, parsec >= 3, MissingH, time, array, compdata >= 0.6.1.2, thrift >= 1
+  hs-source-dirs:   src
+  ghc-options:      -W
+  if !flag(lib) && !flag(all)
+    buildable:      False

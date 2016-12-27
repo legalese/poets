@@ -1,0 +1,25 @@
+name: TopNCustomers
+description:
+  A list of customers who have spent must money in the given currency.
+tags: external, financial, crm
+
+customers : [<Customer>]
+customers = [c | c : <Customer> <- map (\e -> e.1) entities]
+
+totalPayments : Currency -> <Customer> -> Real
+totalPayments c cu = sum [d |
+  p : Payment <- transactions,
+  p.sender == cu || p.receiver == cu,
+  p.money.currency == c,
+  d = if p.sender == cu then p.money.amount else 0 - p.money.amount]
+
+customerStatistics : Currency -> [CustomerStatistics]
+customerStatistics c = [CustomerStatistics{customer = cu, totalPaid = p} |
+  cu <- customers,
+  p = Money{currency = c, amount = totalPayments c cu}]
+
+topN : Int -> [CustomerStatistics] -> [CustomerStatistics]
+topN n cs = take n (sortBy (\cs1 cs2 -> cs1.totalPaid > cs2.totalPaid) cs)
+
+report : Int -> Currency -> TopNCustomers
+report n c = TopNCustomers{customerStatistics = topN n (customerStatistics c)}

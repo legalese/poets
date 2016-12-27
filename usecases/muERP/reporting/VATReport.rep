@@ -1,0 +1,10 @@
+name: VATReport
+description:
+  The VAT report.
+tags: external, financial
+
+report : VATReport
+report = VATReport{
+  outgoingVAT = vatOutgoing,
+  incomingVAT = vatIncoming,
+  vatDue = subtractMoney vatIncoming vatOutgoing}

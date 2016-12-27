@@ -1,0 +1,28 @@
+name: Invoices
+description: Provides a list of all issued Invoices
+tags: external
+
+--mkInvoice : Int -> IssueInvoice -> Invoice
+mkInvoice : Int -> TransactionEvent -> Invoice
+mkInvoice num tev = 
+  let transaction  = tev.transaction 
+  in
+  Invoice {
+    contractId = tev.contractId,
+    timeStamp = tev.timeStamp,
+    sender = transaction.sender,
+    receiver = transaction.receiver,
+    amount = transaction.moneyAmount.amount,
+    currency = transaction.moneyAmount.currency,
+    includedVAT = 0.0,
+    number = num }
+
+issueInvoices : [TransactionEvent]
+issueInvoices = [ev | ev : TransactionEvent <- events,
+                      ev.transaction :? IssueInvoice]
+
+allInvoices : [Invoice]
+allInvoices = numberWith mkInvoice issueInvoices
+
+report : Invoices
+report = Invoices { invoices = allInvoices }

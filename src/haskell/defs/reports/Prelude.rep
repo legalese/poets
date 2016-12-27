@@ -1,0 +1,142 @@
+-- Arithmetic
+min : (Ord a) => a -> a -> a
+min x y = if x < y then x else y
+
+max : (Ord a) => a -> a -> a
+max x y = if x > y then x else y
+
+-- List functions
+null : [a] -> Bool
+null = fold (\e r -> False) True
+
+first : a -> [a] -> a
+first = fold (\x a -> x)
+
+head : [a] -> a
+head = first (error "'head' applied to empty list")
+
+elemBy : (a -> a -> Bool) -> a -> [a] -> Bool
+elemBy f e = fold (\x a -> a || f x e) False
+
+elem : (Ord a) => a -> [a] -> Bool
+elem = elemBy (==)
+
+sum : (a < Real, Int < a) => [a] -> a
+sum = fold (+) 0
+
+length : [a] -> Int
+length = fold (\ x y -> y+1) 0 
+
+map : (a -> b) -> [a] -> [b]
+map f = fold (\x a -> (f x) # a) []
+
+filter : (a -> Bool) -> [a] -> [a]
+filter f = fold (\x a -> if f x then x # a else a) []
+
+nupBy : (a -> a -> Bool) -> [a] -> [a]
+nupBy f = fold (\x a -> x # filter (\ y -> not (f x y)) a) []
+
+nupProj : (Eq b) => (a -> b) -> [a] -> [a]
+nupProj pr = nupBy (\x y -> pr x == pr y)
+
+nup : (Eq a) => [a] -> [a]
+nup = nupBy (==)
+
+all : (a -> Bool) -> [a] -> Bool
+all f = fold (\x a -> f x && a) True
+
+any : (a -> Bool) -> [a] -> Bool
+any f = fold (\x a -> f x || a) False
+
+concat : [[a]] -> [a]
+concat = fold (\x a -> x ++ a) []
+
+concatMap : (a -> [b]) -> [a] -> [b]
+concatMap f l = concat (map f l)
+
+take : Int -> [a] -> [a]
+take n l = (fold (\x a -> if a.2 > 0 then (x # a.1,a.2 - 1) else a) ([],n) l).1
+
+-- Grouping functions
+addGroupBy : (a -> a -> Bool) -> a -> [[a]] -> [[a]]
+addGroupBy f a ll =
+  let felem l = fold (\ el r -> f el a) False l
+      run el r =
+        if r.1 then (True,el # r.2)
+        else if felem el then (True, (a # el) # r.2)
+        else (False, el # r.2)
+      res = fold run (False,[]) ll
+  in if res.1 then res.2 else [a] # res.2
+
+groupBy : (a -> a -> Bool) -> [a] -> [[a]]
+groupBy f = fold (addGroupBy f) []
+
+addGroupProj : (Ord b) => (a -> b) -> a -> [(b,[a])] -> [(b,[a])]
+addGroupProj f a ll =
+  let run el r =
+        if r.1 then(True,el # r.2)
+        else if el.1 == f a then (True, (el.1,a # el.2) # r.2)
+        else (False, el # r.2)
+      res = fold run (False,[]) ll
+  in if res.1 then res.2 else  (f a,[a]) # res.2
+
+groupProj : (Ord b) => (a -> b) -> [a] -> [(b, [a])]
+groupProj f = fold (addGroupProj f) []
+
+
+-- Sorting functions
+insertBy : (a -> a -> Bool) -> a -> [a] -> [a]
+insertBy le a l =
+  let ins e r =
+        if r.1 then (True, e # r.2)
+        else if le e a then (True,e # a # r.2)
+        else (False, e # r.2)
+      res = fold ins (False,[]) l
+  in if res.1 then res.2 else a # res.2 
+
+insertProj : (Ord b) => (a -> b) -> a -> [a] -> [a]
+insertProj proj = insertBy (\x y -> proj x <= proj y)
+
+insert : (Ord a) => a -> [a] -> [a]
+insert = insertBy (<=)
+
+sortBy : (a -> a -> Bool) -> [a] -> [a]
+sortBy le = fold (\e r -> insertBy le e r) []
+
+sortProj : (Ord b) => (a -> b) -> [a] -> [a]
+sortProj proj = sortBy (\x y -> proj x <= proj y)
+
+sort : (Ord a) => [a] -> [a]
+sort = sortBy (<=)
+
+
+-- Generators for 'lifecycled' data
+reports : [PutReport]
+reports = nupBy (\pr1 pr2 -> pr1.name == pr2.name) [pr |
+  cr : CreateReport <- events,
+  pr : PutReport = first cr [ur | ur : ReportEvent <- events, ur.name == cr.name]]
+
+entities : [(<Data>,String)]
+entities = [(ce.ent,ce.recordType) |
+  ce : CreateEntity <- events,
+  null [de | de : DeleteEntity <- events, de.ent == ce.ent]]
+
+contracts : [PutContract]
+contracts = [pc |
+  cc : CreateContract <- events,
+  pc = first cc [uc | uc : UpdateContract <- events, uc.contractId == cc.contractId],
+  null [cc | cc : ConcludeContract <- events, cc.contractId == pc.contractId],
+  null [dc | dc : DeleteContract <- events, dc.contractId == pc.contractId]]
+
+contractTemplates : [PutContractTemplate]
+contractTemplates = nupBy (\pcd1 pcd2 -> pcd1.name == pcd2.name) [pcd |
+  ccd : CreateContractTemplate <- events,
+  pcd : PutContractTemplate = first ccd [ucd | ucd : ContractTemplateEvent <- events, ucd.name == ccd.name]]
+
+transactionEvents : [TransactionEvent]
+transactionEvents = [tr | tr : TransactionEvent <- events,
+                          null [dc | dc : DeleteContract <- events,
+                                     dc.contractId == tr.contractId]]
+
+transactions : [Transaction]
+transactions = [tr.transaction | tr <- transactionEvents]

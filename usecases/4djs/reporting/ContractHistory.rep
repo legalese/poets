@@ -1,0 +1,10 @@
+name: ContractHistory
+description:
+      provides a list of previous transactions for a given contract (by id)
+
+report : Int -> ContractHistory
+report cid = 
+  ContractHistory { transactions =
+    [transaction | transaction : TransactionEvent <- events, 
+                   transaction.contractId == cid]
+  }

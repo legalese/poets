@@ -1,0 +1,22 @@
+BiTransaction is a Transaction.
+BiTransaction is abstract.
+BiTransaction has an Agent entity called sender.
+BiTransaction has an Agent entity called receiver.
+
+Transfer is a BiTransaction.
+Transfer is abstract.
+
+Payment is a Transfer.
+Payment is abstract.
+Payment has Money.
+
+CashPayment is a Payment.
+
+ContactConfirms is a Transaction.
+
+PrepareTables is a Transaction.
+
+GuestsArrive is a Transaction.
+
+ServeFood is a Transaction.
+ServeFood has a String called menuServed.

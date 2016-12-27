@@ -1,0 +1,12 @@
+name: ContractsByCustomer
+description:
+  Returns contractIds for every contract a specific 
+    customer has entered. Special case report for lejdj
+tags: internal, contract, lejdj
+
+report : <Customer> -> ContractsByCustomer
+report customer = ContractsByCustomer {
+      contracts = nup [con | 
+                   con : PutContract <- contracts,
+                   pr : DJContract = con.contract,
+                   pr.customer == customer ] }

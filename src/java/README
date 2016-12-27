@@ -1,0 +1,10 @@
+POETS Client side tool chain description:
+
+Compile a libthrift.jab file by entering your thrift folder and go to /lib/java. run the ant script.
+copy the libtrhrift.jar to /java/poetsio/lib/.
+
+After this, enter /java/poetsio/ and run 
+
+# ant dist
+
+to generate the poetsio.jar library. This will also generate the thrift classes for java. The poetsio.jar library will also contain the libthrift.jar. 

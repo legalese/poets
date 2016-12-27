@@ -1,0 +1,112 @@
+## * Resource model
+Resource is a Data.
+Resource has a list of AtomicResource called resources.
+
+## Atomic resources
+AtomicResource is a Data.
+AtomicResource has a ResourceType.
+AtomicResource has an Double called qty.
+
+## Resource types
+ResourceType is abstract.
+ResourceType is a Data.
+
+## Predefined resource types (enumeration)
+PredefinedRT is abstract.
+PredefinedRT is a ResourceType.
+
+Currency is a PredefinedRT.
+Currency is abstract.
+
+DKK is a Currency.
+#GBP is a Currency.
+#Euro is a Currency.
+#USD is a Currency.
+
+## Custom resource types
+CustomRT is a ResourceType.
+CustomRT has a ResType entity.
+
+ResType is a Data.
+ResType has a String called name.
+ResType has a UnitOfMeasure called unit.
+
+## Unit of measure (enumeration)
+UnitOfMeasure is abstract.
+UnitOfMeasure is a Data.
+
+Pieces is a UnitOfMeasure.
+Barrels is a UnitOfMeasure.
+
+MoneyAmount is a Data.
+MoneyAmount has a Currency.
+MoneyAmount has a Double called amount.
+
+
+## * Agents model
+Agent is a Data.
+Agent is abstract.
+
+## Legal entities can enter into contracts
+LegalEntity is an Agent.
+LegalEntity is abstract.
+LegalEntity has a String called name.
+LegalEntity has an Address called billingAddress.
+LegalEntity has a String called emailAddress.
+LegalEntity has a String called phoneNo.
+
+Company is a LegalEntity.
+
+Customer is a LegalEntity.
+
+Entrepreneur is a Customer.
+Entrepreneur has a String called companyName.
+Entrepreneur has an String called cvrNumber.
+Entrepreneur has an String called eanNumber.
+
+PrivateIndividual is a Customer.
+
+
+## * Other
+Address is a Data.
+Address has a String called address.
+Address has a String called zipCode.
+
+Payment is a Data.
+Payment has an Int called contractId.
+Payment has an Agent entity called sender.
+Payment has an Agent entity called receiver.
+Payment has a MoneyAmount.
+
+Configuration is a Data.
+Configuration has a Company entity called company.
+
+AssignedDJ is abstract.
+AssignedDJ is a Data.
+UndefinedDJ is an AssignedDJ. 
+DefinedDJ is an AssignedDJ.
+DefinedDJ has a DJ entity called dj.
+
+EventType is a Data.
+EventType is abstract.
+EventType has a String called details.
+
+Firmafest is an EventType.
+Privatfest is an EventType.
+Bryllup is an EventType.
+Ungdomsfest is an EventType.
+
+
+PaymentMethod is a Data.
+PaymentMethod is abstract.
+
+FixedPrice is a PaymentMethod.
+FixedPrice has a MoneyAmount.
+VariablePrice is a PaymentMethod.
+VariablePrice has a MoneyAmount called startPrice.
+VariablePrice has a Double called pricePrHour.
+
+##Extend the AcceptQuote event with a PaymentMethod
+AcceptQuote has a PaymentMethod.
+
+DJ is a LegalEntity.

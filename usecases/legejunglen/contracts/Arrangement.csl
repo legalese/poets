@@ -1,0 +1,35 @@
+name: arrangement
+type: Arrangement
+description: "Contract for handling a arrangement."
+
+// A reference to the designated entity that represents the company
+val me = reports.me ()
+
+clause arr(expectedArrival : Duration, numberOfTableSettings : Int)<me : <Me>, contact : <Adult>> = 
+  when ContactConfirms
+       due within expectedArrival <-> 1D
+       remaining newDeadline
+  then
+       arrival(newDeadline)<me, contact>
+  else arrival(expectedArrival)<me, contact>
+
+clause arrival(expectedArrival : Duration)<me : <Me>, contact : <Adult>> =
+  <me> GuestsArrive
+       due within expectedArrival <+> 10H
+  then payment(me)<contact>
+
+clause payment(me : <Me>)<contact : <Adult>> =
+  <contact> Payment(sender s, receiver r)
+            where r == me && s == contact
+            due within 1D
+
+contract = arr(subtractDate arrivalDate contractStartDate, numberOfTableSettings)<me, contactPerson>
+
+
+//- Indtastet alle oplysninger
+//- Opkald med rigtige antal personer som kommer til "fødselsdagen"
+//- Mindst dagen før; husk at dække bord
+//- Gæsterne ankommer
+//- Ring til pizzaria mindst 45 min før spisetid (skal ikke stå i kontrakt?)
+//- Spisetid tidligst en time efter ankomst (rule-engine)
+//- Betaling ved afslutning (indtastning i klient ved lukketid eller noget)

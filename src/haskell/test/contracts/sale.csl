@@ -1,0 +1,56 @@
+name: sale
+type: Sale
+description: "Set up a sale"
+
+clause sale(deliveryDeadline : Duration,
+            paymentDeadline : Duration,
+            goods : Resource,
+            currency : Currency,
+            amount : Double)<buyer : <Agent>, seller : <Agent>> =
+ // First seller must deliver goods
+ <seller> TransferAndDeliver(resource g, receiver r)
+  where g == goods &&
+        r == buyer
+  due within deliveryDeadline
+  then
+    // Buyer must pay half upon receipt
+    <buyer> Payment(currency c, amount a, receiver r)
+     where c == currency &&
+           a == 0.5 * amount &&
+           r == seller
+     due within 1H
+     then
+       ((// Remainder due within X days of receipt
+         <buyer> Payment(currency c, amount a, receiver r)
+          where c == currency &&
+                a == 0.5 * amount &&
+                r == seller
+          due within paymentDeadline
+         or
+         // Fine in case of late payment
+         <buyer> Payment(currency c, amount a, receiver r)
+          where c == currency &&
+                a == 1.1 * 0.5 * amount &&
+                r == seller
+          due within 14D after paymentDeadline)
+        and
+        // Buyer has 14 days to claim for damages
+        when ClaimForDamages(buyer b, seller s, resource g)
+              where b == buyer &&
+                    g == goods &&
+                    s == seller
+              due within 14D
+        then
+          // In case the goods are damaged, Seller must repay Buyer
+          <seller> Payment(currency c, amount a, receiver r)
+           where c == currency &&
+                 a == amount &&
+                 r == buyer
+           due within 7D)
+
+contract =
+ sale(subtractDate sellerExchangeDeadline startDate,
+      subtractDate buyerExchangeDeadline startDate,
+      goods,
+      currency,
+      price)<buyer, seller>

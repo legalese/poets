@@ -1,0 +1,58 @@
+
+// The company promises to find a DJ for the specified event.
+clause eventContract(djEvent : EventInformation, 
+                     customer : Customer,
+                     start : Duration)<company> =
+  <company> FindDJ(eventInformation ev, receiver r)
+    where ev == djEvent andalso
+          r == customer
+    due within min 1W start
+
+// A DJ promises to play, the company promises to pay the DJs salary, and the
+// customer promisses to pay the company.
+clause djContract(start : Duration,
+                  djEvent : EventInformation, currency : Currency,
+                  djSalary : Double, companyPaymentDeadline : Duration,
+                  customerPaymentDeadline : Duration)
+                 <company, customer, dj> =
+ <company> Payment(currency c, amount a, receiver r)
+  where c == currency andalso
+        a == djSalary andalso
+        r == dj
+  due within companyPaymentDeadline
+ and
+ <dj> PlayEvent(eventInformation ev, endTime end) @ t
+  where ev == djEvent 
+  due within 1D after start
+ then
+ if <customer>Payment(currency c, amount a, receiver r)
+     where  c == currency andalso
+            a == calcPrice ev end andalso
+            r == company
+     due within customerPaymentDeadline <-> t
+ else
+ if <customer>Payment(currency c, amount a, receiver r)
+     where c == currency andalso
+           a == (calcPrice ev end) + 100 andalso
+           r == company
+     due within 14D
+ else
+ <customer>Payment(currency c, amount a, receiver r)
+  where c == currency andalso
+        a == (calcPrice ev end) + 100 andalso
+        r == company
+  due within 14D
+
+
+contract eventContract : EventContract = 
+  eventContract(eventInformation, customer, 
+                subtractDate eventInformation.start startDate)<lejDJ>
+
+contract djContract : DJContract = 
+  djContract(subtractDate eventInformation.start startDate,
+             eventInformation, 
+	     eventInformation.currency, djSalary,
+             subtractDate companyPaymentDeadline startDate,
+	     subtractDate customerPaymentDeadline startDate)<lejDJ,
+                                                             customer,
+                                                             dj>

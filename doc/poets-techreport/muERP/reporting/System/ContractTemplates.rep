@@ -1,0 +1,7 @@
+name: ContractTemplates
+description:
+  A list of 'PutContractDef' events for each non-deleted contract template.
+tags: internal, contract
+
+report : [PutContractDef]
+report = contractDefs

@@ -1,0 +1,14 @@
+name: ActiveContracts
+description: 
+     provides a list of the names of all running contracts
+tags: external, contract
+
+peq c1 c2 = if (c1 :? DJContract) && (c2 :? DJContract)
+            then c1.start < c2.start
+            else c1.startDate < c2.startDate
+
+sortFun : PutContract -> PutContract -> Bool
+sortFun cp1 cp2 = peq cp1.contract cp2.contract
+
+report : ActiveContracts
+report = ActiveContracts{contracts = sortBy sortFun contracts}

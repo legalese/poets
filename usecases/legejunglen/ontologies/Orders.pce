@@ -1,0 +1,27 @@
+Arrangement field arrivalDate has order 1.
+Arrangement field contactPerson has order 2.
+Arrangement field food has order 3.
+Arrangement field placement has order 4.
+Arrangement field participants has order 5.
+Arrangement field numberOfTableSettings has order 6.
+Arrangement field comments has order 7.
+
+Participants is a Data.
+Participants has an Int called numberOfChildren.
+Participants has an Int called numberOfGrandparents.
+Participants has an Int called numberOfAdults.
+Participants has an Int called numberOfBabies.
+
+Birthday is an Arrangement.
+Birthday field birthdayChildren has order 2.
+
+Occasion is an Arrangement.
+Occasion field occasionInfo has order 2.
+
+
+Person field name has order 1.
+Adult field phoneNumber has order 2.
+Adult field eMail has order 3.
+
+FoodIncluded field eatingTime has order 1.
+FoodIncluded field suggestion has order 2.

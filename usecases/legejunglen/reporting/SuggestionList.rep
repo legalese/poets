@@ -1,0 +1,16 @@
+name: SuggestionList
+description:
+	Returns a list of possible values for the suggested menu.
+tags: internal
+
+report : [String]
+report = ["Forslag 1", 
+          "Forslag 2", 
+          "Forslag 3", 
+          "Forslag 4", 
+          "Forslag 5", 
+          "Forslag 6", 
+          "Forslag 7", 
+          "Forslag 8"
+         ]
+

@@ -1,0 +1,7 @@
+name: EntitiesByType
+description:
+  A list of all entities with the given type.
+tags: internal, entity
+
+report : String -> [<Data>]
+report t = map (\e -> e.1) (filter (\e -> e.2 == t) entities)

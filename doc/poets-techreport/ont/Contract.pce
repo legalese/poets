@@ -1,0 +1,3 @@
+Contract is abstract.
+Contract has a Timestamp called startDate.
+Contract has a String called templateName.

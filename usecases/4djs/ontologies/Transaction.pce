@@ -1,0 +1,20 @@
+## A bilateral transaction
+BilateralTransaction is a Transaction.
+BilateralTransaction is abstract.
+BilateralTransaction has an Agent entity called sender.
+BilateralTransaction has an Agent entity called receiver.
+
+## Transfer of a resource
+Transfer is a BilateralTransaction.
+Transfer has a Resource.
+
+## Issue Invoice
+IssueInvoice is a BilateralTransaction.
+IssueInvoice has a MoneyAmount.
+
+## Quote acceptance
+AcceptQuote is a BilateralTransaction.
+
+PlayEvent is a Transaction.
+PlayEvent has a DateTime called endTime.
+PlayEvent has a DJ entity called dj.

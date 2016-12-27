@@ -1,0 +1,2 @@
+// A reference to the designated entity that represents the company
+val me = reports.me ()

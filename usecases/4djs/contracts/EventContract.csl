@@ -1,0 +1,112 @@
+fun isAssigned adj dj =
+  case adj of DefinedDJ ddj -> ddj.dj == dj
+            | UndefinedDJ udj -> false
+
+// Check that the resource r is atomic
+fun isAtomic r t q =
+  r.resources == [AtomicResource{resourceType = t, qty = q}]
+
+fun isPayment a p = isAtomic a p.currency p.amount
+
+// A DJ promises to play, the company promises to pay the DJs salary, and the
+// customer promisses to pay the company.
+clause djContract(start : Duration,
+                  eventDate : DateTime,
+                  djSalary : MoneyAmount)<company : <Company>,
+                                          customer : <Customer>,
+                                          adj : AssignedDJ> =
+ when AcceptQuote(sender s, receiver r, paymentMethod pm)
+       where s == customer &&
+             r == company
+       due within start
+       remaining r
+ then
+ <company> Transfer(sender s, receiver r, resource p)
+            where isPayment p djSalary &&
+                  s == company &&
+                  isAssigned adj r
+  due within 1M
+ and
+ case pm of
+   // The customer pays a fixed price
+   FixedPrice fp -> fixedPrice(r, fp.moneyAmount)<company, customer,adj>
+   // The customer pays a variable price, depending on the hours played
+ | VariablePrice vp -> variablePrice(r,
+                                     vp.startPrice,
+                                     vp.pricePrHour,
+                                     eventDate)<company, customer, adj>
+
+clause fixedPrice(start : Duration,
+                  amount : MoneyAmount)<company : <Company>,
+                                        customer : <Customer>,
+                                        adj : AssignedDJ> =
+ <adj> PlayEvent(endTime end, dj dj)
+        where isAssigned adj dj
+        due within 1D after start
+ and
+ // Fixed pricing, so the customer can pay immediately
+ payment(amount)<company, customer>
+
+clause variablePrice(start : Duration,
+                     startPrice : MoneyAmount,
+                     pricePrHour : Double,
+                     eventDate : DateTime)<company : <Company>,
+                                           customer : <Customer>,
+                                           adj : AssignedDJ> =
+ <adj> PlayEvent(endTime end, dj dj)
+        where isAssigned adj dj
+        due within 1D after start
+ then
+ // Variable pricing, so the customer can only pay after the event
+ payment(calcPrice startPrice pricePrHour eventDate end)<company, customer>
+
+// Calculate the price, given the start price, the price per hour, and the
+// start/end time
+fun calcPrice startPrice pricePrHour start end =
+  startPrice{amount = startPrice.amount +
+             (pricePrHour / 60.0) * (durationToMinutes (subtractDate end start))}
+
+clause payment(amount : MoneyAmount)<company : <Agent>, customer : <Agent>> =
+ <company> IssueInvoice(sender s, receiver r, moneyAmount a)
+            where s == company &&
+                  r == customer &&
+                  a == amount
+            due within 1M
+ then
+ when Transfer(sender s, receiver r, resource p)
+       where s == customer &&
+             r == company &&
+             isPayment p amount
+       due within 1W
+ else
+  <company> IssueInvoice(sender s, receiver r, moneyAmount a)
+             where s == company &&
+                   r == customer &&
+                   a == amount{amount = amount.amount + 100}
+             due within 1W
+  then
+  when Transfer(sender s, receiver r, resource p)
+        where s == customer &&
+              r == company &&
+              isPayment p amount{amount = amount.amount + 100}
+        due within 1W
+  else
+   <company> IssueInvoice(sender s, receiver r, moneyAmount a)
+              where s == company &&
+                    r == customer &&
+                    a == amount{amount = amount.amount + 200}
+              due within 1W
+   then
+   <customer> Transfer(sender s, receiver r, resource p)
+               where s == customer &&
+                     r == company &&
+                     isPayment p amount{amount = amount.amount + 200}
+        due within 14D
+
+val config = head (reports.getConfig ()).configuration
+
+// Read company information from config
+val company = config.company
+
+contract = 
+ djContract(subtractDate start startDate, start, djSalary)<company, customer, dj>

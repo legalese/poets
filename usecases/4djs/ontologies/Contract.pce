@@ -1,0 +1,14 @@
+DJContract is a Contract.
+DJContract has comment "A contract between the company, the customer, and a DJ".
+DJContract has an AssignedDJ called dj.
+DJContract has a Customer entity.
+DJContract has a MoneyAmount called djSalary.
+DJContract has a Resource called gear.
+DJContract has an EventType.
+DJContract has an Int called size.
+DJContract has a DateTime called start.
+DJContract has a DateTime called tentativeEnd.
+DJContract has an Address called eventAddress.
+DJContract has a String called comments.
+DJContract has a String called setupInfo.
+DJContract has a String called jobInfo.

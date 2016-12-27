@@ -1,0 +1,47 @@
+name: MonthlyOverview
+description:
+  Get information about payments received for given month of 2012.
+tags: legejunglen
+
+allContracts : [PutContract]
+allContracts = [pc |
+  cc : CreateContract <- events,
+  pc = first cc [uc | uc : UpdateContract <- events, uc.contractId == cc.contractId]]
+
+allPayments : Int -> [(Payment, PutContract)]
+allPayments month =
+  [(pay, putC) |
+    putC <- allContracts,
+    arra : Arrangement = putC.contract,
+    arra.arrivalDate.month == month,
+    arra.arrivalDate.year == 2012,
+    tr   : TransactionEvent <- transactionEvents,
+    tr.contractId == putC.contractId,
+    pay : Payment = tr.transaction
+  ]
+
+initialOverview = 
+  MonthlyOverview {
+    total = 0,
+    arrangements = []
+  }
+
+
+addArrangement : (Payment, Arrangement) -> [ArrangementInfo] -> [ArrangementInfo]
+addArrangement payArr arrs =
+  insertProj 
+  (\pa -> pa.arrangement.arrivalDate) 
+  (ArrangementInfo {arrangement = payArr.2, payment = payArr.1})
+  arrs
+
+calc payPut overv = 
+	type x = payPut.2.contract of
+		Arrangement ->
+			overv {
+			 total         = overv.total + payPut.1.money.amount,
+			 arrangements  = addArrangement (payPut.1, x) overv.arrangements
+			}
+		_ -> overv
+
+report : Date -> MonthlyOverview
+report month = fold calc initialOverview (allPayments month.month)

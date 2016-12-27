@@ -1,0 +1,171 @@
+########## EXAMPLE ONTOLOGY #############
+Data is abstract.
+
+#### VAT Determinants ####
+VATDeterminants is in Data.
+VATDeterminants has a StationaryLocation called placeOfDelivery.
+VATDeterminants has a bool called levyVAT.
+VATDeterminants has a bool called reverseCharge.
+VATDeterminants has a double called rate. #The VAT rate, 0.25 = 25%
+VATDeterminants has a double called deductRate. #The rate with which ingoing VAT is deductible
+VATDeterminants has a UnrealizedEnum called unrealized.
+
+UnrealizedEnum is abstract.
+UnrealizedEnum is in Data.
+
+NoUnrealized is an UnrealizedEnum. #Don't use unrealized VAT
+
+#### LOCATIONS ####
+Location is abstract.
+Location is in Data.
+
+StationaryLocation is a Location.
+StationaryLocation has a CountryEnum called country.
+StationaryLocation has a bool called isEU. #Whether this location is in the EU (to be derived).
+
+CountryEnum is abstract.
+CountryEnum is in Data.
+Denmark is a CountryEnum.
+Germany is a CountryEnum.
+
+## ADDRESS
+Address is a StationaryLocation.
+Address has a string called addressString. #This can be fleshed out with house number etc.
+
+
+
+
+PlaceOfDelivery is abstract.
+PlaceOfDelivery is in Location.
+
+Denmark is a PlaceOfDelivery.
+
+#### AGENTS ####
+Agent is abstract.
+Agent is in Data.
+
+VatAgent is abstract.
+VatAgent is in Agent.
+VatAgent has a Location called establishedIn.
+VatAgent has a bool called registeredForVAT.
+
+Seller is abstract.
+Seller is in VatAgent.
+Seller has a bool called isBusiness.
+
+Buyer is abstract.
+Buyer is in VatAgent.
+Buyer has a bool called liableForVAT.
+
+#### Transaction ####
+Transaction is abstract.
+Transaction has an Item.
+Transaction has an TransportSum called transport.
+
+
+
+Sale is in Transaction. //Classification
+OwnersUse is in Transaction.
+StaffUse is in Transaction.
+Gift is in Transaction.
+ProductSample is in Transaction.
+Merchandise is in Transaction.
+Purchase is in Transaction.
+Purchase has a bool called useLiableForVAT
+
+
+
+#### ITEMS ####
+Item is abstract.
+Item is in Data.
+Item has an int called vatRate.
+Item has a Seller.
+Item has a Buyer.
+Item has a PlaceOfDelivery.
+Item has a VatAgentSum called vatCalculator. #This is the agent who must calculate the VAT.
+Item has a VatAgentSum called vatCharger. #This is the agent who must charge the VAT.
+Item has an Invoice.
+Item has a bool called levyVAT.
+Item has an int called purchaceValue.
+Item has an int called deductRate. #Percentage with which incomming VAT can be deducted.
+#### GOODS ####
+Good is in Item.
+
+#### SERVICES ####
+Service is in Data.
+Service has a Location called placeOfActualUse.
+
+#### INVOICE ####
+Invoice is in Data.
+Invoice has a double called price.
+Invoice has a double called vat.
+Invoice has a double called totalPrice.
+Invoice has a bool called reverseCharge.
+Invoice has a bool called registerVATNO.
+
+
+#### SERVICE INSTANCES ####
+PersonalService is in Service.
+CateringService is in Service.
+AdministrativeService is in Service.
+VehicleRentalInEUService is in Service.
+VeterinarianService is in Service.
+SafeDepositBoxService is in Service.
+
+V0_1 is in Service.
+V0_1 has comment "Arbejdsydelser på varer, som efter behandlingen bliver transporteret til et sted uden for EU af den, der sælger ydelsen eller af en køber etableret i udlandet.".
+
+V0_2 is in Service.
+V0_2 has comment "Udlejning af skibe og fly samt reparations-, vedligeholdelses- og ombygningsarbejde på skibe og fly. Skibene skal have en bruttotonage på 5 eller derover. Udlejning, repa- ration og vedligeholdelse af det faste udstyr er også fritaget. Fritagelsen gælder dog ikke ydelser på sportsfly og lystfartøjer.".
+
+V0_3 is in Service.
+V0_3 has comment "Ydelser, der udføres for fly og skibe i udenrigsfart og deres ladning, bortset fra sports- fly og lystfartøjer.".
+
+V0_4 is in Service.
+V0_4 has comment "Transportydelser til diplomatiske og konsulære repræsentationer samt dertil knyttet personale i andre EU-lande. Fritagelsen gælder dog kun, når modtageren af transport- ydelsen er berettiget til momsfritagelse i værtslandet.".
+
+V0_5 is in Service.
+V0_5 has comment "Ydelser til internationale organisationer i andre EU-lande. Fritagelsen gælder dog kun, når den internationale organisation er berettiget til momsfritagelse i værtslandet.".
+
+V0_6 is in Service.
+V0_6 has comment "Ydelser, herunder transportydelser og hertil knyttede transaktioner, der er direkte knyttet til udførsel af varer til steder uden for EU.".
+
+V0_7 is in Service.
+V0_7 has comment "Ydelser, der er direkte knyttet til indførsel af varer under en af følgende ordninger: - fællesskabsforsendelse - aktiv forædling - midlertidig indførsel - varer til oplæggelse i Københavns Frihavn, på frilager eller toldoplag.".
+
+V0_8 is in Service.
+V0_8 has comment "Bestemte formidlingsydelser.".
+
+AdvisingService is a Service.
+
+ElectronicService is a Service.
+
+
+#### Branch ####
+Branch is abstract.
+Branch is in Data.
+
+Lawyering is in Branch.
+Engineering is in Branch.
+ProjectEngineering is in Branch.
+Accounting is in Branch.
+Advising is in Branch.
+Other is in Branch. #Encodes all other (for which there are no rules)
+
+#### SUM TYPES ####
+VatAgentSum is abstract.
+VatAgentSum is in Data.
+
+VCSome is in VatAgentSum.
+VCSome has a VatAgent.
+
+VCNone is in VatAgentSum.
+
+TransportSum is abstract.
+TransportSum is in Data.
+
+TransportSome is in TransportSum.
+TransportSome has a Location called start.
+TransportSome has a Location called end.
+
+TransportNone is in TransportSum.

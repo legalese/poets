@@ -1,0 +1,28 @@
+name: salesContract
+type: Sale
+description: "A simple sales contract between a company and a customer"
+
+fun elem x = foldr (\y b -> x == y || b) false
+fun filter f = foldr (\x b -> if f x then x # b else b) []
+fun subset l1 l2 = all (\x -> elem x l2) l1
+fun diff l1 l2 = filter (\x -> not (elem x l2)) l1
+
+clause sale(goods : [Goods], amount : Int)<comp : <Company>, cust : <Customer>> =
+ <comp> IssueInvoice(goods g, amount a)
+   where g == goods && a == amount due immediately
+ then
+ <cust> Payment(amount a)
+   where a == amount due within 14D
+ and
+ delivery(goods, 1W)<comp>
+
+clause delivery(goods : [Goods], deadline : Duration)<comp : <company>> =
+ if goods == [] then
+   fulfilment
+ else
+   <comp> Delivery(goods g)
+     where g /= [] && subset g goods due within deadline remaining r
+   then
+   delivery(diff goods g, r)<comp>
+
+contract = sale(goods, amount)<company, customer>

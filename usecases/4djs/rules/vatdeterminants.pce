@@ -1,0 +1,36 @@
+########## EXAMPLE ONTOLOGY #############
+Data is abstract.
+
+#### VAT Determinants ####
+VATDeterminants is in Data.
+VATDeterminants has a StationaryLocation called placeOfSupply.
+VATDeterminants has a bool called levyVAT.
+VATDeterminants has a bool called reverseCharge.
+VATDeterminants has a double called rate. #The VAT rate, 0.25 = 25%
+VATDeterminants has a double called deductRate. #The rate with which ingoing
+                                                #VAT is deductible.
+VATDeterminants has a UnrealizedEnum called unrealized.
+
+UnrealizedEnum is abstract.
+UnrealizedEnum is in Data.
+
+NoUnrealized is an UnrealizedEnum. #Don't use unrealized VAT.
+
+#### LOCATIONS ####
+Location is abstract.
+Location is in Data.
+
+StationaryLocation is a Location.
+StationaryLocation has a CountryEnum called country.
+StationaryLocation has a bool called isEU. #Whether this location is in the
+                                           #EU (to be derived).
+
+CountryEnum is abstract.
+CountryEnum is in Data.
+Denmark is a CountryEnum.
+Germany is a CountryEnum.
+
+## ADDRESS
+Address is a StationaryLocation.
+Address has a string called addressString. #This can be fleshed out with
+                                           #house number etc.

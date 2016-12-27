@@ -1,0 +1,22 @@
+name: UnpaidInvoices
+description:
+  A list of unpaid invoices.
+tags: external, financial
+
+-- Generate a list of unpaid invoices
+unpaidInvoices : [UnpaidInvoice]
+unpaidInvoices = [UnpaidInvoice{invoice = inv, remainder = remainder} |
+  invS <- invoicesSent,
+  inv = Invoice{
+    sender = invS.2.sender @,
+    receiver = invS.2.receiver @,
+    orderLines = invS.2.orderLines},
+  payments = [payment.money |
+    tr <- transactionEvents,
+    tr.contractId == invS.1,
+    payment : Payment = tr.transaction],
+  remainder = subtractMoney (invoiceTotal inv) payments,
+  any (\m -> m.amount > 0) remainder]
+
+report : UnpaidInvoices
+report = UnpaidInvoices{invoices = unpaidInvoices}

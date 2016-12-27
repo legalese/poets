@@ -1,0 +1,9 @@
+name: ContractSummary
+description:
+  A list of meta data for the given contract.
+tags: internal, contract
+
+report : Int -> [PutContract]
+report cid = [createCon |
+  createCon : PutContract <- contracts,
+  createCon.contractId == cid]

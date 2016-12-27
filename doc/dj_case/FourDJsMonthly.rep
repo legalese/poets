@@ -1,0 +1,20 @@
+-- DateTime filter function:
+DateTimeFilter : Date -> Date -> [Event] -> [Event]
+DateTimeFilter lowerBounr UpperBound list = 
+  let list'  = filter \e -> e.timeStamp < lowerBound list in
+  filter \e -> e.timeStamp < upperBound list'
+
+-- Monthly income
+MonthlyIncome : [Event] -> Int -> Int -> Double
+MonthlyIncome month year ev = 
+  let lowerBound = Date 01-month-year in
+  let upperBound = Date 01-month+1-year in
+  let ev' = filter (:? Payment) ev
+  let ev'' = DateTimeFilter lowerBound upperBound ev' in
+  fold \x y -> x.value + y 0,0 ev''
+
+-- Monthly expenses
+MonthlyExpenses : [Event] -> Int -> Int -> Double
+MonthlyExpenses month year ev = 
+  -- TODO
+  0.0

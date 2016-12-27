@@ -1,0 +1,20 @@
+// Arithmetic
+fun floor x = let n = ceil x in if n > x then n - 1 else n
+fun round x = let n1 = ceil x in let n2 = floor x in if n1 + n2 > 2 * x then n2 else n1
+fun max a b = if a > b then a else b
+fun min a b = if a > b then b else a
+
+// List functions
+fun filter f = foldr (\x b -> if f x then x # b else b) []
+fun map f = foldr (\x b -> (f x) # b) []
+val length = foldr (\x b -> b + 1) 0
+fun null l = l == []
+fun elem x = foldr (\y b -> x == y || b) false
+fun all f = foldr (\x b -> b && f x) true
+fun any f = foldr (\x b -> b || f x) false
+val reverse = foldl (\a e -> e # a) []
+fun append l1 l2 = foldr (\e a -> e # a) l2 l1
+
+// Lists as sets
+fun subset l1 l2 = all (\x -> elem x l2) l1
+fun diff l1 l2 = filter (\x -> not (elem x l2)) l1

@@ -1,0 +1,32 @@
+name: JobsPrWeek
+description:
+  Return the number of jobs pr week for all weeks. The weeks are identified by the date of the monday in that week.
+tags: Internal, Dashboard, LejDJ
+
+
+--List of jobs for a given week
+getJobs : DateTime -> [DJContract]
+getJobs startDate = [gig | cp : CreateContract <- events,
+                           gig : DJContract = cp.contract,
+                           gig.start >= startDate,
+                           gig.start < startDate <+> <<1 week>>]
+
+prWeek : DateTime -> JobsPrWeekData
+prWeek date = JobsPrWeekData { amount   = length (getJobs date),
+                               fromDate = date,
+                               toDate   = date <+> <<1 week>> }
+
+absoluteStart : DateTime
+absoluteStart = <<2006-01-02 12:00:00>>
+
+-- Enumerates the weeks from the absolute start
+-- until the 'date'
+-- weeks : DateTime -> [DateTime]
+  
+
+report : [DateTime] -> JobsPrWeek
+report dates = JobsPrWeek { 
+  jobs = [job | 
+          date <- dates,
+          job = prWeek date]
+  }

@@ -1,0 +1,27 @@
+Name:			poets-thrift
+Version:		0.1
+Synopsis:            	Library containing the thrift interface for POETS.
+Description:		Library containing the thrift interface for POETS.
+Category:            	
+License:		AllRightsReserved
+License:		AllRightsReserved
+Author:			diku@3gerp.org
+Maintainer:		diku@3gerp.org
+Build-Type:		Simple
+Cabal-Version:		>=1.2
+
+library
+  Exposed-Modules:      Value_Types,
+                        Type_Types,
+                        Data_Types,
+                        Entities_Types,
+                        Contracts_Types,
+                        Reporting_Types,
+                        Rules_Types,
+                        Poets_Types,
+                        PoetsServer,
+                        PoetsServer_Iface,
+                        PoetsServer_Client,
+                        Poets_Consts
+  Build-Depends:	base >=4, thrift >= 1, containers, bytestring, vector, unordered-containers, text, hashable, QuickCheck
+  hs-source-dirs:	gen-hs

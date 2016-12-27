@@ -1,0 +1,54 @@
+name: PaidInvoices
+description: Provides a list of all paid Invoices
+tags: external
+
+
+filterPaymentAmounts : [AtomicResource] -> [MoneyAmount]
+filterPaymentAmounts res = [ MoneyAmount{currency = r.resourceType,
+                                         amount = r.qty} |
+                             r <- res,
+                             r.resourceType :? Currency ]
+
+-- Get all transfer transactions which are transfer of money.
+getPaymentTransactions : [Payment]
+getPaymentTransactions = [ Payment{contractId = transaction.contractId,
+                                   sender = transfer.sender,
+                                   receiver = transfer.receiver,
+                                   moneyAmount = amount} |
+                           transaction : TransactionEvent  <- events,
+                           transfer : Transfer = transaction.transaction,
+                           amount <- filterPaymentAmounts transfer.resource.resources]
+
+getPayments : Invoice -> [Payment]
+getPayments invoice = [ payment |
+                        payment <- getPaymentTransactions,
+                payment.contractId == invoice.contractId,
+                invoice.receiver == payment.sender]
+
+--mkInvoice : Int -> IssueInvoice -> Invoice
+mkInvoice : Int -> TransactionEvent -> Invoice
+mkInvoice num tev = 
+  let transaction  = tev.transaction 
+  in
+  Invoice {
+    contractId = tev.contractId,
+    timeStamp = tev.timeStamp,
+    sender = transaction.sender,
+    receiver = transaction.receiver,
+    amount = transaction.moneyAmount.amount,
+    currency = transaction.moneyAmount.currency,
+    includedVAT = 0.0,
+    number = num }
+
+issueInvoices : [TransactionEvent]
+issueInvoices = [ev | ev : TransactionEvent <- events,
+                      ev.transaction :? IssueInvoice]
+
+allInvoices : [Invoice]
+allInvoices = numberWith mkInvoice issueInvoices
+
+report : PaidInvoices
+report = PaidInvoices { invoices =
+                    [ PaidInvoice {invoice = inv, payment = pay} |
+                      inv <- allInvoices,
+                      pay <- headList (getPayments inv)] }

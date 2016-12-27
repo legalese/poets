@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<project name="client" default="javac" basedir=".">
+	<!-- Arguments to gwtc and devmode targets -->
+
+	<property name="poetsio.dir" value="./../poetsio" />
+	<property name="javalib.dir" value="lib" />
+	
+	<path id="project.class.path">
+		<pathelement location="bin" />
+	</path>
+
+	<target name="poetsio" description="Build the poetsio.jar">
+		<ant antfile="build.xml" target="dist" dir="${poetsio.dir}" inheritall="false"/>
+		<mkdir dir="${javalib.dir}"/>
+		<copy todir="${javalib.dir}">
+			<fileset dir="${poetsio.dir}/dist" includes="poetsio.jar"/>
+			<fileset dir="${poetsio.dir}/lib" includes="libthrift*.jar,slf4j-*jar"/>
+		</copy>
+	</target>
+
+	<!--<target name="javac" depends="poetsio" description="Compile java source">-->
+	<target name="javac" description="Compile java source">
+		<mkdir dir="bin" />
+		<javac srcdir="src" includes="**" encoding="utf-8"
+				destdir="bin/"
+				debug="true" debuglevel="lines,vars,source" includeantruntime="false">
+			<classpath>
+				<path refid="project.class.path"/>
+				<fileset dir="${javalib.dir}">
+					<include name="*.jar" />
+				</fileset>
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="boot" depends="javac" description="Run bootstrap">
+		<java classname="dk.diku.poets.bootstrap.Bootstrap" fork="true">
+			<!-- <arg value="setup.ini"/> -->
+			<arg value="${file}" />
+			<classpath>
+				<path refid="project.class.path"/>
+				<fileset dir="${javalib.dir}">
+					<include name="*.jar" />
+				</fileset>
+			</classpath>
+		</java>
+	</target>
+
+	<!-- JB hack to create a stand-alone bootstrap program -->
+        <target name="package" depends="javac" description="Create stand-alone bootstrap jar">
+	  <jar destfile="poets-bootstrap.jar" basedir="bin">
+	    <zipgroupfileset dir="lib" includes="*.jar"/>
+	    <!-- This leads to "exploding" and integrating the libraries into
+	         this jar. This is a _hack_ described at
+http://stackoverflow.com/questions/183292/classpath-including-jar-within-a-jar
+	    --> 
+	    <manifest>
+	      <!-- manifest does not need class-path, all is in this jar -->
+	      <!-- entry point is the only thing required -->
+	      <attribute name="Main-Class" value="dk.diku.poets.bootstrap.Bootstrap"/>
+	    </manifest>
+	  </jar>
+	</target>
+
+</project>

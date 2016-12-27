@@ -1,0 +1,7 @@
+name: ReportNames
+description:
+  A list of names of all registered reports.
+tags: internal, report
+
+report : [String]
+report = [r.name | r <- reports]

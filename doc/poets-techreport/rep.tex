@@ -1,0 +1,581 @@
+\subsection{Types, Type Constraints and Type Schemes}
+\label{sec:type-system}
+
+The following grammar describes the type expressions that are used in
+the report language:
+\begin{center}
+  \begin{bnf}
+    \tau &\ebnf& r \bnfsep \alpha \bnfsep \tbool \bnfsep
+    \tint \bnfsep \treal \bnfsep \tchar \bnfsep
+    \ttimestamp \bnfsep \tduration
+    &\\ &\bnfsep &
+    \tdt \bnfsep \tlist{\tau} \bnfsep \tent{r} \bnfsep \tau_1 \to \tau_2 \bnfsep \tau_1
+    + \tau_2 \bnfsep (\tau_1, \tau_2) \bnfsep ()
+  \end{bnf}
+\end{center}
+where $r$ ranges over record names and $\alpha$ over type
+variables.
+
+The report language is polymorphically typed and permits to put
+constraints on types, for example, subtyping constraints.  The
+language of type constraints is defined as follows:
+\begin{center}
+  \begin{bnf}
+    C &\ebnf& \tau_1 <: \tau_2 \bnfsep \fieldC{\tau_1}{f}{\tau_2}
+    \bnfsep \eqC{\tau} \bnfsep \ordC{\tau}
+  \end{bnf}
+\end{center}
+
+Intuitively, these constraints can be interpreted as follows:
+\begin{itemize}
+\item A \emph{subtype constraint} of the form $\tau_1 <: \tau_2$
+  requires $\tau_1$ to be a subtype of $\tau_2$,
+\item a \emph{field constraint} of the form
+  $\fieldC{\tau_1}{f}{\tau_2}$ requires $\tau_1$ to be a record
+  type containing a field $f$ of type $\tau_2$,
+\item an \emph{equality constraint} of the form $\eqC{\tau}$ requires
+  the type $\tau$ to have an equality predicate \prt{==} defined on it,
+  and
+\item an \emph{order constraint} of the form $\ordC{\tau}$ requires
+  the type $\tau$ to have order predicates ($<$, \prt{<=}) defined on
+  it.
+\end{itemize}
+
+In order to accommodate for the polymorphic typing, we have to move
+from types to \emph{type schemes}. Type schemes are of the form
+$\forall \tup \alpha. \tup C \implC \tau$, that is, a type with a
+universal quantification over a sequence of type variables, restricted
+by a sequence of constraints. We abbreviate $\forall \emptyseq. \tup C
+\implC \tau$ by writing $\tup C \implC \tau$, and $\emptyseq \implC
+\tau$ by $\tau$. The \emph{universal closure} of a type scheme $\tup C
+\implC \tau$, that is, $\forall \tup \alpha. \tup C \implC \tau$ for
+$\tup \alpha$ the free variables $\fv{\tup C,\tau}$ in $\tup C$ and
+$\tau$, is abbreviated by $\forall \tup C \implC \tau$.
+
+\subsection{Built-in Symbols}
+\label{sec:built-symbols}
+
+
+In the following we give an overview of the constants provided by the
+language. Along with each constant $c$ we will associate a designated
+type scheme $\sigma_c$.
+
+One part of the set of constants consists of literals: Numeric
+literals $\reals$, Boolean literals $\set{\ctrue, \cfalse}$, character
+literals $\set{\texttt{'a'}, \texttt{'b'}, \ldots}$, and string
+literals. Each literal is associated with its obvious type: $\tint$
+(respectively $\treal$), $\tbool$, $\tchar$, respectively
+$\tstring$. Moreover, we also have entity values $\valref{r,e}$ of
+type $\tent{r}$ with $e$ a unique identifier.
+
+
+In the following we list the remaining built-in constants along with
+their respective type schemes. Many of the given constant symbols are
+used as mixfix operators. This is indicated by placeholders
+$\mhole$. For example a binary infix operator $\circ$ is then written
+as a constant $\mhole \circ \mhole$. For a constant $c$ we write $c :
+\tup C \implC \tau$ in order to indicate the type scheme $\sigma_c =
+\forall \tup C \implC \tau$ assigned to $c$.
+
+\begin{align*}
+  \mhole\circ\mhole &\colon \alpha <: \treal \implC \alpha
+  \to \alpha \to \alpha &&\forall
+  \circ \in \set{+,-,*}\\
+  \mhole / \mhole&\colon \treal \to \treal \to
+  \treal \\
+  \mhole \equiv \mhole &\colon \eqC{\alpha} \implC \alpha \to
+  \alpha \to \tbool\\
+  \mhole\circ\mhole &\colon \ordC{\alpha} \implC \alpha \to
+  \alpha \to \tbool &&\forall
+  \circ \in \set{>,\ge,<,\le}\\
+  \mhole\circ\mhole &\colon \alpha <: \tdt \implC \alpha
+  \to \tduration \to \alpha &&\forall
+  \circ \in \set{\dplus,\dminus}
+\end{align*}
+%
+\begin{align*}
+  r\;\{f_1 = \mhole, \ldots , f_n
+    = \mhole\} &\colon \tau_1 \to \ldots \tau_n \to r \qquad
+  \text{where } \rho(r) = \set{(f_1,\tau_1),\ldots,(f_n,\tau_n)}\\
+  \mhole . f &\colon \fieldC{\alpha}{f}{\beta} \implC
+  \alpha \to \beta\\
+  \mhole\;\{f_1 = \mhole, \ldots , f_n
+    = \mhole\} &\colon
+  \fieldC{\alpha}{f_1}{\alpha_1},\ldots,\fieldC{\alpha}{f_n}{\alpha_n}
+  \implC \alpha \to \alpha_1 \to \ldots \to \alpha_n \to \alpha
+\end{align*}
+%
+\begin{align*}
+  \lnot &: \tbool \to \tbool\\
+  \mhole \circ \mhole &: \tbool \to \tbool \to \tbool &&\forall
+  \circ \in \set{ \land, \lor }\\
+  \ifelse{\mhole}{\mhole}{\mhole} &\colon \tbool \to \alpha \to \alpha \to \alpha
+\end{align*}
+%
+\begin{align*}
+  \vlist{}&\colon \tlist{\alpha}\\
+  \mhole \cons\mhole &\colon \alpha \to \tlist{\alpha} \to
+  \vlist{\alpha}\\
+  \foldr &\colon \eqC\beta \implC (\alpha \to \beta \to \beta) \to \beta
+  \to \tlist\alpha \to \beta
+\end{align*}
+%
+\begin{align*}
+  () &\colon ()\\
+  (\mhole,\mhole)&\colon \alpha \to \beta \to
+  (\alpha,\beta)\\
+  \keyword{Inl}&\colon \alpha \to \alpha + \beta\\
+  \keyword{Inr}&\colon \beta \to \alpha + \beta\\
+  \keyword{case}&\colon \alpha + \beta \to (\alpha \to
+    \gamma) \to (\beta \to \gamma) \to \gamma\\
+  \mhole.1&\colon (\alpha,\beta)\to\alpha\\
+  \mhole.2&\colon (\alpha,\beta)\to\beta
+\end{align*}
+%
+\begin{align*}
+  \mhole\derefNow&\colon \tent{r} \to r\\
+  \mhole\derefCxt&\colon \tent{r} \to r
+\end{align*}
+%
+\begin{align*}
+  \vdate{\mhole-\mhole-\mhole\quad\mhole\colon\mhole\colon\mhole}
+  &: \underbrace{\tint \to \dots \to \tint}_{6\times} \to \ttimestamp%
+  \\%
+  \vdur{\mhole\; s, \mhole\; min, \mhole\;
+    h,  \mhole\; d,  \mhole\;
+    w,  \mhole\; mon, \mhole\; y}
+  &: \underbrace{\tint \to \dots \to \tint}_{7\times} \to \tduration%
+\end{align*}
+%
+\begin{align*}
+  \keyword{error} &: \tstring \to \alpha
+\end{align*}
+
+We assume that there is always defined a record type $\recordname{Event}$
+which is the type of an event stored in the central \emph{event log}
+of the system. The list of all events in the event log can be accessed
+by the following constant:
+\begin{align*}
+  \keyword{events} &: \tlist{\recordname{Event}}
+\end{align*}
+
+When considering built-in constants, we also distinguish between
+\emph{defined functions} $f$ and \emph{constructors}
+$F$. Constructors are the constants $\vdate{\mhole-\mhole-\mhole\quad\mhole\colon\mhole\colon\mhole}$,
+$\vdur{\mhole\; s, \mhole\; min, \mhole\; h, \mhole\; d, \mhole\; w,
+  \mhole\; mon, \mhole \; y}$, $r\;\{f_1 = \mhole, \ldots ,
+f_n = \mhole\}$, $\cons$, $\vlist{}$, $()$, $(\mhole,\mhole)$,
+$\keyword{Inl}$, $\keyword{Inr}$ and $\keyword{error}$ as well as all
+literals. The remaining constants are defined functions.
+
+Derived from its type scheme we can also assign an \emph{arity}
+$\arity{c}$ to each constant $c$ by defining $\arity{c}$ as the
+largest $n$ such that $\sigma_c = \forall \tup\alpha.\tup C \implC
+\tau_1 \to \tau_2 \to \dots \to \tau_{n+1}$
+
+\subsection{Type System}
+\label{sec:constraint-system}
+
+Before we can present the type system of the report language, we have
+to give the rules for the type constraints. To this end we extend the
+subtyping judgement $\issubtype{\calR}{\tau_1}{\tau_2}$ for values
+from Figure~\ref{fig:value-typing}. The constraint entailment
+judgement $\constrEnt{\calR}{\calC}{C}$ states that a constraint $C$
+follows from the set of constraints $\calC$ and the record typing
+environment $\calR$.
+\begin{figure}
+  \centering%
+  \small%
+  % 
+  \infruleI{Hyp}%
+  {C \in \calC}%
+  {\constrEnt{\calR}{\calC}{C}}%
+  \quad%
+  \infruleI{$<:$ Rec}
+  {r_1 \subrec r_2}%
+  {\constrEnt{(R,A,F,\rho,\subrec)}{\calC}{r_1 <: r_2}}%
+  \\[1em]% 
+  \infrule{$<:$ Refl}%
+  {\constrEnt{\calR}{\calC}{\tau <: \tau}}%
+  \quad%
+  \infruleII{$<:$ Trans}%
+  {\constrEnt{\calR}{\calC}{\tau_1 <: \tau_2}}
+  {\constrEnt{\calR}{\calC}{\tau_2 <: \tau_3}}
+  {\constrEnt{\calR}{\calC}{\tau_1 <: \tau_3}}
+  \\[1em]%
+  \infruleII{$<:$ Fun}
+  {\constrEnt\calR\calC{\tau_1 <: \tau_2}}
+  {\constrEnt\calR\calC{\tau_3 <: \tau_4}}
+  {\constrEnt\calR\calC{\tau_2 \to \tau_3 <: \tau_1 \to \tau_4}}
+  \quad%
+  \infruleI{$<:$ List}
+  {\constrEnt\calR\calC{\tau_1 <: \tau_2}}
+  {\constrEnt\calR\calC{\tlist{\tau_1} <: \tlist{\tau_2}}}
+  \\[1em]%
+  \infruleII{$<:$ Sum}
+  {\constrEnt\calR\calC{\tau_1 <: \tau_2}}
+  {\constrEnt\calR\calC{\tau_3 <: \tau_4}}
+  {\constrEnt\calR\calC{\tau_1 + \tau_3 <: \tau_2 + \tau_4}}
+  \\[1em]%
+  \infruleII{$<:$ Prod}
+  {\constrEnt\calR\calC{\tau_1 <: \tau_2}}
+  {\constrEnt\calR\calC{\tau_3 <: \tau_4}}
+  {\constrEnt\calR\calC{(\tau_1, \tau_3) <: (\tau_2, \tau_4)}}
+  \\[1em]%
+  \infrule{$<:$ Num}
+  {\constrEnt\calR\calC{\tint <: \treal}}
+  \quad%
+  \infrule{$<:$ Timestamp}
+  {\constrEnt\calR\calC{\ttimestamp <: \tdt}}
+  \\[1em]%
+  \infrule{$<:$ Duration}
+  {\constrEnt\calR\calC{\tduration <: \tdt}}
+  \\[2em]
+  \infruleI{Field}
+  {(f,\tau) \in \rho(r)}
+  {\constrEnt{(R,A,F,\rho,\subrec)}\calC{\fieldC{r}{f}{\tau}}}
+  \\[1em]%
+  \infruleII{Field Prop}%
+  {\constrEnt\calR\calC{\fieldC{\tau_1}{f}{\tau_2}}}%
+  {\constrEnt\calR\calC{\tau'_1 <: \tau_1}}%
+  {\constrEnt\calR\calC{\fieldC{\tau'_1}{f}{\tau_2}}}
+  \\[2em]%
+  \infruleI{Ord Base}%
+  {\tau \in \set{\tbool, \tint, \treal, \tchar, \tduration, \ttimestamp, \tdt}}%
+  {\constrEnt\calR\calC{\ordC{\tau}}}%
+  \\[1em]% 
+  \infruleI{Eq Ord}%
+  {\constrEnt\calR\calC{\ordC{\tau}}}%
+  {\constrEnt\calR\calC{\eqC{\tau}}}%
+  \quad%
+  \infruleI{Eq Rec}%
+  { r\in R}%
+  {\constrEnt{(R,A,F,\rho,\subrec)}\calC{\eqC{r}}}%
+  \\[2em]%
+  \infruleIII{$P$ $F$}%
+  {F \in \set{(\cdot,\cdot), +, \tlist{\cdot},\tent{\cdot}}}%
+  {P \in \set{\ordC{\cdot},\eqC{\cdot}}}%
+  {\forall 1 \le i \le n\colon\;\constrEnt\calR\calC{P(\tau_i)}}%
+  {\constrEnt\calR\calC{P(F(\tau_1, \dots,\tau_n))}}%
+  % 
+  \caption{Type constraint entailment $\constrEnt{\calR}{\calC}{C}$.}
+  \label{fig:constr}
+\end{figure}
+
+The type constraint entailment judgement $\constrEnt\calR\calC C$ is
+straightforwardly extended to sequences of constraints $\tup C$. We
+define that $\constrEnt\calR\calC C_1,\dots,C_n$ iff
+$\constrEnt\calR\calC C_i$ for all $ 1\le i \le n$.
+
+
+The type system of the report language is a straightforward
+polymorphic lambda calculus extended with type constraints. The typing
+judgement for the report language is written
+$\reptype\calR{\calC}{\Gamma}{e}{\sigma}$, where $\calR$ is a record
+typing environment, $\calC$ a set of type constraints, $\Gamma$ a type
+environment, $e$ an expression and $\sigma$ a type scheme. The
+inference rules for this judgement are given in
+Figure~\ref{fig:reptype}.
+
+\begin{figure}[t]
+  \centering%
+  \small%
+  \infruleI{Var}%
+  { x : \sigma \in \Gamma }%
+  {\reptype\calR{\calC}{\Gamma}{x}{\sigma}}%
+  \quad%
+  \infrule{Const}%
+  { \reptype\calR{\calC}{\Gamma}{c}{\sigma_c}}%
+  \\[1em]%
+  \infruleII{Sub}%
+  {\reptype\calR{\calC}{\Gamma}{e}{\tau}}%
+  {\constr{\calC}{\tau <: \tau'}} %
+  {\reptype\calR{\calC}{\Gamma}{e}{\tau'}}%
+  \quad%
+  \infruleI{Abs}%
+  {\reptype\calR{\calC}{\Gamma\cup\set{x:\tau}}{e}{\tau'}}%
+  {\reptype\calR{\calC}{\Gamma}{\lambda x \to e}{\tau \to \tau'}}%
+  \\[1em]%
+  \infruleII{App}%
+  {\reptype\calR{\calC}{\Gamma}{e_1}{\tau_1 \to \tau_2}}%
+  {\reptype\calR{\calC}{\Gamma}{e_2}{\tau_1}}%
+  {\reptype\calR{\calC}{\Gamma}{e_1 \;      e_2}{\tau_2}}%
+  \\[1em]%
+  \infruleII{Let}%
+  {\reptype\calR{\calC}{\Gamma}{e_1}{\sigma}}%
+  {\reptype\calR{\calC}{\Gamma \cup \set{x : \sigma}}{e_2}{\tau}}%
+  {\reptype\calR{\calC}{\Gamma}{\letin{x = e_1}{e_2}}{\tau}}%
+  \\[1em]%
+  \infruleII{Type Of}%
+  {\begin{gathered}[b]
+      \reptype\calR{\calC}{\Gamma}{e}{r'}\\%
+      \constrEnt\calR{\calC}{r <: r'}
+    \end{gathered}}%
+  {\begin{gathered}[b]
+      \reptype\calR{\calC}{\Gamma \cup \set{x : r}}{e_1}{\tau}\\%
+      \reptype\calR{\calC}{\Gamma \cup \set{x : r'}}{e_2}{\tau}
+    \end{gathered}}%
+  {\reptype\calR{\calC}{\Gamma}{\typeof{x = e}{\{r \to e_1
+          \semi \default \to e_2\}}}{\tau}}%
+  \\[1em]%
+  \infruleII{Type Of Ref}%
+  {\begin{gathered}[b]
+      \reptype\calR{\calC}{\Gamma}{e}{\tent{r'}}\\%
+      \constrEnt\calR{\calC}{r <: r'}
+    \end{gathered}}%
+  {\begin{gathered}[b]
+      \reptype\calR{\calC}{\Gamma \cup \set{x : \tent{r}}}{e_1}{\tau}\\%
+      \reptype\calR{\calC}{\Gamma \cup \set{x : \tent{r'}}}{e_2}{\tau}
+    \end{gathered}}%
+  {\reptype\calR{\calC}{\Gamma}{\typeof{x = e}{\{\tent{r} \to e_1
+          \semi \default \to e_2\}}}{\tau}}%
+  \\[1em]%
+  \infruleII{$\forall$ Intro}%
+  {\reptype\calR{\calC \cup \tup C}{\Gamma}{e}{\tau}}%
+  {\tup\alpha \not\in \fv{\calC}\cup \fv{\Gamma}}%
+  {\reptype\calR{\calC}{\Gamma}{e}{\forall\tup\alpha.\tup C\implC \tau}}%
+  \\[1em]%
+  \infruleII{$\forall$ Elim}%
+  {\reptype\calR{\calC}{\Gamma}{e}{\forall\tup\alpha.\tup C \implC
+      \tau'}}%
+  {\constrEnt\calR{\calC}{\subst{\tup C}{\tup\alpha}{\tup\tau}}}%
+  {\reptype\calR{\calC}{\Gamma}{e}{\subst{\tau'}{\tup\alpha}{\tup\tau}}}%
+  %
+  %
+  \caption{Type inference rules for the report language.}
+  \label{fig:reptype}
+\end{figure}
+
+A typing $\reptype{\calR}{\calC'}{\Gamma'}{e}{\tau'}$ is an instance of
+$\reptype{\calR}{\calC}{\Gamma}{e}{\tau}$ iff there is a substitution $S$
+such that $ \Gamma'\supseteq \Gamma S$, $\tau' = \tau S$, and
+$\constrEnt\calR{\calC'}{\calC S}$. Deriving from that we say that the type
+scheme $\sigma' = \forall \tup \alpha'. \tup C' \implC \tau'$ is an
+instance of $\sigma = \forall \tup \alpha. \tup C \implC \tau$,
+written $\sigma' < \sigma$, iff there is a substitution $S$ with
+$\dom{S} = \alpha$ such that $\tau' = \tau S$ and
+$\constrEnt\calR{\calC'}{\calC S}$.
+
+Top-level function definitions are of the form
+\[
+f \; x_1 \; \dots \; x_n = e
+\]
+and can be preceded by an explicit type signature declaration of the
+form $f : \sigma$.
+
+Depending on whether an explicit type signature is present, the
+following inference rules define the typing of top-level function definitions:
+\begin{center}
+  \infruleII{Fun}%
+  {\reptype\calR{\calC \cup \tup
+      C}{\Gamma\cup\set{x_1:\tau_1, \dots,
+        x_n:\tau_n}}{e}{\tau}}%
+  {\tup\alpha \not\in \fv{\calC}\cup \fv{\Gamma}}%
+  {\reptype\calR{\calC}{\Gamma}{f \; x_1 \; \dots \; x_n =
+      e}{\forall\tup\alpha.\tup C \implC \tau_1 \to \dots \to \tau_n
+      \to \tau}}%
+  \\[1em]
+  \infruleII{Fun'}%
+  {\reptype\calR{\calC}{\Gamma}{f \; x_1 \; \dots \; x_n = e}{\sigma}}%
+  {\sigma' < \sigma}%
+  {\reptype\calR{\calC}{\Gamma}{f \colon \sigma' \semi f \; x_1 \; \dots \;
+      x_n = e}{\sigma'}}%
+\end{center}
+
+\subsection{Operational Semantics}
+\label{sec:oper-semant}
+
+In order to simplify the presentation of the operational semantics we
+assign to each constant $c$ of the language its set of \emph{strict
+  argument positions} $\strict{c} \subseteq \set{1,\dots,\arity{c}}$:
+
+\begin{align*}
+  \strict{\mhole\circ\mhole} &= \set{1,2} && \text{ for all binary
+    operators } \circ \neq \cons \\
+  \strict{c} &= \set{1} && \forall c \in \set{\lnot,
+    \ifelse\mhole\mhole\mhole,\keyword{case},\keyword{error}, \mhole\derefCxt,\mhole\derefNow}\\
+  \strict{\mhole. f} &= \set{1}\\
+  \strict{\mhole\;\{\tup{f_i = e_i}\}} &= \set{1}\\
+  \strict{\mhole.i} &= \set{1}
+\end{align*}
+For all other constraints $c$ for which the above equations do not
+apply $\strict{c}$ is defined as the empty set $\emptyset$.
+
+\emph{Values} form a subset of expressions which are fully evaluated
+at the top-level. Such expressions are also said to be in \emph{weak
+  head normal form} (\emph{whnf}). An expression is in weak head
+normal form, if it is an application of a built-in function to too few
+arguments, an application of a constructor, or a lambda
+abstraction. Moreover, if a value is not of the form
+$\keyword{error}\; v$, it is called \emph{defined}:
+
+
+\begin{center}
+  \begin{align*}
+    v \ebnf\ &c \; e_1 \dots \; e_n && n < \arity{f}%
+    \\ \bnfsep &F \; e_1 \dots \; e_n && n = \arity{F}, \forall i \in
+    \strict{F}\quad e_i \text{ is defined value} %
+    \\ \bnfsep &\lambda x \to e %
+  \end{align*}
+\end{center}
+
+An even more restricted subset of the set of values is the set of
+\emph{constructor values} which are expressions in \emph{constructor
+  head normal form}. It is similar to weak head normal form, but with
+the additional restriction, that arguments of a fully applied
+constructor are in constructor normal form as well:
+
+\begin{align*}
+  V \ebnf\ &c \; e_1 \dots \; e_n && n < \arity{f}%
+  \\ \bnfsep &F \; V_1 \dots \; V_n && n = \arity{F}, \forall i \in
+  \strict{F}\quad V_i \text{ is defined} %
+  \\ \bnfsep &\lambda x \to e %
+\end{align*}
+
+To further simplify the presentation we introduce evaluation
+contexts. The following evaluation context $\ecxt$ corresponds to weak
+head normal forms:
+\begin{align*}
+  \ecxt \ebnf &\cxthole \bnfsep \ecxt \; e \bnfsep \typeof{x =
+    \ecxt}{\{r \to e_1\semi \default \to e_2\}} \\ \bnfsep &c\;
+  e_1 \; \dots e_{i-1} \; \ecxt \; e_{i+1} \; \dots \; e_n\qquad
+  \begin{aligned}[t]
+    &i\in \strict{c}, n = \arity{c},\\
+    &\forall j < i, j\in \strict{c}\colon e_j \text{ is defined value}
+  \end{aligned}
+\end{align*}
+
+The evaluation context $\fcxt$ corresponds to constructor head normal
+forms:
+\begin{align*}
+  \fcxt \ebnf &\cxthole \bnfsep \ecxt \; e \bnfsep \typeof{x =
+    \ecxt}{\{r \to e_1\semi \default \to e_2\}}%
+  \\%
+  \bnfsep &f\; e_1 \; \dots e_{i-1} \; \ecxt \; e_{i+1} \; \dots \;
+  e_n\qquad
+  \begin{aligned}[t]
+    &i\in \strict{f}, n = \arity{f},\\
+    &\forall j < i, j\in \strict{f}\colon e_j \text{ is defined value}
+  \end{aligned}
+  \\%
+  \bnfsep &F\; V_1 \; \dots V_{i-1} \; \fcxt \; e_{i+1} \; \dots \;
+  e_n\qquad n= \arity{F}, V_1 \; \dots V_{i-1} \text{ are defined}
+\end{align*}
+
+Computations take place in a context of an \emph{event log}, i.e.\ a
+sequence of values of type $\recordname{Event}$. In the following
+definition of the semantics of the report language we use
+$(ev_i)_{i<n}$ to refer to this sequence, where each $ev_i$ is of the
+form $r \{\tup{f_j = e_j}\}$ with $r \subrec \recordname{Event}$.
+
+We assume that the \recordname{Event} record type has a field
+\fieldname{internalTimeStamp} that records the time at which the event
+was added to the log. For each $ev_i$, we define its extension $ev'_i$
+as follows: Each occurrence of an entity value $\valref{r,e}$ is
+replaced by $\valref{r,e,t}$ where $t$ is the value of the
+\fieldname{internalTimeStamp} field of $ev_i$. This will allow us to
+define the semantics of the contextual dereference operator
+$\derefCxt$. The semantics of both the $\derefCxt$ and the $\derefNow$
+operator are given by the $\entlookup$ operator, which is provided by
+the entity store, compare Section~\ref{sec:entity-store}. In order to
+retrieve the latest value associated to an entity, we assume the
+timestamp $t_\mathrm{now}$ that denotes the current time.
+
+The rules describing the semantics of the report language in the form
+of a small step transition relation $\step$ are given in
+Figure~\ref{fig:repSem}.
+\begin{figure}[t]
+  \centering%
+  \small%
+  \infruleI{Context}%
+  {e \step e'}%
+  {\fapp{e} \step \fapp{e'}}%
+  \quad%
+  \infrule{Error}%
+  {\fapp{\keyword{error}\; v} \step \keyword{error}\; v} %
+  \\[1em]%
+  \infrule{Abs}%
+  {(\lambda x \to e_1) e_2 \step \subst{e_1}{x}{e_2} }%
+  \quad%
+  \infrule{Let}%
+  {\letin{x = e_1}{e_2} \step \subst{e_2}{x}{e_1} }%
+  \\[1em]%
+  \infruleII{Type suc}%
+  {r' \subrec r}%
+  {v = r'\{\dots\}}%
+  {\typeof{x = v}{\{r \to e_1 \semi \default \to e_2\}} \step
+    \subst{e_1}{x}{v}}%
+  \\[1em]%
+  \infruleII{Type def}%
+  {r' \not\subrec r}%
+  {v = r'\{\dots\}}%
+  {\typeof{x = v}{\{r \to e_1 \semi \default \to e_2\}} \step
+    \subst{e_2}{x}{v}}%
+  \\[1em]%
+  \infruleII{Mod}%
+  {\begin{aligned}[t]
+      &\text{injection } \phi\colon \set{1,\dots,m} \hookrightarrow \set{1,\dots,n}\\%
+      &\forall j \in \set{1,\dots, m} \colon\;f'_j = f_{\phi(j)} 
+    \end{aligned}}%
+  {e''_i = \begin{cases} e'_{\phi^{-1}(i)} &\text{if
+        } i \in \image{\phi}\\
+        e_i &\text{otherwise}
+      \end{cases} }%
+  {r\{f_1 = e_1,\dots,f_n =
+    e_n\}\;\{f'_1 = e'_1,\dots,f'_m =
+    e'_m\} \step r\{f_1 = e''_1,\dots,f_n
+    = e''_n\}}%
+  \\[1em]%
+  \infrule{Acc}%
+    {r\{f_1 = e_1,\dots,f_n = e_n\}
+      . f_i \step e_i}%
+    \quad%
+    \infrule{If True}%
+    {\ifelse{\keyword{True}}{e_1}{e_2} \step e_1}%
+    \\[1em]%
+    \infrule{If False}%
+    {\ifelse{\keyword{False}}{e_1}{e_2} \step e_2}%
+    \quad%
+    \infrule{Case Left}%
+    {\keyword{case} \; (\keyword{Inl}\; e) \; e_1 \; e_2 \step e_1 \; e}%
+    \\[1em]%
+    \infrule{Case Right}%
+    {\keyword{case} \; (\keyword{Inr}\; e) \; e_1 \; e_2 \step e_2 \; e}%
+    \quad%
+    \infruleI{Proj}%
+    { i \in \set{1,2} }%
+    { (e_1,e_2) . i \step e_i }%
+    \\[1em]%
+    \infrule{Events}%
+    {\keyword{events} \step \vlist{ev_1, ev_2,\dots,ev_n}}%
+    \quad%
+    \infrule{Fold Empty}%
+    { \foldr \; e_1 \; e_2 \; \vlist{} \step e_2 }%
+    \\[1em]%
+    \infrule{Fold Cons}%
+    { \foldr \; e_1 \; e_2 \; (e_3 \cons e_4) \step e_1 \; e_3
+      \; (\foldr \; e_1 \; e_2 \; e_4) }%
+    \\[1em]
+    \infruleI{$\derefNow$ ignore}%
+    {\entlookup_{t_\mathrm{now}}(e,t_\mathrm{now}) = v}%
+    {\valref{r,e,t}\derefNow \step v}%
+    \quad%
+    \infruleI{$\derefNow$}%
+    {\entlookup_{t_\mathrm{now}}(e,t_\mathrm{now}) = v}%
+    {\valref{r,e}\derefNow \step v}%
+    \\[1em]
+    \infruleI{$\derefCxt$}%
+    {\entlookup_{t_\mathrm{now}}(e,t) = v}%
+    {\valref{r,e,t}\derefCxt \step v}%
+    \quad%
+    \infruleI{$\derefCxt$ now}%
+    {\entlookup_{t_\mathrm{now}}(e,t_\mathrm{now}) = v}%
+    {\valref{r,e}\derefCxt \step v}%
+\caption{Small step operational semantics of the report language.}
+\label{fig:repSem}
+\end{figure}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "tr"
+%%% End: 

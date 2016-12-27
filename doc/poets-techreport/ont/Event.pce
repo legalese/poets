@@ -1,0 +1,92 @@
+Event is abstract.
+Event has a Timestamp
+         called internalTimeStamp.
+
+# Add data definitions to the system
+AddDataDefs is an Event.
+AddDataDefs has a String called defs.
+
+# Events associated with entities
+EntityEvent is an Event.
+EntityEvent is abstract.
+EntityEvent has a Data entity called ent.
+
+# Put entity event
+PutEntity is an EntityEvent.
+PutEntity has Data.
+PutEntity is abstract.
+
+# Create entity event
+CreateEntity is a PutEntity.
+CreateEntity has a String called recordType.
+
+# Update entity event
+UpdateEntity is a PutEntity.
+
+# Delete entity event
+DeleteEntity is an EntityEvent.
+
+# Events associated with a report definition
+ReportEvent is an Event.
+ReportEvent has a String called name.
+
+# Put report definition event
+PutReport is a ReportEvent.
+PutReport is abstract.
+PutReport has a String called code.
+PutReport has a String called description.
+PutReport has a list of String called tags.
+
+# Create report definition event
+CreateReport is a PutReport.
+
+# Update report definition event
+UpdateReport is a PutReport.
+
+
+# Delete report definition event
+DeleteReport is a ReportEvent.
+
+# Events associated with a contract template
+ContractDefEvent is an Event.
+ContractDefEvent has a String called name.
+
+# Put contract template event
+PutContractDef is a ContractDefEvent.
+PutContractDef is abstract.
+PutContractDef has a String called recordType.
+PutContractDef has a String called code.
+PutContractDef has a String called description.
+
+# Create contract template event
+CreateContractDef is a PutContractDef.
+
+# Update contract template event
+UpdateContractDef is a PutContractDef.
+
+# Delete contract template event
+DeleteContractDef is a ContractDefEvent.
+
+# Events associated with a contract
+ContractEvent is an Event.
+ContractEvent is abstract.
+ContractEvent has an Int called contractId.
+
+# Put contract event
+PutContract is a ContractEvent.
+PutContract has a Contract.
+PutContract is abstract.
+
+# Create contract event
+CreateContract is a PutContract.
+
+# Update contract event
+UpdateContract is a PutContract.
+
+# Conclude contract event
+ConcludeContract is a ContractEvent.
+
+# Transaction super class
+TransactionEvent is a ContractEvent.
+TransactionEvent has a Timestamp.
+TransactionEvent has a Transaction.

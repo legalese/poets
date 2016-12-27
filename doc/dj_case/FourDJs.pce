@@ -1,0 +1,70 @@
+## Contracts
+EventContract is a Contract.
+EventContract has comment "A contract between the company and the customer, in which the company promisses to find a DJ for an event".
+EventContract has a LejDJ.
+EventContract has a Customer.
+EventContract has an EventInformation.
+
+DJContract is a Contract.
+DJContract has comment "A contract between the company, the customer, and a DJ".
+DJContract has a LejDJ.
+DJContract has a DJ called dj.
+DJContract has a Customer.
+DJContract has an EventInformation.
+DJContract has a double called djSalary.
+DJContract has a dateTime called companyPaymentDeadline.
+DJContract has a dateTime called customerPaymentDeadline.
+DJContract has a list of GearPackage called gear.
+
+DJ is a LegalEntity.
+LejDJ is a LegalEntity.
+
+## Required extension to the Domain Model:
+EventInformation is a Data.
+EventInformation has a EventType.
+EventInformation has a int called size.
+EventInformation has a dateTime called start.
+EventInformation has a dateTime called tentativeEnd.
+EventInformation has a Currency.
+EventInformation has a double called tentativePrice.
+EventInformation has a double called pricePrHour.
+EventInformation has a double called startPrice.
+
+## Predefined event types 
+EventType is a PredefinedRT.
+EventType is abstract.
+
+Bryllup is an EventType.
+Firmafest is an EventType.
+Julefrokost is an EventType.
+AeldrePrivatfest is an EventType.
+YngrePrivatFest is an EventType.
+
+## Gear
+GearPackage is a PredefinedRT.
+GearPackage has a string called name.
+GearPackage has a Location.
+
+Light is a GearPackage.
+Speaker is a GearPackage.
+
+## Events
+FindDJ is a ReceivableTransaction.
+FindDJ has a DJ.
+FindDJ has an EventInformation.
+
+PlayEvent is a ContractTransaction.
+PlayEvent has an EventInformation.
+PlayEvent has a dateTime called endTime.
+
+## Reports
+DJStatistics is a Report.
+DJStatistics has comment "Displays current usage of all employed DJs".
+DJStatistics has a string called dj.
+DJStatistics has a list of Event called events.
+
+AllDjs is a Report.
+AllDjs has a list of DJ called djs.
+
+GetLejDJ is a Report.
+GetLejDJ has a list of LejDJ called company.

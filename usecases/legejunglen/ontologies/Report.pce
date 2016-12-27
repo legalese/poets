@@ -1,0 +1,10 @@
+Schedule is a Report.
+Schedule has a list of Arrangement called arrangements.
+
+MonthlyOverview is a Report.
+MonthlyOverview has a Real called total.
+MonthlyOverview has a list of ArrangementInfo called arrangements.
+
+ArrangementInfo is a Data.
+ArrangementInfo has an Arrangement.
+ArrangementInfo has a Payment.

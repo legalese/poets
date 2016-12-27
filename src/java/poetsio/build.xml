@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="POETS XML Persistence" default="dist">
+	<property name="version" value="1.0" />
+
+	<property name="javasrc.dir"   value="./src" />
+	<property name="gensrc.dir"    value="./gen-java" />
+	<property name="build.dir"     value="./build" />
+	<property name="dist.dir"      value="./dist" />
+	<property name="lib.dir"       value="./lib" />
+	<property name="manifest.file" value="MANIFEST.MF"/>	
+	<property name="javadoc.dir"   value="./javadoc" />
+
+	<tstamp>
+		<format property="current.month" pattern="MMM"/>
+		<format property="current.year"  pattern="yyyy"/>
+	</tstamp>	
+	
+	<target name="clean">
+		<delete dir="${gensrc.dir}"/>
+		<delete dir="${build.dir}"/>
+		<delete dir="${dist.dir}"/>
+		<delete dir="${javasrc.dir}/dk/diku/poets/record/gen"/>
+	</target>
+
+	<fileset id="libs" dir="${lib.dir}">
+		<include name="**/*.jar"/>
+		<include name="**/*.class"/>
+	</fileset>
+
+	<target name="init">
+		<mkdir dir="${gensrc.dir}"/>
+		<mkdir dir="${build.dir}/classes"/>
+		<mkdir dir="${dist.dir}"/>
+	</target>
+
+	<target name="thrift" depends="init">
+	  <exec executable="make" dir="../../thrift" />
+		<javac srcdir="${gensrc.dir}" destdir="${build.dir}/classes"
+		 includeantruntime="false">
+			<classpath>
+				<fileset refid="libs" />
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="javarep" depends="thrift">
+		<javac srcdir="${javasrc.dir}" destdir="${build.dir}/classes"
+			debug="on" debuglevel="lines,vars,source"
+			includeantruntime="false">
+			<classpath>
+				<fileset refid="libs" />
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="dist" depends="init,thrift,javarep">
+		<manifestclasspath property="jar.classpath" jarfile="${dist.dir}/poetsio.jar">
+			<classpath>
+				<fileset dir="${lib.dir}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</manifestclasspath>
+
+		<manifest file="${build.dir}/${manifest.file}">
+			<attribute name="Copyright"
+				value="Copyright (c) ${current.year} DIKU. All rights reserved."/>
+			<attribute name="Legal-Notice" value="A license is required to operate this software legally."/>
+			<attribute name="Contact-Information" value="diku (at) 3gerp (dot) org"/>
+			<attribute name="Built-By" value="${user.name}"/>
+			<attribute name="Version" value="${version}"/>
+			<attribute name="Class-Path" value="${jar.classpath}"/>
+			<attribute name="Main-Class" value="dk.diku.poets.record.Record"/>
+		</manifest>
+		<jar jarfile="${dist.dir}/poetsio.jar" manifest="${build.dir}/${manifest.file}">
+		  <fileset dir="${build.dir}/classes">
+		    <include name="**/*.class" />
+		  </fileset>
+		  <fileset dir="${javasrc.dir}">
+		    <include name="**/*.java" />
+		  </fileset>
+		  <fileset dir="${gensrc.dir}">
+		    <include name="**/*.java" />
+		  </fileset>
+		  <fileset dir="${javasrc.dir}/dk/diku/poets/">
+		    <include name="poetsio.gwt.xml" />
+		  </fileset>
+		</jar>
+	</target>
+	<target name="javadoc" depends="javarep">
+		<mkdir dir="${javadoc.dir}" />
+	  	<javadoc
+		  destdir="${javadoc.dir}"
+	  	  packagenames="dk.diku.poets.*, org.json"
+		  access="public"
+		  verbose="true"
+		  author="true"
+		  version="true"
+	  	  additionalparam=""
+	  	>
+	  	  <fileset dir="src" includes="**/*.java" />
+		</javadoc>
+	</target>
+</project>

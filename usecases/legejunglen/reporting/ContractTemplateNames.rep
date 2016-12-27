@@ -1,0 +1,7 @@
+name: ContractTemplateNames
+description:
+	Returns a list of possible names of contract templates.
+tags: internal
+
+report : [String]
+report = map (\pc -> pc.name) contractTemplates

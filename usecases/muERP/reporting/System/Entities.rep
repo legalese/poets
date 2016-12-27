@@ -1,0 +1,7 @@
+name: Entities
+description:
+  A list of all entities.
+tags: internal, entity
+
+report : [<Data>]
+report = map (\e -> e.1) entities

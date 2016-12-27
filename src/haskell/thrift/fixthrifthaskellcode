@@ -1,0 +1,19 @@
+#!/bin/bash
+
+LOCALTHRIFT=`thrift -version`
+echo "$LOCALTHRIFT is buggy. Fixing bug..."
+
+sed -i -e 's/import qualified Value_Types/import Value_Types/g' gen-hs/Data_Types.hs
+sed -i -e 's/import qualified Value_Types/import Value_Types/g' gen-hs/Contracts_Types.hs
+sed -i -e 's/import qualified Value_Types/import Value_Types/g' gen-hs/PoetsServer.hs
+sed -i -e 's/import qualified Value_Types/import Value_Types/g' gen-hs/Rules_Types.hs
+sed -i -e 's/import qualified Value_Types/import Value_Types/g' gen-hs/Entities_Types.hs
+sed -i -e 's/import qualified Type_Types/import Type_Types/g' gen-hs/Data_Types.hs
+sed -i -e 's/import qualified Type_Types/import Type_Types/g' gen-hs/Reporting_Types.hs
+sed -i -e 's/import qualified Data_Types/import Data_Types/g' gen-hs/PoetsServer.hs
+sed -i -e 's/import qualified Type_Types/import Type_Types/g' gen-hs/PoetsServer.hs
+sed -i -e 's/import qualified Reporting_Types/import Reporting_Types/g' gen-hs/PoetsServer.hs
+sed -i -e 's/import qualified Contracts_Types/import Contracts_Types/g' gen-hs/PoetsServer.hs
+sed -i -e 's/import qualified Rules_Types/import Rules_Types/g' gen-hs/PoetsServer.hs
+sed -i -e 's/import qualified Entities_Types/import Entities_Types/g' gen-hs/PoetsServer.hs
+echo "Done."

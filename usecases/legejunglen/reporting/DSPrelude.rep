@@ -1,0 +1,22 @@
+-- Check if an agent is the company itself
+isMe : <Agent> -> Bool
+isMe a = a :? <Me>
+
+-- Normalise a list of money by grouping currencies together
+normaliseMoney : [Money] -> [Money]
+normaliseMoney ms = [Money{currency = m.1, amount = sum (map (\m -> m.amount) m.2)} |
+  m <- groupProj (\m -> m.currency) ms]
+
+-- Add one list of money from another
+addMoney : [Money] -> [Money] -> [Money]
+addMoney m1 m2 = normaliseMoney (m1 ++ m2)
+
+-- Subtract one list of money from another
+subtractMoney : [Money] -> [Money] -> [Money]
+subtractMoney m1 m2 = addMoney m1 (map (\m -> m{amount = 0 - m.amount}) m2)
+
+-- Produce normalised list of all items given in list
+normaliseItems : [Item] -> [Item]
+normaliseItems its = [Item{itemType = i.1, quantity = sum (map (\is -> is.quantity) i.2)} |
+  i <- groupProj (\is -> is.itemType) its]
+ 

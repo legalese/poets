@@ -1,0 +1,10 @@
+Krav til GUI-spec
+
+Præsentation af data
+- Man skal kunne vælge hvilke felter, der præsenteres og rækkefølgen først
+
+
+Om inddata fra brugeren
+- Det ville være smart om man kunne tilknytte specifikke rapporter til felter, som man skal indtaste. F.eks. en 'AvailableRooms' til 'room'-feltet på en 'Birthday'. 
+
+- Alternativt kunne man vælge at *alle* inddata felter skulle tilknyttes enhver rapport, som giver et type-mæssigt korrekt resultat, men det er nok for "dyrt"

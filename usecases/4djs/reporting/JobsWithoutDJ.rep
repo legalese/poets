@@ -1,0 +1,27 @@
+name: JobsWithoutDJ
+description: Provides a list of all jobs where a DJ has not been assigned
+tags: external
+
+missingDJ dj = dj :? UndefinedDJ
+--	dj.name == ""
+--	|| dj.name == "\"\""
+--	|| dj.name == "Vælg DJ"
+--	|| dj.name == "\"Vælg DJ\""
+djProcess : [PutContract]
+djProcess = [ recent |
+		recent <- contracts,
+		djCon: DJContract = recent.contract,
+		missingDJ djCon.dj
+		]
+
+report : JobsWithoutDJ
+report = 
+  JobsWithoutDJ {
+    missingDJs = djProcess
+--    [
+--      JobsWithoutDJData {
+--        contractId = p.contractId,
+--        contract = p.contract
+--      } | p <- djProcess
+--    ]
+  }

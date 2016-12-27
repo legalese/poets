@@ -1,0 +1,7 @@
+name: Contracts
+description:
+  A list of all running (i.e. non-concluded) contracts.
+tags: internal, contract
+
+report : [PutContract]
+report = contracts

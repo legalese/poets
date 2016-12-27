@@ -1,0 +1,403 @@
+In this section we describe a use case instantiation of POETS, which
+we refer to as \muerp. With \muerp we model a simple ERP system for a
+small bicycle shop. Naturally, we do not intend to model all features
+of a full-blown ERP system, but rather we demonstrate a limited set of
+core ERP features. In our use case, the shop purchases bicycles from
+a bicycle vendor, and sells those bicycles to customers. We want to
+make sure that the bicycle shop only sells bicycles in stock, and we
+want to model a repair guarantee, which entitles customers to
+have their bikes repaired free of charge up until three months after purchase.
+
+Following Henglein et al.~\cite{henglein09jlap}, we also provide core
+financial reports, namely the income statement, the balance sheet, the
+cash flow statement, the list of open (not yet paid) invoices, and the
+value-added tax (VAT) report. These reports are typical, minimal legal
+requirements for running a business. We provide some example code in
+this section, and the complete specification is included in
+Appendix~\ref{app:muerp}. As we have seen in
+Section~\ref{sec:extended-poets}, instantiating POETS amounts to
+defining a data model, a set of reports, and a set of contract
+templates. We describe each of these components in the following
+subsections.
+
+\subsection{Data Model}
+
+The data model of \muerp is tailored to the ERP domain in accordance
+with the REA ontology~\cite{mccarthy82tar}. Therefore, the main
+components of the data model are resources, transactions (that is, events
+associated with contracts), and agents. The complete data model is
+provided in Appendix~\ref{app:muerp-ontology}.
+
+~
+
+\noindent\textbf{Agents} are modelled as an abstract type
+\recordname{Agent}. An agent is either a \recordname{Customer}, a
+\recordname{Vendor}, or a special \recordname{Me}
+agent. \recordname{Customer}s and \recordname{Vendor}s are equipped
+with a name and an address. The \recordname{Me} type is used to
+represent the bicycle company itself. In a more elaborate example, the
+\recordname{Me} type will have subtypes such as \recordname{Inventory}
+or \recordname{SalesPerson} to represent subdivisions of, or
+individuals in, the company. The agent model is summarised below:
+\begin{lstlisting}[language=ontology,basicstyle=\small,multicols=2]
+Agent is Data.
+
+Customer is an Agent.
+Customer has a String called name.
+Customer has an Address.
+
+Me is an Agent.
+
+Vendor is an Agent.
+Vendor has a String called name.
+Vendor has an Address.
+\end{lstlisting}
+\vspace{-12pt}
+\noindent\textbf{Resources} are---like
+agents---\recordname{Data}. In our modelling of resources, we make a
+distinction between \emph{resource types} and \emph{resources}. A
+resource type represents a kind of resource, and resource types are
+divided into currencies (\recordname{Currency}) and item types
+(\recordname{ItemType}). Since we are modelling a bicycle shop, the
+only item type (for now) is bicycles (\recordname{Bicycle}). A
+resource is an instance of a resource type, and---similar to resource
+types---resources are divided into money (\recordname{Money}) and
+items (\recordname{Item}). Our modelling of items assumes an implicit
+unit of measure, that is we do not explicitly model units of measure
+such as pieces, boxes, pallets, etc.  Our resource model is summarised
+below:
+\begin{lstlisting}[language=ontology,basicstyle=\small,multicols=2]
+ResourceType is Data.
+ResourceType is abstract.
+
+Currency is a ResourceType.
+Currency is abstract.
+
+DKK is a Currency.
+EUR is a Currency.
+
+ItemType is a ResourceType.
+ItemType is abstract.
+
+Bicycle is an ItemType.
+Bicycle has a String called model.
+
+Resource is Data.
+Resource is abstract.
+
+Money is a Resource.
+Money has a Currency.
+Money has a Real called amount.
+
+Item is a Resource.
+Item has an ItemType.
+Item has a Real called quantity.  
+\end{lstlisting}
+
+\noindent\textbf{Transactions} (events in the REA terminology)
+are, not surprisingly, subtypes of the built-in
+\recordname{Transaction} type. The only transactions we consider in
+our use case are bilateral transactions (\recordname{BiTransaction}),
+that is transactions that have a sender and a receiver. Both the
+sender and the receiver are agent entities, that is a bilateral
+transaction contains references to two agents rather than copies of
+agent data. For our use case we model payments (\recordname{Payment}),
+deliveries (\recordname{Delivery}), issuing of invoices
+(\recordname{IssueInvoice}), requests for repair of a set of items
+(\recordname{RequestRepair}), and repair of a set of items
+(\recordname{Repair}). Issuing of invoices contain the relevant
+information for modelling of VAT, encapsulated in the
+\recordname{OrderLine} type. We include some of these definitions
+below:
+\begin{lstlisting}[language=ontology,basicstyle=\small,multicols=2]
+BiTransaction is a Transaction.
+BiTransaction is abstract.
+BiTransaction has an Agent entity
+  called sender.
+BiTransaction has an Agent entity
+  called receiver.
+
+Transfer is a BiTransaction.
+Transfer is abstract.
+
+Payment is a Transfer.
+Payment is abstract.
+Payment has Money.
+
+CashPayment is a Payment.
+CreditCardPayment is a Payment.
+BankTransfer is a Payment.
+
+IssueInvoice is a BiTransaction.
+IssueInvoice has a list of OrderLine
+   called orderLines.
+\end{lstlisting}
+
+Besides agents, resources, and transactions, the data model defines
+the output types of reports (Appendix~\ref{app:muerp-ontology-report})
+the input types of contracts
+(Appendix~\ref{app:muerp-ontology-contract}), and generic data
+definitions such as \recordname{Address} and \recordname{OrderLine}.
+ The report types define
+the five mandatory reports mentioned earlier, and additional
+\recordname{Inventory} and \recordname{TopNCustomers} report
+types. The contract types define the two types of contracts for the
+bicycle company, namely \recordname{Purchase} and \recordname{Sale}.
+
+\subsection{Reports}
+
+Report specifications are divided into prelude functions
+(Appendix~\ref{app:muerp-reports-prelude}), domain-specific prelude
+functions (Appendix~\ref{app:muerp-reports-dsprelude}), internal
+reports (Appendix~\ref{app:muerp-reports-internal}), and external
+reports (Appendix~\ref{app:muerp-reports-external}).
+
+~
+
+\noindent\textbf{Prelude functions} are utility functions that are
+independent of the custom data model. These functions are
+automatically added to all POETS instances, but they are included in
+the appendix for completeness. The prelude includes standard functions
+such as \prt{filter}, but it also includes generators for accessing
+event log data such as \prt{reports}. The event log generators provide
+access to data that has a lifecycle such as contracts or reports,
+compare Section~\ref{sec:event-log}.
+
+~
+
+\noindent\textbf{Domain-specific prelude functions} are utility
+functions that depend on the custom data model. The
+\prt{itemsReceived} function, for example, computes a list of all
+items that have been delivered to the company, and it hence relies on
+the \recordname{Delivery} transaction type (\prt{normaliseItems} and
+\prt{isMe} are also defined in
+Appendix~\ref{app:muerp-reports-dsprelude}):
+\begin{lstlisting}[language=parrot,basicstyle=\small]
+itemsReceived : [Item]
+itemsReceived = normaliseItems [is |
+  tr <- transactionEvents,
+  del : Delivery = tr.transaction,
+  not(isMe del.sender) && isMe del.receiver,
+  is <- del.items]
+\end{lstlisting}
+
+~
+
+\noindent\textbf{Internal reports} are reports that are needed either
+by clients of the system or by contracts. For instance, the
+\emph{ContractTemplates} report is needed by clients of the system in
+order to instantiate contracts, and the \emph{Me} report is needed by
+the two contracts, as we shall see in the following subsection.  A
+list of internal reports, including a short description of what they
+compute, is summarised in Figure~\ref{fig:internal-reports}. Except
+for the \emph{Me} report, all internal reports are independent from
+the custom data model.
+\begin{figure}[t]
+  \centering\small
+  \begin{tabularx}{\textwidth}{l|X}
+    \textbf{Report} & \textbf{Result}\\
+    \hline\hline
+    \emph{Me} & The special \recordname{Me} entity.\\
+    \emph{Entities} & A list of all non-deleted entities.\\
+    \emph{EntitiesByType} & A list of all non-deleted entities of a
+    given type.\\
+    \emph{ReportNames} & A list of names of all non-deleted
+    reports.\\
+    \emph{ReportNamesByTags} & A list of names of all non-deleted
+    reports whose tags contain a given set and do not contain
+    another given set.\\
+    \emph{ReportTags} & A list of all tags used by non-deleted
+    reports.\\
+    \emph{ContractTemplates} & A list of names of all non-deleted
+    contract templates.\\
+    \emph{ContractTemplatesByType} & A list of names of all
+    non-deleted contract templates of a given type.\\
+    \emph{Contracts} & A list of all non-deleted contract
+    instances.\\
+    \emph{ContractHistory} & A list of previous transactions for a
+    given contract instance.\\
+    \emph{ContractSummary} & A list of meta data for a given
+    contract instance.
+  \end{tabularx}
+  \caption{Internal reports.}
+  \label{fig:internal-reports}
+\end{figure}
+
+~
+
+\noindent\textbf{External reports} are reports that are expected to be
+rendered directly in clients of the system, but they may also be
+invoked by contracts. The external reports in our use case are the
+reports mentioned earlier, namely the income statement, the balance
+sheet, the cash flow statement, the list of unpaid invoices, and the
+VAT report. Moreover, we include reports for calulating the list of
+items in the inventory, and the list of top-$n$ customers,
+respectively. We include the inventory report below as an example:
+\begin{lstlisting}[language=parrot,basicstyle=\small]
+report : Inventory
+report =
+ let itemsSold' = map (\i -> i{quantity = 0 - i.quantity}) itemsSold
+ in
+ -- The available items is the list of received items minus the
+ -- list of reserved or sold items
+ Inventory{availableItems = normaliseItems (itemsReceived ++ itemsSold')}
+\end{lstlisting}
+The value \prt{itemsSold} is defined in the domain-specific
+prelude, similar to the value \prt{itemsReceived}. But unlike
+\prt{itemsReceived}, the computation takes into account that items can be
+reserved but not yet delivered. Hence when we check that items
+are in stock using the inventory report, we also take into account
+that some items in the inventory may have been sold, and therefore cannot
+be sold again.
+
+The five standard reports are defined according to the specifications
+given by Henglein et al.~\cite[Section~2.1]{henglein09jlap}, but for
+simplicity we do not model fixed costs, depreciation, and fixed
+assets. We do, however, model multiple currencies, exemplified via
+Danish Kroner (\recordname{DKK}) and Euro (\recordname{EUR}). This
+means that financial reports, such as \prt{IncomeStatement}, provide
+lists of values of type \recordname{Money}---one for each currency
+used.
+
+
+\subsection{Contracts}
+\label{sec:use-case-contracts}
+Contract specifications are divided into prelude functions
+(Appendix~\ref{app:muerp-contracts-prelude}), domain-specific prelude
+functions (Appendix~\ref{app:muerp-contracts-dsprelude}), and contract
+templates (Appendix~\ref{app:muerp-contracts-templates}).
+
+~
+
+\noindent\textbf{Prelude functions} are utility functions similar to
+the report engine's prelude functions. They are independent from the
+custom data model, and are automatically added to all POETS
+instances. The prelude includes standard functions such as
+\prt{filter}.
+
+~
+
+\noindent\textbf{Domain-specific prelude functions} are utility
+functions that depend on the custom data model. The \pcsl{inStock}
+function, for example, checks whether the items described in a list of
+order lines are in stock, by querying the \emph{Inventory} report (we
+assume that the item types are different for each line):
+\begin{lstlisting}[language=pcsl,basicstyle=\small]
+fun inStock lines =
+  let inv = (reports.inventory ()).availableItems
+  in
+  all (\l -> any (\i -> (l.item).itemType == i.itemType &&
+                              (l.item).quantity <= i.quantity) inv) lines
+\end{lstlisting}
+
+~
+
+\noindent\textbf{Contract templates} describe the daily activities in
+the company, and in our \muerp use case we only consider a purchase
+contract and a sales contract. The purchase contract is presented
+below:
+\lstinputlisting[language=pcsl,basicstyle=\small]{muERP/contracts/Purchase.csl}
+
+The contract describes a simple workflow, in which the vendor delivers
+items, possibly followed by an invoice, which in turn is followed by a
+bank transfer of the company.  Note how the \pcsl{me} parameter in the
+contract template body refers to the value from the domain-specific
+prelude, which in turn invokes the \emph{Me} report. Note also how the
+\pcsl{payment} clause template is recursively defined in order to
+accommodate for potentially different currencies. That is, the total
+payment is split up in as many bank transfers as there are currencies
+in the purchase.
+
+The sales contract is presented below:
+\lstinputlisting[language=pcsl,basicstyle=\small]{muERP/contracts/Sale.csl}
+
+The contract describes a workflow, in which the company issues an
+invoice to the customer---but only if the items on the invoice are in
+stock. The issuing of invoice is followed by an immediate (within an
+hour) payment by the customer to the company, and a delivery of goods
+by the company within a week. Moreover, we also model the repair
+guarantee mentioned in the introduction.
+
+\subsection{Bootstrapping the System}
+\label{sec:bootstrapping}
+
+The previous subsections described the specification code for
+\muerp. Since data definitions, report specifications, and contract
+specifications are added to the system at run-time, \muerp is
+instantiated by invoking the following sequence of services on an
+initially empty POETS instance:
+\begin{enumerate}
+\item Add data definitions in Appendix~\ref{app:muerp-ontology} via
+  \emph{addDataDefs}.
+\item Create a designated \recordname{Me} entity via
+  \emph{createEntity}.
+\item Add report specifications via \emph{addReport}.
+\item Add contract specifications via \emph{createTemplate}.
+\end{enumerate}
+
+Hence, the event log will, conceptually, have the form (we write the
+value of the field \fieldname{internalTimeStamp} before each event):
+\begin{itemize}
+\item[$t_1$:] \lstinline[language=eventlog]!AddDataDefs{defs = "ResourceType is ..."}!
+\item[$t_2$:] \lstinline[language=eventlog]!CreateEntity{ent = $e_1$, recordType = "Me", data = Me}!
+\item[$t_3$:] \lstinline[language=eventlog]!CreateReport{name = "Me", description = "Returns the ...",!\\
+\lstinline[language=eventlog]! code = "name: Me\n ...", tags = ["internal","entity"]}!\\
+$\vdots$
+\item[$t_i$:] \lstinline[language=eventlog]!CreateReport{name = "TopNCustomers", description = "A list ...",!\\
+\lstinline[language=eventlog]! code = "name: TopNCustomers\n ...",!\\
+\lstinline[language=eventlog]! tags = ["external","financial","crm"]}!
+\item[$t_{i+1}$:] \lstinline[language=eventlog]!CreateContractDef{name = "Purchase", recordType = "Purchase",!\\
+\lstinline[language=eventlog]! code = "name: purchase\n ...", description = "Set up ..."}!
+\item[$t_{i+2}$:] \lstinline[language=eventlog]!CreateContractDef{name = "Sale", recordType = "Sale",!\\
+\lstinline[language=eventlog]! code = "name: sale\n ...", description = "Set up a sale"}!
+\end{itemize}
+for some increasing timestamps $t_1 < t_2 < \ldots < t_{i+2}$. Note
+that the entity value $e_1$ of the \recordname{CreateEntity} event is
+automatically generated by the entity store, as described in
+Section~\ref{sec:entity-store}.
+
+Following these operations, the system is operational. That is,
+\begin{inparaenum}[(i)]
+  \item customers and vendors can be managed via \emph{createEntity},
+    \emph{updateEntity}, and \emph{deleteEntity},
+  \item contracts can be instantiated, updated, concluded, and
+    inspected via \emph{createContract}, \emph{updateContract},
+    \emph{concludeContract}, and \emph{getContract} respectively,
+  \item transactions can be registered via \emph{registerTransaction},
+    and
+  \item reports can be queried via \emph{queryReport}.
+\end{inparaenum}
+
+For example, if a sale is initiated with a new customer John Doe,
+starting at time $t$, then the following events will be added to the
+event log:
+\begin{itemize}
+\item[$t_{i+3}$:] \lstinline[language=eventlog]!CreateEntity{ent = $e_2$, recordType = "Customer", data = Customer{!\\
+\lstinline[language=eventlog]!  name = "John Doe", address = Address{!\\
+\lstinline[language=eventlog]!   string = "Universitetsparken 1", country = Denmark}}}!
+\item[$t_{i+4}$:] \lstinline[language=eventlog]!CreateContract{contractId = 0, contract = Sale{!\\
+\lstinline[language=eventlog]! startDate = $t$, templateName = "sale", customer = $e_2$,!\\
+\lstinline[language=eventlog]! orderLines = [OrderLine{!\\
+\lstinline[language=eventlog]!   item = Item{itemType = Bicycle{model = "Avenue"}, quantity = 1.0},!\\
+\lstinline[language=eventlog]!   unitPrice = Money{currency = DKK, amount = 4000.0},!\\
+\lstinline[language=eventlog]!   vatPercentage = 25.0}]}}!
+\end{itemize}
+That is, first the customer entity is created, and then we can
+instantiate a new sales contract. In this particular sale, one bicycle
+of the model ``Avenue'' is sold at a unit price of 4000 DKK, with an
+additional VAT of 25 percent. Note that the contract id 0 of the
+\recordname{CreateContract} is automatically generated and that the
+start time $t$ is explicitly given in the
+\recordname{CreateContract}'s \fieldname{startDate} field independent
+from the \recordname{internalTimeStamp} field.
+
+Following the events above, if the contract is executed
+successfully, events of type \recordname{IssueInvoice},
+\recordname{Delivery}, and \recordname{Payment} will persisted in the
+event log with appropriate values---in particular, the payment will be
+5000 DKK.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "tr"
+%%% End: 

@@ -1,0 +1,157 @@
+Enterprise resource planning (ERP) systems are comprehensive software
+systems used to manage daily activities in enterprises. Such
+activities include---but are not limited to---financial management
+(accounting), production planning, supply chain management and
+customer relationship management. ERP systems emerged as a remedy to
+heterogeneous systems, in which data and functionality are spread
+out---and duplicated---amongst dedicated subsystems. Instead, an ERP
+system it built around a central database, which stores all
+information in one place.
+
+Traditional ERP systems such as
+Microsoft Dynamics
+NAV\footnote{\url{http://www.microsoft.com/en-us/dynamics/products/nav-overview.aspx}.},
+Microsoft Dynamics
+AX\footnote{\url{http://www.microsoft.com/en-us/dynamics/products/ax-overview.aspx}.}, and
+SAP\footnote{\url{http://www.sap.com}.}
+are three-tier architectures with a client, an application
+server, and a centralised relational database system. The central database
+stores information in tables, and the application server provides the
+business logic, typically coded in a general purpose, imperative
+programming language. A shortcoming to this approach is
+that the state of the system is decoupled from the business logic,
+which means that business processes---that is, the daily
+activities---are not represented explicitly in the system. Rather,
+business processes are encoded implicitly as transition systems, where
+the state is maintained by tables in the database, and transitions are
+encoded in the application server, possibly spread out across several
+different logical modules.
+
+The process-oriented event-driven transaction systems (POETS)
+architecture introduced by Henglein et al.~\cite{henglein09jlap} is a
+qualitatively different approach to ERP systems. Rather than storing
+both transactional data and implicit process state in a database,
+POETS employs a pragmatic separation between transactional data, which
+is persisted in an \emph{event log}, and \emph{contracts}, which are
+explicit representations of business processes, stored in a separate
+module. Moreover, rather than using general purpose programming
+languages to specify business processes, POETS utilises a declarative
+domain-specific language (DSL)~\cite{andersen06sttt}. The use of a DSL
+not only enables explicit formalisation of business processes, it also
+minimises the gap between requirements and a running system. In fact,
+Henglein et al. take it as a goal of POETS that ``[...] the formalized
+requirements \emph{are} the system''  \cite[page 382]{henglein09jlap}.
+
+The bird's-eye view of the POETS architecture is presented in
+Figure~\ref{fig:origArch}.
+\begin{figure}[t]
+  \centering\small
+  \input{origArch}
+  \caption{Bird's-eye view of the POETS
+    architecture (diagram copied from~\cite{henglein09jlap}).}
+  \label{fig:origArch}
+\end{figure}
+At the heart of the system is the event log, which is an append-only
+list of transactions. Transactions represent ``things that take
+place'' such as a payment by a customer, a delivery of goods by a
+shipping agency, or a movement of items in an inventory. The
+append-only restriction serves two purposes. First, it is a legal
+requirement in ERP systems that transactions, which are relevant for
+auditing, are retained. Second, the report engine utilises
+monotonicity of the event log for optimisation, as shown by Nissen and
+Larsen~\cite{nissen07ifl}.
+
+Whereas the event log stores historical data, contracts play the role
+of describing which events are expected in the future. For instance, a
+yearly payment of value-added tax (VAT) to the tax authorities is an
+example of a (recurring) business process. The amount to be paid to
+the tax authorities depends, of course, on the financial transactions
+that have taken place. Therefore, information has to be derived from
+previous transactions in the event log, which is realised as a
+\emph{report}. A report provides structured data derived from the
+transactions in the event log. Like contracts, reports are written in
+a declarative domain-specific language---not only in order to minimise
+the semantic gap between requirements and the running system, but also
+in order to perform automatic optimisations.
+
+Besides the radically different software architecture, POETS
+distinguishes itself from existing ERP systems by abandoning
+the double-entry bookkeeping (DEB) accounting
+principle~\cite{weygandt04book} in favour of the resources, events,
+and agents (REA) accounting model of McCarthy~\cite{mccarthy82tar}.
+
+In double-entry bookkeeping, each transaction is recorded as two
+postings in a \emph{ledger}---a \emph{debit} and a
+\emph{credit}. When, for instance, a customer pays an amount $x$ to
+a company, then a debit of $x$ is posted in a cash account, and a
+credit of $x$ is posted in a sales account, which reflects the flow of
+cash from the customer to the company. The central invariant of DEB
+is that the total credit equals the total debit---if not,
+resources have either vanished or spontaneously appeared. DEB fits
+naturally in the relational database oriented architectures, since
+each ledger is similar in structure to a table. Moreover, DEB is the
+de facto standard accounting method, and therefore used by
+current ERP systems.
+
+In REA, transactions are not registered in accounts, but rather as the
+events that take place. An event in REA is of the form $(a_1,a_2,r)$
+meaning that agent $a_1$ transfers resource $r$ to agent $a_2$. Hence,
+when a customer pays an amount $x$ to a company, then it is
+represented by a single event
+$(\mbox{customer},\mbox{company},x)$. Since events are atomic, REA
+does not have the same redundancy\footnote{In traditional DEB,
+  redundancy is a feature to check for consistency. However,
+  in a computer system such redundancy is superfluous.} as DEB, and
+inconsistency is not a possibility: resources always have an origin and a
+destination.  The POETS architecture not only fits with the REA
+ontology, it is based on it. Events are stored as first-class objects
+in the event log, and contracts describe the expected future flow of
+resources.\footnote{Structured contracts are not part of the original
+  REA ontology but instead due to Andersen et
+  al.~\cite{andersen06sttt}.} Reports enable computation of derived 
+information that is inherent in DEB, and which may be a legal
+requirement for auditing. For instance, a sales account---which
+summarises (pending) sales payments---can be reconstructed from
+information about initiated sales and payments made by customers. Such
+a computation will yield the same \emph{derived} information as in
+DEB, and the principles of DEB consistency will be fulfilled simply by
+construction.
+
+\subsection{Outline and Contributions}
+The motivation for our work is to assess the POETS architecture in
+terms of a prototype implementation. During the implementation process
+we have added 
+features to the architecture that were painfully missing. Moreover, in
+the process we found that the architecture need not be tailored to the
+REA ontology---indeed to ERP systems---but the applicability of our
+generalised architecture to other domains remains future research.
+Our contributions are as follows:
+\begin{itemize}
+\item We present a generalised and extended POETS architecture
+  (Section~\ref{sec:extended-poets}) that has been fully
+  implemented.
+\item We present domain-specific languages (DSLs) for data modelling
+  (Section~\ref{sec:data-model}), report specification
+  (Section~\ref{sec:report-engine}), and contract specification
+  (Section~\ref{sec:contract-engine}).
+\item We demonstrate how to implement a small use case, from scratch,
+  in our implemented system (Section~\ref{sec:use-case}). We provide
+  the complete specification of the system, which demonstrates both
+  the conciseness and domain-orientation\footnote{Compare the motto:
+    ``[...] the formalized requirements \emph{are} the system''
+    \cite[page 382]{henglein09jlap}.} of our approach. We conclude that
+  the extended architecture is indeed well-suited for implementing ERP
+  systems---although the DSLs and the data model may require
+  additions for larger systems. Most notably, the amount of code
+  needed to implement the system is but a fraction of what would be
+  have to be implemented in a standard ERP system.
+\item We describe how we have utilised state-of-the art software
+  development tools in our implementation, especially how the tightly
+  coupled DSLs are implemented
+  (Section~\ref{sec:implementation-aspects}).
+\end{itemize}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "tr"
+%%% End: 

@@ -1,0 +1,14 @@
+name: Inventory
+description:
+  A list of items in the inventory available for sale (regardless of whether we
+  have paid for them).
+tags: external, inventory
+
+report : Inventory
+report =
+  let itemsSold' = map (\i -> i{quantity = 0 - i.quantity}) itemsSold
+  in
+  -- The available items is the list of received items minus the list of reserved
+  -- or sold items
+  Inventory{availableItems = normaliseItems (itemsReceived ++ itemsSold')}
+    

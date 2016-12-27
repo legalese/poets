@@ -1,0 +1,15 @@
+name: Schedule
+description:
+	Returns a list of arrangements for which the expected arrival falls within the given dates.
+tags: legejunglen
+
+report : Date -> Date -> Schedule
+report fromDate toDate = 
+	Schedule {
+    arrangements = [arra |
+			putC <- contracts,
+			arra  : Arrangement = putC.contract,
+			fromDate <= arra.arrivalDate.date,
+			arra.arrivalDate.date <= toDate
+		]
+	}

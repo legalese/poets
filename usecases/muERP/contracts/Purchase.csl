@@ -1,0 +1,27 @@
+name: purchase
+type: Purchase
+description: "Set up a purchase"
+
+clause purchase(lines : [OrderLine])<me : <Me>, vendor : <Vendor>> =
+ <vendor> Delivery(sender s, receiver r, items i)
+   where s == vendor && r == me && i == map (\x -> x.item) lines
+   due within 1W
+ then
+ when IssueInvoice(sender s, receiver r, orderLines sl)
+   where s == vendor && r == me && sl == lines
+   due within 1Y
+ then
+ payment(lines, vendor, 14D)<me>
+
+clause payment(lines : [OrderLine], vendor : <Vendor>, deadline : Duration)<me : <Me>> =
+ if null lines then
+   fulfilment
+ else
+   <me> BankTransfer(sender s, receiver r, money m)
+     where s == me && r == vendor && checkAmount m lines
+     due within deadline
+     remaining newDeadline
+   then
+   payment(remainingOrderLines m lines, vendor, newDeadline)<me>
+
+contract = purchase(orderLines)<me, vendor>

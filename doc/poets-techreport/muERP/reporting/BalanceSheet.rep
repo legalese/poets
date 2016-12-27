@@ -1,0 +1,96 @@
+name: BalanceSheet
+description:
+  The Balance Sheet.
+tags: external, financial
+
+-- List of all payments and their associated contract ID
+payments : [(Int,Payment)]
+payments = [ (tr.contractId,payment) |
+  tr <- transactionEvents,
+  payment : Payment = tr.transaction]
+
+-- List of all received payments and their associated contract ID
+paymentsReceived : [(Int,Payment)]
+paymentsReceived = filter (\p -> not (isMe p.2.sender) && isMe p.2.receiver) payments
+
+-- List of all payments made and their associated contract ID
+paymentsMade : [(Int,Payment)]
+paymentsMade = filter (\p -> isMe p.2.sender && not (isMe p.2.receiver)) payments
+
+cashReceived : [Money]
+cashReceived = normaliseMoney (map (\p -> p.2.money) paymentsReceived)
+
+cashPaid : [Money]
+cashPaid = normaliseMoney (map (\p -> p.2.money) paymentsMade)
+
+netCashFlow : [Money]
+netCashFlow = subtractMoney cashReceived cashPaid
+
+depreciation : [Money]
+depreciation = [] -- For simplicity
+
+fAssetAcq : [Money]
+fAssetAcq = [] -- For simplicity
+
+fixedAssets : [Money]
+fixedAssets = subtractMoney fAssetAcq depreciation
+
+inventory : [Money]
+inventory =
+  let inventoryValue = [price |
+        item <- invAcq,
+        price = item.2{amount = item.2.amount * item.1.quantity}]
+  in
+  subtractMoney inventoryValue fifoCost
+
+accReceivable : [Money]
+accReceivable =
+  let paymentsDue = normaliseMoney [line.unitPrice{amount = amount} |
+        inv <- invoicesSent,
+        line <- inv.2.orderLines,
+        amount = line.unitPrice.amount * line.item.quantity]
+  in
+  subtractMoney paymentsDue cashReceived
+
+currentAssets : [Money]
+currentAssets = addMoney inventory (addMoney accReceivable netCashFlow)
+
+totalAssets : [Money]
+totalAssets = addMoney fixedAssets currentAssets
+
+accPayable : [Money]
+accPayable = 
+  let paymentsDue = [line.unitPrice{amount = amount} |
+        inv <- invoicesReceived,
+        line <- inv.2.orderLines,
+        amount = line.unitPrice.amount * line.item.quantity]
+  in
+  subtractMoney paymentsDue cashPaid
+
+vatPayable : [Money]
+vatPayable = subtractMoney vatIncoming vatOutgoing
+
+liabilities : [Money]
+liabilities = addMoney accPayable vatPayable
+
+ownersEq : [Money]
+ownersEq = subtractMoney totalAssets liabilities
+
+totalLiabPlusEq : [Money]
+totalLiabPlusEq = addMoney liabilities ownersEq
+
+report : BalanceSheet
+report = BalanceSheet{
+  fixedAssets = fixedAssets,
+  currentAssets = CurrentAssets{
+    currentAssets = currentAssets,
+    inventory = inventory,
+    accountsReceivable = accReceivable,
+    cashPlusEquiv = netCashFlow},
+  totalAssets = totalAssets,
+  liabilities = Liabilities{
+    liabilities = liabilities,
+    accountsPayable = accPayable,
+    vatPayable = vatPayable},
+  ownersEquity = ownersEq,
+  totalLiabilitiesPlusEquity = totalLiabPlusEq}

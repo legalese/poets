@@ -1,0 +1,75 @@
+ResourceType is Data.
+ResourceType is abstract.
+
+Currency is a ResourceType.
+Currency is abstract.
+
+DKK is a Currency.
+EUR is a Currency.
+
+ItemType is a ResourceType.
+ItemType is abstract.
+
+Bicycle is an ItemType.
+Bicycle has a String called model.
+
+Resource is Data.
+Resource is abstract.
+
+Money is a Resource.
+Money has a Currency.
+Money has a Real called amount.
+
+Item is a Resource.
+Item has an ItemType.
+Item has a Real called quantity.
+
+Agent is Data.
+
+Me is an Agent.
+
+Customer is an Agent.
+Customer has a String called name.
+Customer has an Address.
+
+Vendor is an Agent.
+Vendor has a String called name.
+Vendor has an Address.
+
+Address is Data.
+Address has a String.
+Address has a Country.
+
+Country is Data.
+Country is abstract.
+
+Denmark is a Country.
+
+OrderLine is Data.
+OrderLine has an Item.
+OrderLine has Money called unitPrice.
+OrderLine has a Real called vatPercentage.
+
+CurrentAssets is Data.
+CurrentAssets has a list of Money called currentAssets.
+CurrentAssets has a list of Money called inventory.
+CurrentAssets has a list of Money called accountsReceivable.
+CurrentAssets has a list of Money called cashPlusEquiv.
+
+Liabilities is Data.
+Liabilities has a list of Money called liabilities.
+Liabilities has a list of Money called accountsPayable.
+Liabilities has a list of Money called vatPayable.
+
+Invoice is Data.
+Invoice has an Agent called sender.
+Invoice has an Agent called receiver.
+Invoice has a list of OrderLine called orderLines.
+
+UnpaidInvoice is Data.
+UnpaidInvoice has an Invoice.
+UnpaidInvoice has a list of Money called remainder.
+
+CustomerStatistics is Data.
+CustomerStatistics has a Customer entity.
+CustomerStatistics has Money called totalPaid.

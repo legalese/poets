@@ -1,0 +1,7 @@
+name: GetReportNames
+description: This function provides the names of all registered reports.
+tags: Internal
+
+report : GetReportNames
+report = 
+  GetReportNames{names = map (\x -> x.name) reports}

@@ -1,0 +1,8 @@
+name: ContractTemplatesByType
+description:
+  A list of 'PutContractTemplate' events for each non-deleted contract template of the
+  given type.
+tags: internal, contract
+
+report : String -> [PutContractTemplate]
+report r = filter (\x -> x.recordType == r) contractTemplates

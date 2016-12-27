@@ -1,0 +1,12 @@
+name: ReportNamesByTags
+description:
+  A list of reports that have the all tags provided as first argument to the
+  function and none of the tags provided as second argument.
+tags: internal, report
+
+filt allOf noneOf rep =
+  all (\x -> elem x rep.tags) allOf &&
+  not (any (\x -> elem x rep.tags) noneOf)
+
+report : [String] -> [String] -> [String]
+report allOf noneOf = [r.name | r <- filter (filt allOf noneOf) reports]

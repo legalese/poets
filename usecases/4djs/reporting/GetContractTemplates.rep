@@ -1,0 +1,6 @@
+name: GetContractTemplates
+description:
+  Returns a list of PutContractDef events for each non-deleted contract template.
+tags: Internal, Contract
+report : GetContractTemplates
+report = GetContractTemplates{contractTemplates = contractDefs}

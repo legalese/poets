@@ -1,0 +1,24 @@
+name: OutstandingQuotes
+description:
+	provides a list of quotes not accepted by the customer yet
+tags: external, contract
+
+--peq : Contract -> Contract -> Bool
+peq c1 c2 = if (c1 :? DJContract) && (c2 :? DJContract)
+            then c1.start < c2.start
+            else c1.startDate < c2.startDate
+
+sortFun : PutContract -> PutContract -> Bool
+sortFun cp1 cp2 = peq cp1.contract cp2.contract
+
+report : OutstandingQuotes
+report = OutstandingQuotes {
+       	   contracts = sortBy sortFun 
+	               [ contract |
+		         contract : PutContract <- contracts,
+			 null [c | c : TransactionEvent <- events,
+			           c.contractId == contract.contractId,
+				   a : AcceptQuote = c.transaction
+ 			      ]
+	               ]
+         }

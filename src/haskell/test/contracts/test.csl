@@ -1,0 +1,342 @@
+clause debugSale(seller : Agent)<buyer> =
+  when Payment(sender s, receiver r)
+        where s == seller &&
+              r == buyer
+        due within 1D
+  then
+  <buyer> TransferAndDeliver
+          due within 1D
+  then
+  debugSale(seller)<buyer>
+
+
+
+contract debugSale : Sale =
+  debugSale(seller)<buyer>
+				
+clause debugContract()<> = terminate
+
+contract debugContract : Contract = debugContract()<>fun not a = if a then false else true
+val andList = foldr (\x y -> x && y) true
+val orList = foldr (\x y -> x || y) true
+
+fun max a b = if a > b then a else b
+fun min a b = if a > b then b else a
+
+fun filter f = foldr (\x b -> if f x then x : b else b) []
+fun map f = foldr (\x b -> (f x) : b) []
+val length = foldr (\x b -> b + 1) 0
+fun elem x = foldr (\y b -> x == y || b) false
+
+fun all f = foldr (\x b -> b && f x) true
+fun subset l1 l2 = all (\x -> elem x l2) l1
+fun diff l1 l2 = filter (\x -> not (elem x l2)) l1/*
+ * Installment sale
+ */
+clause installmentSale(deliveryDeadline : Duration,
+                      deliveryAddress : Address,
+                      goods : Resource,
+                      amount : Double,
+                      currency : Currency,
+                      installment : Double,
+                      payDeadline : Duration,
+                      start : Duration,
+                      end : Duration,
+                      frequency : Duration,
+                      rate : Double,
+                      closingPayment : Double)<buyer, seller> =
+ // First seller must deliver goods
+ <seller> TransferAndDeliver(resource g, deliveryAddress a, receiver r)
+  where g == goods &&
+        a == deliveryAddress &&
+        r == buyer
+  due within deliveryDeadline
+  then
+  // Then buyer must pay installments
+  installments(amount, currency, installment, payDeadline, start, end,
+               frequency, rate, closingPayment, seller)<buyer>
+
+clause installments(balance : Double,
+                    currency : Currency,
+                    installment : Double,
+                    payDeadline : Duration,
+                    start : Duration,
+                    end : Duration,
+                    frequency : Duration,
+                    rate : Double,
+                    closingPayment : Double,
+                    seller : Agent)<buyer> =
+ if balance <= 0.0 then
+   // Balance has been fully paid, so closing payment is due
+   <buyer> Payment(currency c, amount a, receiver r)
+    where c == currency &&
+          a == closingPayment &&
+          r == seller
+    due within end
+ else
+ if end <= start then
+   // The closing day has been reached, so buyer must pay
+   // remaining balance + closing payment
+   <buyer> Payment(currency c, amount a, receiver r)
+    where c == currency &&
+          a == balance + closingPayment &&
+          r == seller
+    due within end
+ else
+   // The closing day has not been reached, so buyer must 
+   // pay a normal installment
+   <buyer> Payment(currency c, amount a, receiver r) @ t
+    where c == currency &&
+          a >= min balance installment &&
+          a <= balance &&
+          r == seller
+    due within payDeadline after start
+   then
+   installments((1.0 + rate) * (balance - a), currency,
+                installment, payDeadline, frequency <-> t, end <-> frequency,
+                frequency, rate, closingPayment, seller)<buyer>
+
+contract installmentSale : InstallmentSale =
+ installmentSale(sellerExchangeDeadline,
+                 deliveryAddress,
+                 goods,
+                 price,
+                 currency,
+                 installment,
+                 buyerExchangeDeadline,
+                 0D,
+                 end,
+                 paymentFrequency,
+                 rate,
+                 closingPayment)<buyer, seller>/*
+ * Lease agreement
+ */
+clause lease(property : Resource,
+             leaseStart : Duration,
+             leasePeriod : Duration,
+             leasePeriods : Int,
+             currency : Currency,
+             amount : Double,
+             payDeadline : Duration,
+             terminationRequested : Bool)<lessor, lessee> =
+ if leasePeriods <= 0 && terminationRequested then
+   // Contract has expired
+   terminate
+ else
+   <lessee> Payment(currency c, amount a, receiver r)
+    where c == currency &&
+          a == amount &&
+          r == lessor
+    due within payDeadline after leaseStart
+   and
+   <lessor> Lease(resource p, receiver r)
+    where p == property &&
+          r == lessee
+    due immediately after leaseStart
+    then
+      if terminationRequested then
+        // A termination has previously been requested
+        lease(property, leasePeriod, leasePeriod, leasePeriods - 1,
+              currency, amount, payDeadline, true)<lessor, lessee>
+      else
+        when ReqTermination(agent a) @ t
+              where a == lessor || a == lessee
+              due within leasePeriod
+        then
+          // Lessor or lessee requests termination, so the lease
+          // should end after the minimum of 1 lease period and the
+          // remaining amount of lease periods
+          lease(property, leasePeriod <-> t, leasePeriod,
+                min 1 (leasePeriods - 1),
+                currency, amount, payDeadline, true)<lessor, lessee>
+        else
+          // Nobody requests termination
+          lease(property, 0D, leasePeriod, leasePeriods - 1,
+                currency, amount, payDeadline, false)<lessor, lessee>
+
+contract lease : LeaseAgreement =
+ lease(resource,
+       0D,
+       leasePeriod,
+       leasePeriods,
+       currency,
+       amount,
+       payDeadline,
+       false)<lessor, lessee>/*legal(service : Service,
+//      hours : Int,
+      fee : Currency,
+      rate : Currency,
+      start : Duration,
+      frequency : Duration,
+      paymentDeadline : Duration,
+      invoiceDeadline : Duration,
+      excessPaymentDeadline : Duration)<attorney, company> =
+ <company> Payment(amount a, receiver r)
+  where a == fee &&
+        r == attorney
+  due within paymentDeadline after start
+ and
+ <attorney> ProvideService(service s, receiver r) @ t
+  where s == service{quantity = s.quantity} &&
+        r == company
+  due within frequency after start
+ then
+   legal(service, fee, rate, (start <+> frequency) <-> t, frequency,
+         paymentDeadline, invoiceDeadline, excessPaymentDeadline)
+        <attorney, company>
+   and
+   if s.quantity > service.quantity then
+     (if <attorney> IssueInvoice(receiver r)
+          where r == company
+          due within invoiceDeadline
+      then
+        <company> Payment(amount a, receiver r)
+         where a == rate{quantity = (s.quantity - service.quantity) *
+                                    rate.quantity} &&
+               r == attorney
+         due within excessPaymentDeadline)
+   else
+     empty
+
+//contract legal : Contract =
+// legal("legal service", 50, 8000, 150, 0D, 30D, 38D, 40D)<Attorney, Company>*/contract manageCustomer : ICustomer = terminate/*
+ * Master agreement
+ */
+clause master(resourceType : ResourceType,
+              quantity : Double,
+              terminationDeadline : Duration,
+              currency : Currency,
+              payment : Double,
+              invoiceDeadline : Duration,
+              paymentDeadline : Duration)<vendor, customer> =
+ if quantity <= 0.0 then
+   // No more goods in the master agreement, so it is terminated
+   terminate
+ else
+   when Request(buyer b, resourceType tp, qty q, seller s) @ t
+         where b == customer &&
+               tp == resourceType &&
+               0.0 < q &&
+               q <= quantity &&
+               s == vendor
+       due within terminationDeadline
+   then
+     sale(max 14D ((ceil q)*24*6M),
+          paymentDeadline,
+          Resource{resources = [AtomicResource{
+                                  resourceType = resourceType,
+                                  qty = q}]},
+          currency,
+          q * payment)<vendor, customer>
+     and
+     master(resourceType, quantity - q,
+            terminationDeadline <-> t, currency, payment,
+            invoiceDeadline, paymentDeadline)<vendor, customer>
+
+contract master : MasterAgreement =
+ master(resourceType,
+        resourceQuantity,
+        termination,
+        currency,
+        unitPrice,
+        vendorResponseDeadline,
+        customerPaymentDeadline)<vendor, customer>/*
+ * Sales contract
+ */
+clause sale(deliveryDeadline : Duration,
+            paymentDeadline : Duration,
+            goods : Resource,
+            currency : Currency,
+            amount : Double)<buyer, seller> =
+ // First seller must deliver goods
+ <seller> TransferAndDeliver(resource g, receiver r)
+  where g == goods &&
+        r == buyer
+  due within deliveryDeadline
+  then
+    // Buyer must pay half upon receipt
+    <buyer> Payment(currency c, amount a, receiver r)
+     where c == currency &&
+           a == 0.5 * amount &&
+           r == seller
+     due within 1H
+     then
+       ((// Remainder due within X days of receipt
+         <buyer> Payment(currency c, amount a, receiver r)
+          where c == currency &&
+                a == 0.5 * amount &&
+                r == seller
+          due within paymentDeadline
+         or
+         // Fine in case of late payment
+         <buyer> Payment(currency c, amount a, receiver r)
+          where c == currency &&
+                a == 1.1 * 0.5 * amount &&
+                r == seller
+          due within 14D after paymentDeadline)
+        and
+        // Buyer has 14 days to claim for damages
+        when ClaimForDamages(buyer b, seller s, resource g)
+              where b == buyer &&
+                    g == goods &&
+                    s == seller
+              due within 14D
+        then
+          // In case the goods are damaged, Seller must repay Buyer
+          <seller> Payment(currency c, amount a, receiver r)
+           where c == currency &&
+                 a == amount &&
+                 r == buyer
+           due within 7D)
+
+contract sale : Sale =
+ sale(sellerExchangeDeadline,
+      buyerExchangeDeadline,
+      goods,
+      currency,
+      price)<buyer, seller>/*
+ * Sales contract allowing deliveries in multiple batches
+ */
+clause saleMult(deliveryDeadline : Duration,
+                goods : Resource,
+                currency : Currency,
+                amount : Double,
+                latePaymentDeadline : Duration)<buyer, seller> =
+ if length(goods.resources) == 0 then
+   // All goods have been delivered, so Buyer most pay
+   <buyer> Payment(currency c, amount a, receiver r)
+    where c == currency &&
+          a == amount &&
+          r == seller
+    due immediately
+   or
+   <buyer> Payment(currency c, amount a, receiver r)
+    where c == currency &&
+          a == 0.5 * amount &&
+          r == seller
+    due immediately
+    then
+      <buyer> Payment(currency c, amount a, receiver r)
+       where c == currency &&
+             a == 1.05 * 0.5 * amount &&
+             r == seller
+       due within latePaymentDeadline
+ else
+   // Goods remain to be delivered, possibly in multiple batches
+   <seller> TransferAndDeliver(resource g, receiver r) @ t
+    where subset g.resources goods.resources &&
+          length(g.resources) >= 1 &&
+          r == buyer
+    due within deliveryDeadline
+    then
+      saleMult(deliveryDeadline <-> t,
+               Resource{resources = diff goods.resources g.resources},
+               currency, amount, latePaymentDeadline)
+              <buyer, seller>
+
+contract saleMult : Sale = 
+ saleMult(sellerExchangeDeadline,
+          goods,
+          currency,
+          price,
+          buyerExchangeDeadline)<buyer, seller>

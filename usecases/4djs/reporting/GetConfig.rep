@@ -1,0 +1,7 @@
+name: GetConfig
+description: Retrieves the configuration record.
+tags: Internal
+
+report : GetConfig
+report = 
+  GetConfig{configuration = headList [co ! | co : <Configuration> <- entities]}

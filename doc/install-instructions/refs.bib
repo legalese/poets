@@ -1,0 +1,30 @@
+@TECHREPORT{hvitved11tr,
+  author = {Tom Hvitved and Patrick Bahr and Jesper Andersen},
+  title = {Domain-Specific Languages for Enterprise Systems},
+  institution = {Department of Computer Science, University of Copenhagen},
+  year = {2011},
+  abstract = {The process-oriented event-driven transaction systems (POETS) architecture
+	introduced by Henglein et al. is a novel software architecture for
+	enterprise resource planning (ERP) systems. POETS employs a pragmatic
+	separation between (i) transactional data, that is what has happened;
+	(ii) reports, that is what can be derived from the transactional
+	data; and (iii) contracts, that is which transactions are expected
+	in the future. Moreover, POETS applies domain-specific languages
+	(DSLs) for specifying reports and contracts, in order to enable succinct
+	declarative specifications as well as rapid adaptability and customisation.
+	In this report we document an implementation of a generalised and
+	extended variant of the POETS architecture. The generalisation is
+	manifested in a detachment from the ERP domain, which is rather an
+	instantiation of the system than a built-in assumption. The extensions
+	amount to a customisable data model based on nominal subtyping; support
+	for run-time changes to the data model, reports and contracts, while
+	retaining full auditability; and support for referable data that
+	may evolve over time, also while retaining full auditability as well
+	as referential integrity. Besides the revised architecture, we present
+	the DSLs used to specify data definitions, reports, and contracts
+	respectively, and we provide the complete specification for a use
+	case scenario, which demonstrates the conciseness and validity of
+	our approach. Lastly, we describe technical aspects of our implementation,
+	with focus on the techniques used to implement the tightly coupled
+	DSLs.}
+}

@@ -1,0 +1,11 @@
+name: AllContracts
+description:
+	Returns all (possibly concluded) contracts.
+
+report : AllContracts
+report = 
+  AllContracts{
+    contracts = [pc | cc : CreateContract <- events,
+                      pc = first cc [ uc | uc : UpdateContract <- events,
+                                           uc.contractId == cc.contractId]]
+  }

@@ -1,0 +1,40 @@
+\newcommand\drawInner[2]{
+  \node[anchor=east,align=center] (t) at (#2.east) {#1};%
+  \draw[thick] (t.north west) -- (t.north east)%
+            (t.south west) -- (t.south east);%
+  }
+\newcommand\drawHeader[2]{
+  \node[anchor=north] at (#2.north) {#1};
+}
+\newcommand\drawList[2]{
+  \node[fill=white,draw,align=left] at (#2.south) {#1};
+}
+
+\begin{tikzpicture}
+  [box/.style={shape=rectangle,rounded corners=3mm,minimum height=3cm,
+    minimum width=3.5cm, anchor=north,draw},%
+  db/.style={very thick,shape=cylinder, shape border
+    rotate=90,aspect=.25,draw,align=center},%
+  node distance=8cm]%
+  \node[thick,box] (contract) {};%
+  \drawHeader{Contract engine}{contract}%
+  \drawInner{Running\\contracts}{contract}%
+  \drawList{start contract\\register event\\end contract}{contract}%
+
+  \node[thick,box,right of=contract] (report) {};%
+  \drawHeader{Report engine}{report}%
+  \drawInner{Report\\definitions}{report}%
+  \drawList{add report\\delete report\\get report\\query report}{report}%
+
+  \node[db,anchor=north] (events) at ($(contract)!.5!(report)-(0,1)$) {Event\\log};%
+
+  \draw[-latex] (contract) edge[]
+  node[above,midway,sloped] {events} (events)%
+  (events) edge[] node[above,midway,sloped]
+  {updates} (report)%
+  (report.150) -- node[above,midway] {query results} (contract.30);%
+\end{tikzpicture}
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "tr"
+%%% End: 

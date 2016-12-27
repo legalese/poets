@@ -1,0 +1,117 @@
+-- Check if an agent is the company itself
+isMe : <Agent> -> Bool
+isMe a = a :? <Me>
+
+-- Normalise a list of money by grouping currencies together
+normaliseMoney : [Money] -> [Money]
+normaliseMoney ms = [Money{currency = m.1, amount = sum (map (\m -> m.amount) m.2)} |
+  m <- groupProj (\m -> m.currency) ms]
+
+-- Add one list of money from another
+addMoney : [Money] -> [Money] -> [Money]
+addMoney m1 m2 = normaliseMoney (m1 ++ m2)
+
+-- Subtract one list of money from another
+subtractMoney : [Money] -> [Money] -> [Money]
+subtractMoney m1 m2 = addMoney m1 (map (\m -> m{amount = 0 - m.amount}) m2)
+
+-- Produce normalised list of all items given in list
+normaliseItems : [Item] -> [Item]
+normaliseItems its = [Item{itemType = i.1, quantity = sum (map (\is -> is.quantity) i.2)} |
+  i <- groupProj (\is -> is.itemType) its]
+ 
+-- List of all invoices and their associated contract ID
+invoices : [(Int,IssueInvoice)]
+invoices = [(tr.contractId,inv) |
+  tr <- transactionEvents,
+  inv : IssueInvoice = tr.transaction]
+
+-- List of all received invoices and their associated contract ID
+invoicesReceived : [(Int,IssueInvoice)]
+invoicesReceived = 
+  filter (\inv -> not (isMe (inv.2).sender) && isMe (inv.2).receiver) invoices
+
+-- List of all sent invoices and their associated contract ID
+invoicesSent : [(Int,IssueInvoice)]
+invoicesSent = filter (\inv -> isMe inv.2.sender && not (isMe inv.2.receiver)) invoices
+
+-- Calculate the total price including VAT on an invoice
+invoiceTotal : (a.orderLines : [OrderLine]) => a -> [Money]
+invoiceTotal inv = normaliseMoney [line.unitPrice{amount = price} |
+  line <- inv.orderLines,
+  quantity = line.item.quantity,
+  price = ((100 + line.vatPercentage) * line.unitPrice.amount * quantity) / 100]
+
+-- List of all items delivered to the company
+itemsReceived : [Item]
+itemsReceived = normaliseItems [is |
+  tr <- transactionEvents,
+  del : Delivery = tr.transaction,
+  not(isMe del.sender) && isMe del.receiver,
+  is <- del.items]
+
+-- List of all items that have been sold
+itemsSold : [Item]
+itemsSold = normaliseItems [line.item | inv <- invoicesSent, line <- inv.2.orderLines]
+
+-- Inventory acquisitions, that is a list of all received items and the unit
+-- price of each item, exluding VAT.
+invAcq : [(Item,Money)]
+invAcq = [(item,line.unitPrice) |
+  inv <- invoicesReceived,
+  tr <- transactionEvents,
+  tr.contractId == inv.1,
+  deliv : Delivery = tr.transaction,
+  item <- deliv.items,
+  line <- inv.2.orderLines,
+  line.item.itemType == item.itemType]
+
+-- FIFO costing: Calculate the cost of all sold goods based on FIFO costing.
+fifoCost : [Money]
+fifoCost = let
+   -- Check whether a set of items equals the current set of items in the
+   -- inventory. If so, 'take' as many of the inventory items as possible
+   -- and add the price of these items to the totals.
+   checkInventory y x = let
+       invItem = y.1  -- The current item in the inventory
+       invPrice = y.2 -- The price of the current item in the inventory
+       oldInv = x.1 -- The part of the inventory that has been processed
+       item = x.2 -- The item to find in the inventory
+       total = x.3 -- The total costs so far
+     in
+     if item.itemType == invItem.itemType then let
+         deltaInv =
+           if invItem.quantity <= item.quantity then
+             []
+           else
+             [(invItem{quantity = invItem.quantity - item.quantity},invPrice)]
+         remainingItem = item{quantity = max 0 (item.quantity - invItem.quantity)}
+         price = invPrice{amount = invPrice.amount * (min item.quantity invItem.quantity)}
+       in
+       (oldInv ++ deltaInv, remainingItem, price # total)
+     else
+       (oldInv ++ [(invItem,invPrice)], item, total)
+
+   -- Process a sold item
+   processSoldItem soldItem x = let
+       total = x.1 -- the total costs so far
+       inv = x.2   -- the remaning inventory so far
+       y = fold checkInventory ([],soldItem,total) inv
+     in
+     (y.3,y.1)
+  in
+  normaliseMoney ((fold processSoldItem ([],invAcq) itemsSold).1)
+
+-- Outoing VAT
+vatOutgoing : [Money]
+vatOutgoing = normaliseMoney [price |
+  inv <- invoicesReceived,
+  l <- inv.2.orderLines,
+  price = l.unitPrice{amount = (l.vatPercentage * l.unitPrice.amount * l.item.quantity) / 100}]
+
+-- Incoming VAT
+vatIncoming : [Money]
+vatIncoming = normaliseMoney [price |
+  inv <- invoicesSent,
+  l <- inv.2.orderLines,
+  price = l.unitPrice{amount = (l.vatPercentage * l.unitPrice.amount * l.item.quantity) / 100}]

@@ -1,0 +1,386 @@
+\usepackage{mylhs2tex}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{paralist}
+\usepackage[final,hidelinks]{hyperref}
+\usepackage{tabularx}
+\usepackage{bussproofs}
+\usepackage[final]{listings}
+\usepackage{stmaryrd}
+\usepackage{cases}
+\usepackage{mathtools}
+\usepackage{multicol}
+\usepackage{url}
+\urlstyle{sf}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usetikzlibrary{shapes}
+\usetikzlibrary{positioning}
+\usepackage{textcomp}
+\usepackage{ifdraft}
+\usepackage{xspace}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{observation}[theorem]{Observation}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+
+% DSL keywords
+\newcommand{\keyword}[1]{\ensuremath{\mathbf{#1}}}
+\newcommand{\recordname}[1]{\ensuremath{\mathsf{#1}}}
+\newcommand{\fieldname}[1]{\ensuremath{\mathsf{#1}}}
+
+% Types
+\newcommand{\tbool}{\keyword{Bool}}
+\newcommand{\tchar}{\keyword{Char}}
+\newcommand{\tint}{\keyword{Int}}
+\newcommand{\treal}{\keyword{Real}}
+\newcommand{\tstring}{\keyword{String}}
+\newcommand{\ttimestamp}{\keyword{Timestamp}}
+\newcommand{\tduration}{\keyword{Duration}}
+\newcommand{\tdt}{\keyword{DurationTimestamp}}
+\newcommand{\tlist}[1]{\ensuremath{\left[#1\right]}}
+\newcommand{\tent}[1]{\ensuremath{\left\langle#1\right\rangle}}
+\newcommand{\subrec}{\le}
+\newcommand{\closure}[1]{\mathrm{Cl}\left(#1\right)}
+
+% Domains
+\newcommand{\drecordname}{\mathit{RecordName}}
+\newcommand{\dfieldname}{\mathit{FieldName}}
+\newcommand{\dvalue}{\mathit{Value}}
+\newcommand{\dbool}{\mathit{Bool}}
+\newcommand{\dint}{\mathit{Int}}
+\newcommand{\dreal}{\mathit{Real}}
+\newcommand{\dstring}{\mathit{String}}
+\newcommand{\dtimestamp}{\mathit{Timestamp}}
+\newcommand{\dduration}{\mathit{Duration}}
+\newcommand{\drecord}{\mathit{Record}}
+\newcommand{\dlist}{\mathit{List}}
+\newcommand{\dent}{\mathit{Ent}}
+\newcommand{\dfields}{\mathit{Fields}}
+\newcommand{\dchar}{\mathit{Char}}
+\newcommand{\dstore}{\mathit{Store}}
+\newcommand{\dtype}{\mathit{Type}}
+\newcommand{\entlookup}{\operatorname{lookup}}
+
+\newcommand\depend{\rightarrow}
+\newcommand{\finmap}{\rightharpoonup_{\mathrm{fin}}}
+\newcommand{\parto}{\rightharpoonup}
+\newcommand{\dom}[1]{\operatorname{dom}(#1)}
+\newcommand{\rem}[2]{\operatorname{rem}(#1,#2)}
+\newcommand{\powerset}{\mathcal{P}}
+\newcommand{\powersetfin}{\powerset_{\mathrm{fin}}}
+\newcommand{\muerp}{$\mu$ERP\xspace}
+
+% Type system
+\newcommand{\hastype}[4]{#1, #2 \vdash #3 : #4}
+\newcommand{\issubtype}[3]{#1 \vdash #2 <: #3}
+\newcommand{\constrEnt}[3]{#1, #2 \Vdash #3}
+\newcommand{\reptype}[5]{#1, #2, #3 \vdash #4 : #5}
+
+% Ontology
+\newcommand{\ontden}[1]{\left\llbracket #1 \right\rrbracket}
+\newcommand{\ontdentp}[1]{\left\llbracket #1 \right\rrbracket}
+
+% Environment for writing BNF grammars
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X}
+\newenvironment{bnf}{\setlength{\tabcolsep}{2pt}\noindent\tabularx{\textwidth}{>{$\it
+    }l<{$}>{$}r<{$}>{$\it }l<{$}R}}{\endtabularx}
+\newcommand\ebnf{::=}
+\newcommand{\bnfsep}{\mid}
+
+% Parrot
+\newcommand\derefCxt{@}
+\newcommand\derefNow{!}
+\newcommand\image[1]{\mathsf{Im}(#1)}
+\newcommand\natseg[1]{\left[#1\right]}
+\newcommand\step{\rightarrow}
+\newcommand\ecxt{{\mathbb E}}
+\newcommand\fcxt{{\mathbb F}}
+\newcommand\eapp[1]{{\mathbb E}\left[#1\right]}
+\newcommand\fapp[1]{{\mathbb F}\left[#1\right]}
+\newcommand\cxthole{\left[\cdot\right]}
+\newcommand\strict[1]{\mathsf{strict}(#1)}
+\newcommand\nstrict[1]{\ob{\mathsf{strict}}(#1)}
+\newcommand\infrule[2]{ %
+  \RightLabel{(#1)}%
+  \AxiomC{\phantom{FOOBAR}}%
+  \UnaryInfC{$#2$}%
+  \DisplayProof{}%
+}%
+\newcommand\infruleI[3]{%
+  \RightLabel{(#1)}%
+  \AxiomC{$#2$}%
+  \UnaryInfC{$#3$}%
+  \DisplayProof{}%
+}
+\newcommand\infruleII[4]{%
+  \RightLabel{(#1)}%
+  \AxiomC{$#2$}%
+  \AxiomC{$#3$}%
+  \BinaryInfC{$#4$}%
+  \DisplayProof{}%
+}
+
+\newcommand\infruleIII[5]{%
+  \RightLabel{(#1)}%
+  \AxiomC{$#2$}%
+  \AxiomC{$#3$}%
+  \AxiomC{$#4$}%
+  \TrinaryInfC{$#5$}%
+  \DisplayProof{}%
+}
+
+\newcommand\arity[1]{\mathsf{ar}(#1)}
+\newcommand\vdur[1]{\langle\langle#1\rangle\rangle}
+\newcommand\vdate[1]{\langle\langle#1\rangle\rangle}
+\newcommand\dminus{\ensuremath{\mathop{\langle-\rangle}}}
+\newcommand\dplus{\ensuremath{\mathop{\langle+\rangle}}}
+\newcommand{\vlist}[1]{\ensuremath{\left[#1\right]}}
+\newcommand{\valref}[1]{\ensuremath{\left\langle#1\right\rangle}}
+\newcommand\calC{{\mathcal C}}
+\newcommand\calD{{\mathcal D}}
+\newcommand\calR{{\mathcal R}}
+\newcommand\calE{{\mathcal E}}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand\letin[2]{\keyword{let}\;#1\;\keyword{in}\;#2}
+\newcommand\equals{=}
+\newcommand\typeof[2]{\keyword{type}\;#1\;\keyword{of}\;#2}
+\newcommand\semi{;}
+\newcommand\default{\_}
+\newcommand\block[1]{\left\{#1\right\}}
+\newcommand\constr[2]{#1\Vdash #2}
+\newcommand\constrt[1]{\constr{}{#1}}
+\newcommand\type[4]{#1; #2\vdash #3 : #4}
+\newcommand\foldr{\keyword{fold}}
+\newcommand\cons{\mathop{\#}}
+\newcommand\ifelse[3]{\keyword{if}\;#1\;\keyword{then}\;#2\;\keyword{else}\;#3}
+\newcommand\subst[3]{#1\substitution{\repl{#2}{#3}}}
+\newcommand\substitution[1]{\left[#1\right]}
+\newcommand\repl[2]{#1/#2}
+
+\newcommand\ordC[1]{\mathsf{Ord}(#1)}
+\newcommand\eqC[1]{\mathsf{Eq}(#1)}
+\newcommand\implC{\Rightarrow}
+\newcommand\fieldC[3]{#1.#2:#3}
+\newcommand\tup[1]{\overline{#1}}
+\newcommand\seq[1]{\left\langle #1 \right\rangle}
+\newcommand\emptyseq{\seq{}}
+\newcommand\fv[1]{\mathsf{fv}(#1)}
+\newcommand\mhole{\_}
+
+
+\newcommand\nats{{\mathbb N}}
+\newcommand\reals{{\mathbb R}}
+\newcommand\ctrue{\mathbf{True}}
+\newcommand\cfalse{\mathbf{False}}
+
+\newcommand\trule[3]{\begin{gathered}\inferrule*{#2}{#3}
+    \tag{#1}\end{gathered}}
+\newcommand{\prt}[1]{\lstinline[language=parrot,basicstyle=\normalsize]!#1!}
+\newcommand{\prtalt}[1]{\lstinline[language=parrot,basicstyle=\normalsize]|#1|}
+\newcounter{dummycounter}
+\newcommand{\lstinputreport}[2]{%
+  \setcounter{dummycounter}{#1}%
+  \lstinputlisting[language=parrotprelude,xleftmargin=0pt,lastline=\arabic{dummycounter},belowskip=0pt]{#2}%
+  \stepcounter{dummycounter}%
+  \lstinputlisting[language=parrot,xleftmargin=0pt,firstline=\arabic{dummycounter}]{#2}}
+\newcommand{\lstinputintreport}[2]{\paragraph{#2}
+
+~
+
+\lstinputreport{#1}{muERP/reporting/System/#2.rep}}
+\newcommand{\lstinputextreport}[2]{\paragraph{#2}
+
+~
+
+\lstinputreport{#1}{muERP/reporting/#2.rep}}
+
+%PCSL
+\newcommand{\pcsl}[1]{\lstinline[language=pcsl,basicstyle=\normalsize]!#1!}
+
+% Macro for identifiers in POETS DSLs
+\makeatletter
+\newcommand*\poetsidstyle{\expandafter\id@style\the\lst@token\relax}
+\def\id@style#1#2\relax{%
+        \ifcat#1\relax\else
+                \ifnum`#1=\uccode`#1%
+                        \sffamily
+                \else
+                        \itshape
+                \fi
+        \fi
+}
+\makeatother
+
+\lstdefinelanguage{ontology}
+{
+ xleftmargin=\parindent,
+ basicstyle=\upshape\scriptsize,
+ keywordstyle=\bfseries,
+ identifierstyle=\itshape,
+ commentstyle=\itshape\bfseries,
+ sensitive=true,
+ keepspaces=true,
+ columns=fullflexible,
+ mathescape=true,
+ showstringspaces=false,
+ comment=[l]\#
+}
+
+\lstdefinelanguage{pcsl}
+{
+ xleftmargin=\parindent,
+ basicstyle=\upshape\scriptsize,
+ keywordstyle=[1]\bfseries,
+ keywordstyle=[2]\itshape,
+ identifierstyle=\poetsidstyle,
+ commentstyle=\itshape\bfseries,
+ stringstyle=\ttfamily,
+ sensitive=true,
+ keepspaces=true,
+ columns=fullflexible,
+ mathescape=true,
+ showstringspaces=false,
+ comment=[l]//,
+ string=[b]{"},
+ keywords=[1]{name,type,description,contract,clause,val,fun,fulfilment,%
+                   where,due,within,after,%
+                   immediately,remaining,if,then,else,when,case,of,and,or,let,%
+                   in,Bool,Int,Double,String,Timestamp,Duration},
+ morekeywords=[2]{S,m,H,D,W,M,Y},
+ literate=*{<}{$\langle$}{1} {>}{$\rangle$}{1} {->}{$\rightarrow$}{1}
+                {\\}{$\lambda$}{1}
+                {*}{$\times$}{1}
+                {<=}{$\le$}{1} {>=}{$\ge$}{1}
+                {==}{$\equiv$}{1} {/=}{$\not\equiv$}{1}
+                {&&}{$\land$}{1}
+                {||}{$\lor$}{1}
+                {not}{$\lnot$}{1}
+                {<+>}{$\langle + \rangle$}{3}
+                {<->}{$\langle - \rangle$}{3}
+                {<*>}{$\langle \times \rangle$}{3}
+                {\ <\ }{\ $<$\ }{3} {\ >\ }{\ $>$\ }{3}
+}
+
+\lstdefinelanguage{parrot}
+{
+ xleftmargin=\parindent,
+ basicstyle=\upshape\scriptsize,
+ keywordstyle=\bfseries,
+ identifierstyle=\poetsidstyle,
+ commentstyle=\itshape\bfseries,
+ stringstyle=\ttfamily,
+ sensitive=true,
+ keepspaces=true,
+ columns=fullflexible,
+ mathescape=true,
+ showstringspaces=false,
+ comment=[l]--,
+ string=[b]{"},
+ keywords={report,fold,Inl,Inr,True,False,if,then,else,let,in,%
+                   type,reftype,of,pic,not,events,error,_,Bool,Int,Double,Char,String,%
+                   Timestamp,Duration,Ord},
+ literate=*{<}{$\langle$}{1} {>}{$\rangle$}{1} {->}{$\rightarrow$}{1}
+                {<-}{$\leftarrow$}{1}
+                {=>}{$\Rightarrow$}{1}
+                {\\}{$\lambda$}{1}
+                {*}{$\times$}{1}
+                {<=}{$\le$}{1} {>=}{$\ge$}{1}
+                {==}{$\equiv$}{1} {/=}{$\not\equiv$}{1}
+                {&&}{$\land$}{1}
+                {||}{$\lor$}{1}
+                {not}{$\lnot$}{1}
+                {<+>}{$\langle + \rangle$}{3}
+                {<->}{$\langle - \rangle$}{3}
+                {<*>}{$\langle \times \rangle$}{3}
+                {\ <\ }{\ $<$\ }{3} {\ >\ }{\ $>$\ }{3}
+                {++}{$+\hspace{-3pt}+$}{1}
+}
+
+\lstdefinelanguage{parrotprelude}
+{
+ xleftmargin=\parindent,
+ basicstyle=\upshape\scriptsize,
+ keywordstyle=\bfseries,
+ identifierstyle=\itshape,
+ sensitive=true,
+ keepspaces=true,
+ columns=fullflexible,
+ mathescape=true,
+ showstringspaces=false,
+ keywords={name,description,tags}
+}
+
+\lstdefinelanguage{eventlog}
+{
+ xleftmargin=\parindent,
+ basicstyle=\upshape,
+ identifierstyle=\sffamily,
+ commentstyle=\itshape\bfseries,
+ stringstyle=\ttfamily,
+ sensitive=true,
+ keepspaces=true,
+ columns=fullflexible,
+ mathescape=true,
+ showstringspaces=false,
+ comment=[l]//,
+ string=[b]{"},
+ literate=*{<}{$\langle$}{1} {>}{$\rangle$}{1} {->}{$\rightarrow$}{1}
+                {\\}{$\lambda$}{1}
+                {*}{$\times$}{1}
+                {<=}{$\le$}{1} {>=}{$\ge$}{1}
+                {==}{$\equiv$}{1} {/=}{$\not\equiv$}{1}
+                {&&}{$\land$}{1}
+                {||}{$\lor$}{1}
+                {not}{$\lnot$}{1}
+                {<+>}{$\langle + \rangle$}{3}
+                {<->}{$\langle - \rangle$}{3}
+                {<*>}{$\langle \times \rangle$}{3}
+                {\ <\ }{\ $<$\ }{3} {\ >\ }{\ $>$\ }{3}
+}
+
+\lstdefinelanguage{lithaskell}[]{haskell}{
+ basicstyle=\ttfamily,
+ flexiblecolumns=false,
+ basewidth={0.5em,0.45em},
+ literate={+}{{$+$}}1 {/}{{$/$}}1 {*}{{$*$}}1 {=}{{$=$}}1
+          {>}{{$>$}}1 {<}{{$<$}}1 {\\}{{$\lambda$}}1
+          {\\\\}{{\char`\\\char`\\}}1
+          {->}{{$\rightarrow$}}2 {>=}{{$\ge$}}2 {<-}{{$\leftarrow$}}2
+          {<=}{{$\le$}}2 {=>}{{$\Rightarrow$}}2
+%          {\ .}{{$\circ$}}2 {\ .\ }{{$\circ$}}2
+          {>>}{{>>}}2 {>>=}{{>>=}}2
+          {|}{{$\mid$}}1}
+
+\newcommand\maybecolor[1]{\ifdraft{\color{#1}}{}}
+\newcommand{\displaycomment}[1]{\ifdraft{#1{}}{}}
+
+\definecolor{dkgreen}{rgb}{0,0.4,0}
+
+% The first parameter is the note author
+% Active comments: something has to be done
+\newcommand{\TODO}[2]{\displaycomment{{\maybecolor{red}{\bf #1: }{{\maybecolor{blue}#2}}}}}
+% Things to keep in mind, potentially useful but no need to edit
+\newcommand{\Remark}[2]{\displaycomment{{\maybecolor{dkgreen} {\bf
+        #1:} #2}}}
+
+\newcommand{\JA}[1]{\TODO{Jesper}{#1}}
+\newcommand{\ja}[1]{\Remark{Jesper}{#1}}
+\newcommand{\PB}[1]{\TODO{Patrick}{#1}}
+\newcommand{\pb}[1]{\Remark{Patrick}{#1}}
+\newcommand{\TOM}[1]{\TODO{Tom}{#1}}
+\newcommand{\tom}[1]{\Remark{Tom}{#1}}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "tr"
+%%% End: 

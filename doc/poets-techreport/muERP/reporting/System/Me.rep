@@ -1,0 +1,7 @@
+name: Me
+description:
+  Returns the pseudo entity 'Me' that represents the company.
+tags: internal, entity
+
+report : <Me>
+report = head [me | me : <Me> <- map (\e -> e.1) entities]

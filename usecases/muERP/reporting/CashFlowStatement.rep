@@ -1,0 +1,19 @@
+name: CashFlowStatement
+description:
+  The Cash Flow Statement.
+tags: external, financial
+
+sumPayments : [Payment] -> [Money]
+sumPayments ps = normaliseMoney (map (\p -> p.money) ps)
+
+report : CashFlowStatement
+report = let
+    payments = [payment | payment : Payment <- transactions]
+    mRevenues = [payment | payment <- payments, isMe (payment.receiver)]
+    mExpenses = [payment | payment <- payments, isMe (payment.sender)]
+  in
+  CashFlowStatement{
+    revenues = mRevenues,
+    expenses = mExpenses,
+    revenueTotal = sumPayments mRevenues,
+    expenseTotal = sumPayments mExpenses}
